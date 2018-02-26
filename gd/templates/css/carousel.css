@@ -7,6 +7,9 @@ body {
   color: #5A5A5A;
 }
 
+.navbar-inverse{
+    color: aquamarine;
+}
 
 /* CUSTOMIZE THE NAVBAR
 -------------------------------------------------- */
