@@ -35,36 +35,22 @@
     <link href="css/blog.css" rel="stylesheet">
 
     <style>
-    .fixed-btn {
-    position: fixed;
-    right: 22%;
-    /* bottom: 5%; */
-    width: 200px;
-    border: 1px solid #eee;
-    background-color: white;
-    /* font-size: 24px; */
-    z-index: 1040;
-    -webkit-backface-visibility: hidden;
-}
-#fenyeqi{
-    margin-left:auto;
-    margin-right:auto;
-}
-.navbar .nav > li > a{
-    color: #ffffff;    
-}
- .navbar .nav >li >a:visited{
-    color: #ffffff;
-    background-color: #e7e7e7;
-}
-.navbar .nav > li > a:hover {
-    color: #555;
-    background-color: #e7e7e7;
-}
-.navbar .nav >li >a:active{
-    color: #555;
-    background-color: #e7e7e7;
-}
+        .fixed-btn {
+            position: fixed;
+            right: 22%;
+            /* bottom: 5%; */
+            width: 200px;
+            border: 1px solid #eee;
+            background-color: white;
+            /* font-size: 24px; */
+            z-index: 1040;
+            -webkit-backface-visibility: hidden;
+        }
+
+        #fenyeqi {
+            margin-left: auto;
+            margin-right: auto;
+        }
     </style>
 </head>
 <!-- NAVBAR
@@ -73,8 +59,8 @@
 <body>
     <!-- 固定导航条 -->
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-default navbar-fixed-top " style="background-color:#096C47;">
-        <div class="container">
+    <nav class="navbar navbar-default navbar-fixed-top navbar-inverse" style="background-color:#096C47;">
+        <div class="container" >
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
                     aria-controls="navbar">
@@ -83,7 +69,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a style="color:#ffffff;" class="navbar-brand" href="#">F-ZTH</a>
+                <a class="navbar-brand" href="#">F-ZTH</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -125,14 +111,14 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-    
+
                     <form class="navbar-form navbar-left" role="search">
                         <div class="btn-group">
                             <button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown">
                                 文章
                                 <span class="caret"></span>
                             </button>
-    
+
                             <ul class="dropdown-menu" role="menu">
                                 <li>
                                     <a href="#">文章</a>
@@ -140,7 +126,7 @@
                                 <li role="presentation" class="disabled">
                                     <a href="#">用户</a>
                                 </li>
-    
+
                                 <li role="presentation">
                                     <a href="#">发表日期(yy-mm-dd)</a>
                                 </li>
@@ -153,8 +139,8 @@
                             </button>
                         </div>
                     </form>
-    
-    
+
+
                     <ul class="nav navbar-nav navbar-right">
                         <li>
                             <a href="#">
@@ -173,6 +159,7 @@
 
 
 
+
     <!-- Marketing messaging and featurettes
     ================================================== -->
     <!-- Wrap the rest of the page in another container to center all the content. -->
@@ -180,82 +167,58 @@
     <div class="container marketing">
 
         <!-- Three columns of text below the carousel -->
-    <div class="blog-header">
-        <!-- <h3 class="blog-title">&nbsp;</h3> -->
-        <br>
-    </div>
+        <div class="blog-header">
+            <!-- <h3 class="blog-title">&nbsp;</h3> -->
+            <br>
+        </div>
         <!-- /.row -->
 
+    <div class="container">
+        <div class="blog-header">
+            <h1 class="blog-title">显示年月日FZTH</h1>
+            <p class="lead blog-description">显示农历</p>
+        </div>
         <div class="row">
-        
-            <div class="col-sm-8 blog-main">
-        
-                <!-- START THE FEATURETTES -->
-        
-                <hr class="featurette-divider">
-        
-                <div class="row featurette">
-                    <div class="col-md-7">
-                        <h2 class="featurette-heading">展示第一篇文章
-                            <span class="text-muted">副标题</span>
-                        </h2>
-                        <p class="lead">内容简介</p>
-                    </div>
-                    <div class="col-md-5">
-                        <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="文章图片">
-                    </div>
-                </div>
-        
-                <hr class="featurette-divider">
-        
-                <div class="row featurette">
-                    <div class="col-md-7 col-md-push-5">
-                        <h2 class="featurette-heading">展示第二篇文章
-                            <span class="text-muted">副标题</span>
-                        </h2>
-                        <p class="lead">内容简介</p>
-                    </div>
-                    <div class="col-md-5 col-md-pull-7">
-                        <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="文章图片">
-                    </div>
-                </div>
-        
-                <hr class="featurette-divider">
-        
-                <div class="row featurette">
-                    <div class="col-md-7">
-                        <h2 class="featurette-heading">展示第三篇文章
-                            <span class="text-muted">副标题</span>
-                        </h2>
-                        <p class="lead">内容简介</p>
-                    </div>
-                    <div class="col-md-5">
-                        <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="文章图片">
-                    </div>
-                </div>
-        
-                <hr class="featurette-divider">
-        
-                <div class="row featurette">
-                    <div class="col-md-7 col-md-push-5">
-                        <h2 class="featurette-heading">展示第四篇文章
-                            <span class="text-muted">副标题</span>
-                        </h2>
-                        <p class="lead">内容简介</p>
-                    </div>
-                    <div class="col-md-5 col-md-pull-7">
-                        <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="文章图片">
-                    </div>
-                </div>
-        
-                <hr class="featurette-divider">
-                <!-- /END THE FEATURETTES -->
-        
-        
+            <div class="col-sm-8 blog-main ">
+<hr style="padding:0%;margin:2%;" class="featurette-divider">
+                                <div  class="row featurette">
+                                    <div>
+                                    <div>
+                                        <span><h5>发表日期：</h5></span>
+                                    </div>
+                                    <div>
+                                        <span>
+                                                <a href="">
+                                                    <img width="24" height="24" src="" alt="">
+                                                </a>
+                                                <a href="#" style="color:black;"><b>冯浩斌</b>  </a><small style="color:#777;">&nbsp;目标：机器学习工程师,数据挖掘工程师</small>
+                                        </span>
+                                    </div>
+                                    </div>
+                                    <div  class="col-md-13" >
+                                        <h3 style="padding:0%;margin:2%;" >展示第一篇文章
+                                            <span class="text-muted"><small>副标题</small></span>
+                                        </h3>
+
+                                        <p class="lead">内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介</p>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="文章图片">
+                                    </div>
+                                                    <nav>
+                                                        <ul class="pager">
+                                                            <li>
+                                                                <a href="#">
+                                                                    <span class="glyphicon glyphicon-heart">&nbsp;喜欢</span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </nav>
+                                </div>
             </div>
             <!-- /.blog-main -->
-            <div class="col-sm-3 col-sm-offset-1 blog-sidebar well fixed-btn">
-
+    
+            <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
                 <div class="sidebar-module sidebar-module-inset">
                     <h4>作者姓名</h4>
                     <p>作者简介作者简介作者简介作者简介作者简介作者简介作者简介</p>
@@ -272,7 +235,7 @@
                         <li>
                             <a href="#">January 2014</a>
                         </li>
-        
+    
                     </ol>
                 </div>
                 <div class="sidebar-module">
@@ -291,53 +254,58 @@
                 </div>
             </div>
             <!-- /.blog-sidebar -->
-        
-
+    
         </div>
         <!-- /.row -->
-<nav id="fenyeqi">
-    <ul class="pagination">
-        <li>
-            <a href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-        <li>
-            <a href="#">1</a>
-        </li>
-        <li>
-            <a href="#">2</a>
-        </li>
-        <li>
-            <a href="#">3</a>
-        </li>
-        <li>
-            <a href="#">4</a>
-        </li>
-        <li>
-            <a href="#">5</a>
-        </li>
-        <li>
-            <a href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-    </ul>
-</nav>
+    
+    </div>
+    <!-- /.container -->
+    
+
+        <!-- /.row -->
+        <nav id="fenyeqi">
+            <ul class="pagination">
+                <li>
+                    <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">1</a>
+                </li>
+                <li>
+                    <a href="#">2</a>
+                </li>
+                <li>
+                    <a href="#">3</a>
+                </li>
+                <li>
+                    <a href="#">4</a>
+                </li>
+                <li>
+                    <a href="#">5</a>
+                </li>
+                <li>
+                    <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
         <!-- FOOTER -->
-        <footer>
-            <p class="pull-right">
-                <a href="#">回到顶部</a>
-            </p>
-            <p>&copy; 2018 广东工业大学, 自动化学院. &middot;
-                <a href="#">物联网工程</a> &middot;
-                <a href="#">2014级4班</a>
-            </p>
+    <footer class="blog-footer">
+        <p>编写
+            <a href="#">网站主页</a> by
+            <a href="#">@冯浩斌</a>.</p>
+        <p>
+            <a href="#">回到顶部</a>
+        </p>
+    </footer>
 
     </div>
     <!-- /.container -->
 
-    
+
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
