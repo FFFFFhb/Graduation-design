@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="image\fzth.ico">
+
+    <title>所有文章 - F-ZTH</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Custom styles for this template -->
+    <link href="css/carousel.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/blog.css" rel="stylesheet">
+
+    <style>
+        .fixed-btn {
+            position: fixed;
+            right: 22%;
+            /* bottom: 5%; */
+            width: 200px;
+            border: 1px solid #eee;
+            background-color: white;
+            /* font-size: 24px; */
+            z-index: 1040;
+            -webkit-backface-visibility: hidden;
+        }
+
+        #fenyeqi {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .navbar .nav > li > a {
+            color: #ffffff;
+        }
+
+        .navbar .nav > li > a:visited {
+            color: #ffffff;
+            background-color: #e7e7e7;
+        }
+
+        .navbar .nav > li > a:hover {
+            color: #555;
+            background-color: #e7e7e7;
+        }
+
+        .navbar .nav > li > a:active {
+            color: #555;
+            background-color: #e7e7e7;
+        }
+
+
+        #selectarticle >li>a {
+            background-color:#096c47;
+            color:#e7e7e7;
+        }
+
+        #selectarticle >li>a :visited {
+            color: #ffffff;
+            background-color: #e7e7e7;
+        }
+
+        #selectarticle >li>a :hover {
+            color: #555;
+            background-color: #e7e7e7;
+        }
+
+        #selectarticle >li>a :active {
+            color: #555;
+            background-color: #e7e7e7;
+        }
+
+    </style>
+</head>
+<!-- NAVBAR
+================================================== -->
+
+<body>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">文章标题</h4>
+            </div>
+            <div class="modal-body">
+                【2018全球赛事公布】今年，我们将会在5月3日—5月20日期间，在德国柏林和法国巴黎首次举办#LOL季中赛#。
+                而后，在7月2日—7月8日，#LOL洲际赛#亚洲对抗赛将会来到中国大陆！2018全球总决赛的举办场地，则是过去 七届全球总决赛之中五次夺冠的队伍主场：韩国。最后，全明星赛将继续落户北美，更多详情，欢迎关注
+                【2018全球赛事公布】今年，我们将会在5月3日—5月20日期间，在德国柏林和法国巴黎首次举办#LOL季中赛#。
+                而后，在7月2日—7月8日，#LOL洲际赛#亚洲对抗赛将会来到中国大陆！2018全球总决赛的举办场地，则是过去
+                七届全球总决赛之中五次夺冠的队伍主场：韩国。最后，全明星赛将继续落户北美，更多详情，欢迎关注 【2018全球赛事公布】今年，我们将会在5月3日—5月20日期间，在德国柏林和法国巴黎首次举办#LOL季中赛#。
+                而后，在7月2日—7月8日，#LOL洲际赛#亚洲对抗赛将会来到中国大陆！2018全球总决赛的举办场地，则是过去
+                七届全球总决赛之中五次夺冠的队伍主场：韩国。最后，全明星赛将继续落户北美，更多详情，欢迎关注 【2018全球赛事公布】今年，我们将会在5月3日—5月20日期间，在德国柏林和法国巴黎首次举办#LOL季中赛#。
+                而后，在7月2日—7月8日，#LOL洲际赛#亚洲对抗赛将会来到中国大陆！2018全球总决赛的举办场地，则是过去
+                七届全球总决赛之中五次夺冠的队伍主场：韩国。最后，全明星赛将继续落户北美，更多详情，欢迎关注 【2018全球赛事公布】今年，我们将会在5月3日—5月20日期间，在德国柏林和法国巴黎首次举办#LOL季中赛#。
+                而后，在7月2日—7月8日，#LOL洲际赛#亚洲对抗赛将会来到中国大陆！2018全球总决赛的举办场地，则是过去
+                七届全球总决赛之中五次夺冠的队伍主场：韩国。最后，全明星赛将继续落户北美，更多详情，欢迎关注
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">点赞</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 固定导航条 -->
+<!-- Fixed navbar -->
+<nav class="navbar navbar-default navbar-fixed-top " style="background-color:#096C47;">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false"
+                    aria-controls="navbar">
+                <span class="sr-only">From Zero to Hero</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a style="color:#ffffff;" class="navbar-brand" href="#">F-ZTH</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="#">
+                        <span class="glyphicon glyphicon-home"></span> 首页</a>
+                </li>
+                <li class="active">
+                    <a href="#about">
+                        <span class="glyphicon glyphicon-align-justify"></span> 文章列表</a>
+                </li>
+                <li class="disabled">
+                    <a href="#contact">用户列表</a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">
+                        <span class="glyphicon glyphicon-user"></span> 个人中心
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="disabled">
+                            <a href="#">我的文章</a>
+                        </li>
+                        <li>
+                            <a href="#">我的收藏</a>
+                        </li>
+                        <li class="disabled">
+                            <a href="#">我的关注</a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li class="dropdown-header">其他</li>
+                        <li>
+                            <a href="#">个人信息</a>
+                        </li>
+                        <li>
+                            <a href="#">我的评论</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown">
+                            文章
+                            <span class="caret"></span>
+                        </button>
+
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">文章</a>
+                            </li>
+                            <li role="presentation" class="disabled">
+                                <a href="#">用户</a>
+                            </li>
+
+                            <li role="presentation">
+                                <a href="#">发表日期(yy-mm-dd)</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                        <button type="submit" class="btn btn-default">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </div>
+                </form>
+
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#">
+                            <span class="glyphicon glyphicon-user"></span> 注册</a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="glyphicon glyphicon-log-in"></span> 登录</a>
+                    </li>
+                </ul>
+            </ul>
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+</nav>
+
+
+<!-- Marketing messaging and featurettes
+================================================== -->
+<!-- Wrap the rest of the page in another container to center all the content. -->
+
+<div class="container marketing">
+
+    <!-- Three columns of text below the carousel -->
+    <div class="blog-header">
+        <!-- <h3 class="blog-title">&nbsp;发呆</h3> -->
+        <br>
+    </div>
+    <!-- /.row -->
+
+    <div class="container">
+        <div class="blog-header">
+            <h1 class="blog-title">贰零壹捌 - 貳</h1>
+            <p class="lead blog-description">显示农历</p>
+        </div>
+        <div class="row">
+            <div class="col-sm-8 blog-main ">
+
+                <ul id="selectarticle" class="nav nav-pills" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#">所 有</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#">最 新</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#">最 热</a>
+                    </li>
+                </ul>
+
+                <hr style="padding:0%;margin:2%;" class="featurette-divider">
+                <div class="row featurette">
+                
+                    <div class="row col-md-12">
+                    <div class="media">
+                        <div class="media-body">
+                            <div>
+                                <div>
+                                    <span>
+                                        <h5>发表日期：</h5>
+                                    </span>
+                                </div>
+                                <div>
+                                    <span>
+                                        <a href="">
+                                            <img width="24" height="24" src="" alt="">
+                                        </a>
+                                        <a href="#" style="color:black;">
+                                            Froben
+                                        </a>
+                                        <small style="color:#777;">&nbsp;目标：机器学习工程师,数据挖掘工程师</small>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-13">
+                                <h3 style="padding:0%;margin:2%;"><b>展示第一篇文章</b>
+                                    <span class="text-muted">
+                                        <small>副标题</small>
+                                    </span>
+                                </h3>
+                            
+                                <p class="lead">内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介</p>
+                            </div>
+                        </div>
+                        
+                        <div class="media-bottom">
+                            <a href="#">
+                                <img class="media-object" src="..." alt="...">
+                            </a>
+                        </div>
+                        <nav>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" style="background-color:#096C47;">
+                                展开全文
+                            </button>
+                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" style="background-color:#096c47;">
+                                展开全文
+                            </button>
+                        </nav>
+                    </div>
+                    </div>
+                </div>
+
+
+                <hr style="padding:0%;margin:2%;" class="featurette-divider">
+                <div class="row featurette">
+                    <div>
+                        <div>
+            <span>
+                <h5>发表日期：</h5>
+            </span>
+                        </div>
+                        <div>
+            <span>
+                <a href="">
+                    <img width="24" height="24" src="" alt="">
+                </a>
+                <a href="#" style="color:black;">
+                    冯浩斌
+                </a>
+                <small style="color:#777;">&nbsp;目标：机器学习工程师,数据挖掘工程师</small>
+            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-13">
+                        <h3 style="padding:0%;margin:2%;">展示第一篇文章
+                            <span class="text-muted">
+                <small>副标题</small>
+            </span>
+                        </h3>
+
+                        <p class="lead">内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介</p>
+                    </div>
+                    <div class="col-md-5">
+                        <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto"
+                             alt="文章图片">
+                    </div>
+                    <nav>
+                        <ul class="pager">
+                            <li>
+                                <a href="#">
+                                    <span class="glyphicon glyphicon-heart">&nbsp;喜欢</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+                <hr style="padding:0%;margin:2%;" class="featurette-divider">
+                <div class="row featurette">
+                    <div>
+                        <div>
+            <span>
+                <h5>发表日期：</h5>
+            </span>
+                        </div>
+                        <div>
+            <span>
+                <a href="">
+                    <img width="24" height="24" src="" alt="">
+                </a>
+                <a href="#" style="color:black;">
+                    <b>冯浩斌</b>
+                </a>
+                <small style="color:#777;">&nbsp;目标：机器学习工程师,数据挖掘工程师</small>
+            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-13">
+                        <h3 style="padding:0%;margin:2%;">展示第一篇文章
+                            <span class="text-muted">
+                <small>副标题</small>
+            </span>
+                        </h3>
+
+                        <p class="lead">内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介</p>
+                    </div>
+                    <div class="col-md-5">
+                        <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto"
+                             alt="文章图片">
+                    </div>
+                    <nav>
+                        <ul class="pager">
+                            <li>
+                                <a href="#">
+                                    <span class="glyphicon glyphicon-heart"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+                <hr style="padding:0%;margin:2%;" class="featurette-divider">
+                <div class="row featurette">
+                    <div>
+                        <div>
+            <span>
+                <h5>发表日期：</h5>
+            </span>
+                        </div>
+                        <div>
+            <span>
+                <a href="">
+                    <img width="24" height="24" src="" alt="">
+                </a>
+                <a href="#" style="color:black;">
+                    <b>冯浩斌</b>
+                </a>
+                <small style="color:#777;">&nbsp;目标：机器学习工程师,数据挖掘工程师</small>
+            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-13">
+                        <h3 style="padding:0%;margin:2%;">展示第一篇文章
+                            <span class="text-muted">
+                <small>副标题</small>
+            </span>
+                        </h3>
+
+                        <p class="lead">内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介</p>
+                    </div>
+                    <div class="col-md-5">
+                        <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto"
+                             alt="文章图片">
+                    </div>
+                    <nav>
+                        <ul class="pager">
+                            <li>
+                                <a href="#">
+                                    <span class="glyphicon glyphicon-heart">&nbsp;喜欢</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+                <hr style="padding:0%;margin:2%;" class="featurette-divider">
+                <div class="row featurette">
+                    <div>
+                        <div>
+            <span>
+                <h5>发表日期：</h5>
+            </span>
+                        </div>
+                        <div>
+            <span>
+                <a href="">
+                    <img width="24" height="24" src="" alt="">
+                </a>
+                <a href="#" style="color:black;">
+                    <b>冯浩斌</b>
+                </a>
+                <small style="color:#777;">&nbsp;目标：机器学习工程师,数据挖掘工程师</small>
+            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-13">
+                        <h3 style="padding:0%;margin:2%;">展示第一篇文章
+                            <span class="text-muted">
+                <small>副标题</small>
+            </span>
+                        </h3>
+
+                        <p class="lead">内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介</p>
+                    </div>
+                    <div class="col-md-5">
+                        <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto"
+                             alt="文章图片">
+                    </div>
+                    <nav>
+                        <ul class="pager">
+                            <li>
+                                <a href="#">
+                                    <span class="glyphicon glyphicon-heart">&nbsp;喜欢</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+            </div>
+            <!-- /.blog-main -->
+
+            <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+                <div class="sidebar-module sidebar-module-inset">
+                    <h4>一些公告</h4>
+                    <p>一些公告一些公告一些公告一些公告一些公告一些公告一些公告一些公告一些公告一些公告一些公告一些公告一些公告</p>
+                </div>
+                <div class="sidebar-module">
+                    <h4>最新文章</h4>
+                    <ol class="list-unstyled">
+                        <li>
+                            <a href="#">March 2014</a>
+                        </li>
+                        <li>
+                            <a href="#">February 2014</a>
+                        </li>
+                        <li>
+                            <a href="#">January 2014</a>
+                        </li>
+
+                    </ol>
+                </div>
+                <div class="sidebar-module">
+                    <h4>猜你喜欢</h4>
+                    <ol class="list-unstyled">
+                        <li>
+                            <a href="#">GitHub</a>
+                        </li>
+                        <li>
+                            <a href="#">Twitter</a>
+                        </li>
+                        <li>
+                            <a href="#">Facebook</a>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <!-- /.blog-sidebar -->
+
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+
+
+    <!-- /.row -->
+    <nav id="fenyeqi">
+        <ul class="pagination">
+            <li>
+                <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">1</a>
+            </li>
+            <li>
+                <a href="#">2</a>
+            </li>
+            <li>
+                <a href="#">3</a>
+            </li>
+            <li>
+                <a href="#">4</a>
+            </li>
+            <li>
+                <a href="#">5</a>
+            </li>
+            <li>
+                <a href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <!-- FOOTER -->
+    <footer class="blog-footer">
+        <p>编写
+            <a href="#">网站主页</a> by
+            <a href="#">@冯浩斌</a>.</p>
+        <p>
+            <a href="#">回到顶部</a>
+        </p>
+    </footer>
+
+</div>
+<!-- /.container -->
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+<script src="../../assets/js/vendor/holder.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+
+
+</body>
+
+</html>
