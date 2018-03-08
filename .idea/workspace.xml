@@ -2,15 +2,38 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f267439a-f74d-45ba-9b2e-61c2de1a2109" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/articledetail.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/blog.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/carousel.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/cover.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/firstpage.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/secondpage.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/signin.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/signin.html" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gd/apps/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/Graduation-design.iml" afterPath="$PROJECT_DIR$/.idea/Graduation-design.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gd/gd/settings.py" afterPath="$PROJECT_DIR$/gd/gd/settings.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/gd/article/__init__.py" afterPath="$PROJECT_DIR$/gd/apps/users/migrations/__init__.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/gd/article/admin.py" afterPath="$PROJECT_DIR$/gd/apps/users/admin.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/gd/article/apps.py" afterPath="$PROJECT_DIR$/gd/apps/article/apps.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/gd/article/migrations/0001_initial.py" afterPath="$PROJECT_DIR$/gd/apps/article/migrations/0001_initial.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/gd/article/migrations/__init__.py" afterPath="$PROJECT_DIR$/gd/apps/users/__init__.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/gd/article/models.py" afterPath="$PROJECT_DIR$/gd/apps/article/models.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/gd/article/tests.py" afterPath="$PROJECT_DIR$/gd/apps/users/tests.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/gd/article/views.py" afterPath="$PROJECT_DIR$/gd/apps/users/views.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/gd/operation/__init__.py" afterPath="$PROJECT_DIR$/gd/apps/operation/migrations/__init__.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/gd/operation/admin.py" afterPath="$PROJECT_DIR$/gd/apps/operation/admin.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/gd/operation/apps.py" afterPath="$PROJECT_DIR$/gd/apps/operation/apps.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/gd/operation/migrations/0001_initial.py" afterPath="$PROJECT_DIR$/gd/apps/operation/migrations/0001_initial.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/gd/operation/migrations/0002_articlecomments_fav_time.py" afterPath="$PROJECT_DIR$/gd/apps/operation/migrations/0002_articlecomments_fav_time.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/gd/operation/migrations/0003_usermessage.py" afterPath="$PROJECT_DIR$/gd/apps/operation/migrations/0003_usermessage.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/gd/operation/migrations/__init__.py" afterPath="$PROJECT_DIR$/gd/apps/operation/__init__.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/gd/operation/models.py" afterPath="$PROJECT_DIR$/gd/apps/operation/models.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/gd/operation/tests.py" afterPath="$PROJECT_DIR$/gd/apps/operation/tests.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/gd/operation/views.py" afterPath="$PROJECT_DIR$/gd/apps/operation/views.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/gd/users/__init__.py" afterPath="$PROJECT_DIR$/gd/apps/article/migrations/__init__.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/gd/users/admin.py" afterPath="$PROJECT_DIR$/gd/apps/article/admin.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/gd/users/apps.py" afterPath="$PROJECT_DIR$/gd/apps/users/apps.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/gd/users/migrations/0001_initial.py" afterPath="$PROJECT_DIR$/gd/apps/users/migrations/0001_initial.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/gd/users/migrations/0002_emailverifyrecord.py" afterPath="$PROJECT_DIR$/gd/apps/users/migrations/0002_emailverifyrecord.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/gd/users/migrations/0003_auto_20180307_2155.py" afterPath="$PROJECT_DIR$/gd/apps/users/migrations/0003_auto_20180307_2155.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/gd/users/migrations/__init__.py" afterPath="$PROJECT_DIR$/gd/apps/article/__init__.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/gd/users/models.py" afterPath="$PROJECT_DIR$/gd/apps/users/models.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/gd/users/tests.py" afterPath="$PROJECT_DIR$/gd/apps/article/tests.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/gd/users/views.py" afterPath="$PROJECT_DIR$/gd/apps/article/views.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -19,8 +42,48 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/gd/gd/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="247">
+              <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+              <folding>
+                <element signature="e#306#315#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gd/gd/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="361">
+              <caret line="20" column="1" lean-forward="true" selection-start-line="20" selection-start-column="1" selection-end-line="20" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/gd/gd/settings.py" />
+      </list>
+    </option>
   </component>
   <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
   <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
@@ -29,9 +92,9 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="779" />
-    <option name="y" value="97" />
-    <option name="width" value="1069" />
+    <option name="x" value="849" />
+    <option name="y" value="79" />
+    <option name="width" value="935" />
     <option name="height" value="903" />
   </component>
   <component name="ProjectView">
@@ -56,18 +119,41 @@
               <item name="Graduation-design" type="b2602c69:ProjectViewProjectNode" />
               <item name="Graduation-design" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Graduation-design" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Graduation-design" type="462c0819:PsiDirectoryNode" />
+              <item name="gd" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Graduation-design" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Graduation-design" type="462c0819:PsiDirectoryNode" />
+              <item name="gd" type="462c0819:PsiDirectoryNode" />
+              <item name="apps" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Graduation-design" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Graduation-design" type="462c0819:PsiDirectoryNode" />
+              <item name="gd" type="462c0819:PsiDirectoryNode" />
+              <item name="apps" type="462c0819:PsiDirectoryNode" />
+              <item name="article" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\gitfiles\Graduation-design\gd\apps" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -95,26 +181,27 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="779" y="97" width="1069" height="903" extended-state="0" />
+    <frame x="849" y="79" width="935" height="903" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24976258" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28618065" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -125,7 +212,67 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/gd/apps/users/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gd/apps/operation/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding>
+            <element signature="e#25#54#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gd/gd/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="20" column="1" lean-forward="true" selection-start-line="20" selection-start-column="1" selection-end-line="20" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gd/manage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="10" column="71" lean-forward="true" selection-start-line="10" selection-start-column="71" selection-end-line="10" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gd/apps/article/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#25#54#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gd/gd/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding>
+            <element signature="e#306#315#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
   </component>
 </project>

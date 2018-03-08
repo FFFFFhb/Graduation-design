@@ -8,7 +8,7 @@
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="images\fzth.ico">
+    <link rel="icon" href="/static/images/fzth.ico">
 
     <title>登录 - F-ZTH</title>
 
@@ -19,7 +19,7 @@
     <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/signin.css" rel="stylesheet">
+    <link href="/static/css/signin.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -35,27 +35,27 @@
 <body>
 <div class="container">
     <div class="row">
-        <img class="img-circle center-block" src="images\LOGO.png" alt="网站图标" width="140" height="140">
+        <img class="img-circle center-block" src="/static/images/LOGO.png" alt="网站图标" width="140" height="140">
     </div>
     <!-- /input-group -->
 </div>
     <div class="container">
         
 
-        <form class="form-signin">
+        <form class="form-signin" action="/login/" method="post" autocomplete="off">
             
             <h2 class="form-signin-heading">Please sign in</h2>
             <label for="inputEmail" class="sr-only">Email address</label>
-            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+            <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
             <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+            <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
             <div class="checkbox">
                 <label>
                     <input type="checkbox" value="remember-me"> Remember me
                 </label>
             </div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
-        
+            <input class="btn btn-lg btn-primary btn-block" type="submit" value="登录"></input>
+        {% csrf_token %}
         </form>
 
     </div>

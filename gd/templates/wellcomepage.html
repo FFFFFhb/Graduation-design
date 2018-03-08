@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
      <!-- 网站图标 -->
-    <link rel="icon" href="images\fzth.ico">
+    <link rel="icon" href="/static/images/fzth.ico">
 
     <title>Wellcome to F-ZTH</title>
 
@@ -19,7 +19,7 @@
     <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="E:\gitfiles\Graduation-design\gd\static\css\cover.css" rel="stylesheet">
+    <link href="/static/css/cover.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -46,16 +46,24 @@
               <nav>
                 <ul class="nav masthead-nav">
                   <li class="active"><a href="#">主页</a></li>
-                  <li><a href="#">登录</a></li>
-                  <li><a href="#">注册</a></li>
+
+                     {% if request.user.is_authenticated %}
+                         <li><a href="#"><img width="20" height="20" src="/static/images/fzth.ico"/>&nbsp;{{ request.user.username }}
+                         </a></li>
+                         <li><a href="#">退出</a></li>
+                    {% else %}
+                        <li><a href="/login/">登录</a></li>
+                        <li><a href="#">注册</a></li>
+                    {% endif %}
+
                 </ul>
               </nav>
             </div>
           </div>
 
           <div class="inner cover">
-            <h1 class="cover-heading">毕业设计分享网</h1>
-            <p class="lead">初步想法：鼓励大家交流与分享各自的毕业设计。</p>
+            <h1 class="cover-heading">F-ZTH</h1>
+            <p class="lead">欢迎来到冯浩斌的毕业设计</p>
             <p class="lead">
               <a href="#" class="btn btn-lg btn-default">Get in !</a>
             </p>

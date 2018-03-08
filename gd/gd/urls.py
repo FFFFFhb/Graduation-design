@@ -15,7 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.views.generic import TemplateView
+import xadmin
+
+from users.views import login
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    url(r'^xadmin/', xadmin.site.urls),
+    url(r'^$',TemplateView.as_view(template_name='wellcomepage.html'),name='wellcomepage'),
+    url(r'^login/$',login,name='login'),
 ]
