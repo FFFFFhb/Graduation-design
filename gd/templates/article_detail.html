@@ -1,0 +1,316 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}{{ articledetail.title }}{% endblock %}
+{% block custom_css %}
+    <style>
+        #fenyeqi {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #selectarticle > li > a {
+            background-color: #096c47;
+            color: #e7e7e7;
+        }
+
+        #selectarticle > li > a :visited {
+            color: #ffffff;
+            background-color: #e7e7e7;
+        }
+
+        #selectarticle > li > a :hover {
+            color: #555;
+            background-color: #e7e7e7;
+        }
+
+        #selectarticle > li > a :active {
+            color: #555;
+            background-color: #e7e7e7;
+        }
+
+        /* Sidebar modules for boxing content */
+        .sidebar-module {
+            padding: 15px;
+            margin: 0 -15px 15px;
+        }
+
+        .sidebar-module-inset {
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+        }
+
+        .sidebar-module-inset p:last-child,
+        .sidebar-module-inset ul:last-child,
+        .sidebar-module-inset ol:last-child {
+            margin-bottom: 0;
+        }
+
+        .blog-header {
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .blog-title {
+            margin-top: 30px;
+            margin-bottom: 0;
+            font-size: 60px;
+            font-weight: normal;
+        }
+
+        .blog-description {
+            font-size: 20px;
+            color: #999;
+        }
+
+    </style>
+{% endblock %}
+{% block custom_js %}
+
+{% endblock %}
+{% block content %}
+    <!-- Modal -->
+    <div class="modal fade in" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" style="width: 800px" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">文章标题 - 评论</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="selectTree" class="ztree" style="height:300px;overflow:auto; ">
+
+                        {% for comment in all_comments %}
+                            <div class="row featurette">
+                                <div class="row col-md-12">
+                                    <div class="media">
+                                        <div class="media-left"></div>
+                                        <div class="media-body">
+                                            <div>
+                                                <div>
+                                        <span>
+                                            <a href="">
+                                                <img width="24" height="24" src="images/LOGO.png" alt="">
+                                            </a>
+                                            <a href="#" style="color:black;">
+                                                {{ comment.user.nick_name }}
+                                            </a>
+
+                                        </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12" data-toggle="collapse" data-target="#collapseFirst1">
+                                                <p>{{ comment.comments }}
+                                                </p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+                        {% endfor %}
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <div class="">
+                        <textarea class="form-control" rows="3" placeholder="扯淡、吐槽、表扬、鼓励……想说啥就说啥！"></textarea>
+                    </div>
+                    <br>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">发表评论</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container marketing">
+
+        <!-- Three columns of text below the carousel -->
+        <div class="blog-header">
+            {#       <h3 class="blog-title">&nbsp;发呆</h3>#}
+            <br>
+        </div>
+        <!-- /.row -->
+
+        <div class="container">
+            <div class="blog-header">
+                <h1 class="blog-title">{{ articledetail.title }}</h1>
+                <p class="lead blog-description">{{ articledetail.desc }}</p>
+            </div>
+            <div class="row">
+                <div class="col-sm-8 blog-main">
+
+                    <div class="row featurette">
+                        <div class="row col-md-12">
+                            <div class="media">
+                                <div class="media-body">
+                                    <div>
+                                        <div>
+                        <span>
+                            <h5 style="color:#777;">发表时间：{{ articledetail.add_time }}</h5>
+                        </span>
+                                        </div>
+                                        <div>
+                        <span>
+                            <a href="">
+                                <img width="24" height="24" src="{{ MEDIA_URL }}{{ articledetail.author.image }}"
+                                     alt="">
+                            </a>
+                            <a href="#" style="color:black;">
+                            {{ articledetail.author }}
+                            </a>
+                            <small style="color:#777;">&nbsp;{{ articledetail.author.short_summary }}</small>
+                        </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-13">
+
+                                        <p class="">{{ articledetail.detail }}</p>
+                                    </div>
+                                </div>
+                                {% if articledetail.image != "" %}
+                                    <div class="media-bottom">
+                                        <div class="row">
+                                            <div class="col-xs-3 col-md-3">
+                                                <a href="#" class="thumbnail">
+                                                    <img class="media-object"
+                                                         style="height:120px;width:100%;display:block;"
+                                                         src="{{ MEDIA_URL }}{{ articledetail.image }}" alt="...">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <!-- /.blog-main -->
+
+                <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+                    <div class="sidebar-module sidebar-module-inset">
+                        <h4>
+                            {% if articledetail.author.nick_name == "" %}
+                                {{ articledetail.author.username }}
+                            {% else %}
+                                {{ articledetail.author.nick_name }}
+                            {% endif %}
+                        </h4>
+                        <p>{{ articledetail.author.summary }}</p>
+                    </div>
+                    <div class="sidebar-module">
+                        <h4>他的文章</h4>
+                        <ol class="list-unstyled">
+                            <li>
+                                <a href="#">March 2014</a>
+                            </li>
+                            <li>
+                                <a href="#">February 2014</a>
+                            </li>
+                            <li>
+                                <a href="#">January 2014</a>
+                            </li>
+
+                        </ol>
+                    </div>
+                    <div class="sidebar-module">
+                        <h4>猜你喜欢</h4>
+                        <ol class="list-unstyled">
+                            <li>
+                                <a href="#">GitHub</a>
+                            </li>
+                            <li>
+                                <a href="#">Twitter</a>
+                            </li>
+                            <li>
+                                <a href="#">Facebook</a>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- /.blog-sidebar -->
+
+            </div>
+            <!-- /.row -->
+
+        </div>
+        <!-- /.container -->
+<div id="demo" class="collapse ">
+<p>评论列表：</p>
+                                        <div id="selectTree" class="ztree" style="height:400px;overflow:auto; ">
+
+                                            {% for comment in all_comments %}
+                                                {% ifequal articledetail.id comment.article_id %}
+                                                    <div class="">
+                                                        <div class="row col-md-12">
+                                                            <div class="media">
+                                                                {#                                                                                <div class="media-left">#}
+                                                                {##}
+                                                                {#                                                                                </div>#}
+                                                                <div class="media-body">
+                                                                    <div>
+                                                                        <div>
+                            <span>
+                                <a href="">
+                                    <img width="24" height="24" src="{{ MEDIA_URL }}{{ comment.user.image }}" alt="">
+                                </a>
+                                <a href="#" style="color:black;">
+                                    {{ comment.user }} -- {{ comment.user.short_summary }}
+                                </a>
+                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <p>{{ comment.comments }}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endifequal %}
+                                            {% endfor %}
+
+                                        </div>
+ <div class="modal-footer">
+                                                <div class="">
+                                                    <textarea class="form-control" rows="3"
+                                                              placeholder="扯淡、吐槽、表扬、鼓励……想说啥就说啥！"></textarea>
+                                                </div>
+                                                <br>
+                                                <button type="button" class="btn btn-default" data-toggle="collapse"
+                                                        data-target="#demo{{ article.id }}">
+                                                    Close
+                                                </button>
+                                                <button type="button" class="btn btn-primary">发表评论</button>
+                                            </div>
+                                    </div>
+        <!-- /.row -->
+        <div class="col-md-8 col-sm-offset-2 text-center">
+            <!-- Button trigger modal -->
+
+                <button type="button" class="btn btn-primary btn-lg" style="background-color:#096c47;">
+                    <span class="glyphicon glyphicon-heart"></span>&nbsp;Like
+                </button>
+
+
+
+                <button type="button" class="btn btn-primary btn-lg" style="background-color:#096c47;" data-toggle="collapse" data-target="#demo">
+                    评&nbsp;&nbsp;论
+                </button>
+
+        </div>
+
+        <hr style="padding:0%;margin:2%;" class="featurette-divider">
+
+
+    </div>
+{% endblock %}

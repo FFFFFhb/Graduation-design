@@ -23,7 +23,7 @@ class UserProfile(AbstractUser):
     short_summary = models.CharField(max_length=100,default=u'',null=True,blank=True)
     is_org = models.CharField(choices=(('yes',u'是'),('no',u'否')),default='no',max_length=7)
     add_time = models.DateTimeField(default=datetime.now)
-
+#nick_name,birthday,gender,educated,profession,mobile,image,fans_num,address,summary,short_summary
     class Meta:
         verbose_name = '用户信息'
         verbose_name_plural = verbose_name

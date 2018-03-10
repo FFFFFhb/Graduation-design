@@ -1,1067 +1,333 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="images\fzth.ico">
-
-    <title>所有文章 - F-ZTH</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <!-- Custom styles for this template -->
-    <link href="css/carousel.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="css/blog.css" rel="stylesheet">
-
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}文章列表 - F-ZTH{% endblock %}
+{% block custom_css %}
     <style>
-        .fixed-btn {
-            position: fixed;
-            right: 22%;
-            /* bottom: 5%; */
-            width: 200px;
-            border: 1px solid #eee;
-            background-color: white;
-            /* font-size: 24px; */
-            z-index: 1040;
-            -webkit-backface-visibility: hidden;
-        }
-
         #fenyeqi {
             margin-left: auto;
             margin-right: auto;
         }
 
-        #selectarticle >li>a {
-            background-color:#096c47;
-            color:#e7e7e7;
+        #selectarticle > li > a {
+            background-color: #096c47;
+            color: #e7e7e7;
         }
 
-        #selectarticle >li>a :visited {
+        #selectarticle > li > a :visited {
             color: #ffffff;
             background-color: #e7e7e7;
         }
 
-        #selectarticle >li>a :hover {
+        #selectarticle > li > a :hover {
             color: #555;
             background-color: #e7e7e7;
         }
 
-        #selectarticle >li>a :active {
+        #selectarticle > li > a :active {
             color: #555;
             background-color: #e7e7e7;
+        }
+
+        /* Sidebar modules for boxing content */
+        .sidebar-module {
+            padding: 15px;
+            margin: 0 -15px 15px;
+        }
+
+        .sidebar-module-inset {
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+        }
+
+        .sidebar-module-inset p:last-child,
+        .sidebar-module-inset ul:last-child,
+        .sidebar-module-inset ol:last-child {
+            margin-bottom: 0;
+        }
+
+        .blog-header {
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .blog-title {
+            margin-top: 30px;
+            margin-bottom: 0;
+            font-size: 60px;
+            font-weight: normal;
+        }
+
+        .blog-description {
+            font-size: 20px;
+            color: #999;
+        }
+
+        {#多行文本溢出显示省略号#}
+        #articledetailp {
+            position: relative;
+            line-height: 1.4em;
+            /* 3 times the line-height to show 3 lines */
+            height: 4.2em;
+            overflow: hidden;
+        }
+
+        #articledetailp::after {
+            content: "...";
+            font-weight: bold;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            padding: 0 20px 1px 45px;
+            background: url(http://css88.b0.upaiyun.com/css88/2014/09/ellipsis_bg.png) repeat-y;
         }
 
     </style>
-</head>
-<!-- NAVBAR
-================================================== -->
+{% endblock %}
+{% block custom_js %}
 
-<body>
-<!-- Modal -->
-<div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title" id="myModalLabel">文章标题 - 评论</h4>
-            </div> 
-            <div class="modal-body">
-                <div class="row featurette">
-                    <div class="row col-md-12">
-                        <div class="media">
-                            <div class="media-left">
-                            
-                            </div>
-                            <div class="media-body">
-                                <div>
-                                    <div>
-                                        <span>
-                                            <a href="">
-                                                <img width="24" height="24" src="images\LOGO.png" alt="">
-                                            </a>
-                                            <a href="#" style="color:black;">
-                                                Froben
-                                            </a>
-                                            
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="col-md-12" data-toggle="collapse" data-target="#collapseFirst1">
-                                    <p>---介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介简介内容简介内容简
-                                    </p>
-                                </div>
-                                <div id="collapseFirst1" class="collapse">
-                                        Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher
-                                        vice lomo.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <hr>
-                <div class="row featurette">
-                    <div class="row col-md-12">
-                        <div class="media">
-                            <div class="media-left">
-                
-                            </div>
-                            <div class="media-body">
-                                <div>
-                                    <div>
-                                        <span>
-                                            <a href="">
-                                                <img width="24" height="24" src="images\LOGO.png" alt="">
-                                            </a>
-                                            <a href="#" style="color:black;">
-                                                Froben
-                                            </a>
-                
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="col-md-12" data-toggle="collapse" data-target="#collapseSecond">
-                                    <p>---介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介简介内容简介内容简
-                                    
-                                    </p>
-                                </div>
-                                <div id="collapseSecond" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher
-                                        vice lomo.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <hr>
-                <div class="row featurette">
-                    <div class="row col-md-12">
-                        <div class="media">
-                            <div class="media-left">
-                
-                            </div>
-                            <div class="media-body">
-                                <div>
-                                    <div>
-                                        <span>
-                                            <a href="">
-                                                <img width="24" height="24" src="images\LOGO.png" alt="">
-                                            </a>
-                                            <a href="#" style="color:black;">
-                                                Froben
-                                            </a>
-                
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="col-md-12" data-toggle="collapse" data-target="#collapseThird">
-                                    <p>---介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介简介内容简介内容简
-                                    </p>
-                                </div>
-                                <div id="collapseThird" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher
-                                        vice lomo.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                
-            </div>
-            <div class="modal-footer">
-                <div class="">
-                    <textarea class="form-control" rows="3">发表评论</textarea>
-                </div><br>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">发表评论</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- 固定导航条 -->
-<!-- Fixed navbar -->
-<nav class="navbar navbar-default navbar-fixed-top navbar-inverse" >
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false"
-                    aria-controls="navbar">
-                <span class="sr-only">From Zero to Hero</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a style="color:#ffffff;" class="navbar-brand" href="#">F-ZTH</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li>
-                    <a href="#">
-                        <span class="glyphicon glyphicon-home"></span> 首页</a>
-                </li>
-                <li class="active">
-                    <a href="#about">
-                        <span class="glyphicon glyphicon-align-justify"></span> 文章列表</a>
-                </li>
-                <li>
-                    <a href="#contact">用户列表</a>
-                </li>
-                <li>
-                    <a href="#contact">官方</a>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false">
-                        <span class="glyphicon glyphicon-user"></span> 个人中心
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="#section-1">个人信息</a>
-                        </li>
-                        <li>
-                            <a href="#section-2">我的文章</a>
-                        </li>
-                        <li>
-                            <a href="#section-3">我的关注</a>
-                        </li>
-                        <li>
-                            <a href="#section-4">我的收藏</a>
-                        </li>
-                        <li>
-                            <a href="#section-5">我的评论</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-
-                <form class="navbar-form navbar-left" role="search">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown">
-                            文章
-                            <span class="caret"></span>
-                        </button>
-
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <a href="#">文章</a>
-                            </li>
-                            <li role="presentation" class="disabled">
-                                <a href="#">用户</a>
-                            </li>
-
-                            <li role="presentation">
-                                <a href="#">发表日期(yy-mm-dd)</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
-                        <button type="submit" class="btn btn-default">
-                            <span class="glyphicon glyphicon-search"></span>
-                        </button>
-                    </div>
-                </form>
+{% endblock %}
+{% block content %}
+    <div class="container marketing">
 
 
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="disabled">
-                        <a href="#">
-                            <span class="glyphicon glyphicon-user"></span> 注册</a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="glyphicon glyphicon-log-in"></span> 登录</a>
-                    </li>
-                </ul>
-            </ul>
-        </div>
-        <!--/.nav-collapse -->
-    </div>
-</nav>
-
-
-<!-- Marketing messaging and featurettes
-================================================== -->
-<!-- Wrap the rest of the page in another container to center all the content. -->
-
-<div class="container marketing">
-
-    <!-- Three columns of text below the carousel -->
-    <div class="blog-header">
-        <!-- <h3 class="blog-title">&nbsp;发呆</h3> -->
-        <br>
-    </div>
-    <!-- /.row -->
-
-    <div class="container">
+        <!-- Three columns of text below the carousel -->
         <div class="blog-header">
-            <h1 class="blog-title">贰零壹捌 - 貳</h1>
-            <p class="lead blog-description">显示农历</p>
-        </div>
-        <div class="row">
-            <div class="col-sm-8 blog-main">
-<div class="col-md-6 col-sm-offset-2 text-center" >
-                <ul id="selectarticle" class="nav nav-pills" role="tablist">
-                    <li role="presentation" class="active">
-                        <a href="#">&nbsp;&nbsp;所&nbsp;&nbsp;有&nbsp;&nbsp;</a>
-                    </li>
-                    <li role="presentation">
-                        <a href="#">&nbsp;&nbsp;最&nbsp;&nbsp;新&nbsp;&nbsp;</a>
-                    </li>
-                    <li role="presentation">
-                        <a href="#">&nbsp;&nbsp;最&nbsp;&nbsp;热&nbsp;&nbsp;</a>
-                    </li>
-                </ul>
-</div>
-<br>
-                <hr style="padding:0%;margin:5%;" class="featurette-divider">
-
-
-<div class="row featurette">
-                
-                    <div class="row col-md-12">
-                    <div class="media">
-                        <div class="media-body">
-                            <div>
-                                <div>
-                                    <span>
-                                        <h5 style="color:#777;">发表时间：2018年3月1日</h5>
-                                    </span>
-                                </div>
-                                <div>
-                                    <span>
-                                        <a href="">
-                                            <img width="24" height="24" src="images\LOGO.png" alt="">
-                                        </a>
-                                        <a href="#" style="color:black;">
-                                            Froben
-                                        </a>
-                                        <small style="color:#777;">&nbsp;目标：机器学习工程师,数据挖掘工程师</small>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="col-md-13" data-toggle="collapse" data-target="#collapseFirst">
-                                <h3 style="padding:0%;margin:2%;">
-                                    <b>展示第一篇文章</b>
-                                    <span class="text-muted">
-                                        <small>副标题</small>
-                                    </span>
-                                </h3>
-                                <p>介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介&nbsp;<a href="#">展开全文 <span class="glyphicon glyphicon-menu-down"></span></a></p>
-                                
-                            </div>
-                            <div id="collapseFirst" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher
-                                    vice lomo.
-                                </div>
-                            </div>
-                        </div>
-                        
-          <div class="media-bottom">
-
-
-    <div class="row">
-    <div class="col-xs-3 col-md-3">
-    <a href="#" class="thumbnail">
-    <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-    </a>
-    </div>
-    <div class="col-xs-3 col-md-3">
-        <a href="#" class="thumbnail">
-            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-        </a>
-    </div>
-    <div class="col-xs-3 col-md-3">
-        <a href="#" class="thumbnail">
-            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-        </a>
-    </div>
-    <div class="col-xs-3 col-md-3">
-        <a href="#" class="thumbnail">
-            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-        </a>
-    </div>
- 
-    </div>
-                            
-                        </div>
-
-
-                        <div class="col-md-8 col-sm-offset-2 text-center">
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="background-color:#096c47;">
-                                <span class="glyphicon glyphicon-heart"></span>&nbsp;Like
-                            </button>
-                            <!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="background-color:#096C47;">
-                                展开全文
-                            </button> -->
-                            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="background-color:#096c47;">
-                                评&nbsp;&nbsp;论
-                            </button>
-                        </div>
-                    </div>
-                    </div>
-</div>
-
-<hr style="padding:0%;margin:2%;" class="featurette-divider">
-<div class="row featurette">
-
-    <div class="row col-md-12">
-        <div class="media">
-            <div class="media-body">
-                <div>
-                    <div>
-                        <span>
-                            <h5 style="color:#777;">发表时间：2018年3月1日</h5>
-                        </span>
-                    </div>
-                    <div>
-                        <span>
-                            <a href="">
-                                <img width="24" height="24" src="images\LOGO.png" alt="">
-                            </a>
-                            <a href="#" style="color:black;">
-                                Froben
-                            </a>
-                            <small style="color:#777;">&nbsp;目标：机器学习工程师,数据挖掘工程师</small>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-md-13">
-                    <h3 style="padding:0%;margin:2%;">
-                        <b>展示第一篇文章</b>
-                        <span class="text-muted">
-                            <small>副标题</small>
-                        </span>
-                    </h3>
-
-                    <p class=""> 内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介 3内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介 内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介
-                        内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介
-                    </p>
-                </div>
-            </div>
-
-            <div class="media-bottom">
-
-
-                <div class="row">
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-
-
-            <div class="col-md-8 col-sm-offset-2 text-center">
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="background-color:#096c47;">
-                    <span class="glyphicon glyphicon-heart"></span>&nbsp;Like
-                </button>
-                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="background-color:#096C47;">
-                    展开全文
-                </button>
-                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="background-color:#096c47;">
-                    评&nbsp;&nbsp;论
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<hr style="padding:0%;margin:2%;" class="featurette-divider">
-<div class="row featurette">
-
-    <div class="row col-md-12">
-        <div class="media">
-            <div class="media-body">
-                <div>
-                    <div>
-                        <span>
-                            <h5 style="color:#777;">发表时间：2018年3月1日</h5>
-                        </span>
-                    </div>
-                    <div>
-                        <span>
-                            <a href="">
-                                <img width="24" height="24" src="images\LOGO.png" alt="">
-                            </a>
-                            <a href="#" style="color:black;">
-                                Froben
-                            </a>
-                            <small style="color:#777;">&nbsp;目标：机器学习工程师,数据挖掘工程师</small>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-md-13">
-                    <h3 style="padding:0%;margin:2%;">
-                        <b>展示第一篇文章</b>
-                        <span class="text-muted">
-                            <small>副标题</small>
-                        </span>
-                    </h3>
-
-                    <p class=""> 内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介 3内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介 内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介
-                        内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介
-                    </p>
-                </div>
-            </div>
-
-            <div class="media-bottom">
-
-
-                <div class="row">
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-
-
-            <div class="col-md-8 col-sm-offset-2 text-center">
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="background-color:#096c47;">
-                    <span class="glyphicon glyphicon-heart"></span>&nbsp;Like
-                </button>
-                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="background-color:#096C47;">
-                    展开全文
-                </button>
-                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="background-color:#096c47;">
-                    评&nbsp;&nbsp;论
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<hr style="padding:0%;margin:2%;" class="featurette-divider">
-<div class="row featurette">
-
-    <div class="row col-md-12">
-        <div class="media">
-            <div class="media-body">
-                <div>
-                    <div>
-                        <span>
-                            <h5 style="color:#777;">发表时间：2018年3月1日</h5>
-                        </span>
-                    </div>
-                    <div>
-                        <span>
-                            <a href="">
-                                <img width="24" height="24" src="images\LOGO.png" alt="">
-                            </a>
-                            <a href="#" style="color:black;">
-                                Froben
-                            </a>
-                            <small style="color:#777;">&nbsp;目标：机器学习工程师,数据挖掘工程师</small>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-md-13">
-                    <h3 style="padding:0%;margin:2%;">
-                        <b>展示第一篇文章</b>
-                        <span class="text-muted">
-                            <small>副标题</small>
-                        </span>
-                    </h3>
-
-                    <p class=""> 内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介 3内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介 内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介
-                        内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介
-                    </p>
-                </div>
-            </div>
-
-            <div class="media-bottom">
-
-
-                <div class="row">
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-
-
-            <div class="col-md-8 col-sm-offset-2 text-center">
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="background-color:#096c47;">
-                    <span class="glyphicon glyphicon-heart"></span>&nbsp;Like
-                </button>
-                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="background-color:#096C47;">
-                    展开全文
-                </button>
-                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="background-color:#096c47;">
-                    评&nbsp;&nbsp;论
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<hr style="padding:0%;margin:2%;" class="featurette-divider">
-<div class="row featurette">
-
-    <div class="row col-md-12">
-        <div class="media">
-            <div class="media-body">
-                <div>
-                    <div>
-                        <span>
-                            <h5 style="color:#777;">发表时间：2018年3月1日</h5>
-                        </span>
-                    </div>
-                    <div>
-                        <span>
-                            <a href="">
-                                <img width="24" height="24" src="images\LOGO.png" alt="">
-                            </a>
-                            <a href="#" style="color:black;">
-                                Froben
-                            </a>
-                            <small style="color:#777;">&nbsp;目标：机器学习工程师,数据挖掘工程师</small>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-md-13">
-                    <h3 style="padding:0%;margin:2%;">
-                        <b>展示第一篇文章</b>
-                        <span class="text-muted">
-                            <small>副标题</small>
-                        </span>
-                    </h3>
-
-                    <p class=""> 内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介 3内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介 内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介
-                        内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介
-                    </p>
-                </div>
-            </div>
-
-            <div class="media-bottom">
-
-
-                <div class="row">
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-
-
-            <div class="col-md-8 col-sm-offset-2 text-center">
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="background-color:#096c47;">
-                    <span class="glyphicon glyphicon-heart"></span>&nbsp;Like
-                </button>
-                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="background-color:#096C47;">
-                    展开全文
-                </button>
-                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="background-color:#096c47;">
-                    评&nbsp;&nbsp;论
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<hr style="padding:0%;margin:2%;" class="featurette-divider">
-<div class="row featurette">
-
-    <div class="row col-md-12">
-        <div class="media">
-            <div class="media-body">
-                <div>
-                    <div>
-                        <span>
-                            <h5 style="color:#777;">发表时间：2018年3月1日</h5>
-                        </span>
-                    </div>
-                    <div>
-                        <span>
-                            <a href="">
-                                <img width="24" height="24" src="images\LOGO.png" alt="">
-                            </a>
-                            <a href="#" style="color:black;">
-                                Froben
-                            </a>
-                            <small style="color:#777;">&nbsp;目标：机器学习工程师,数据挖掘工程师</small>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-md-13">
-                    <h3 style="padding:0%;margin:2%;">
-                        <b>展示第一篇文章</b>
-                        <span class="text-muted">
-                            <small>副标题</small>
-                        </span>
-                    </h3>
-
-                    <p class=""> 内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介 3内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介 内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介
-                        内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介
-                    </p>
-                </div>
-            </div>
-
-            <div class="media-bottom">
-
-
-                <div class="row">
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-3 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-
-
-            <div class="col-md-8 col-sm-offset-2 text-center">
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="background-color:#096c47;">
-                    <span class="glyphicon glyphicon-heart"></span>&nbsp;Like
-                </button>
-                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="background-color:#096C47;">
-                    展开全文
-                </button>
-                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="background-color:#096c47;">
-                    评&nbsp;&nbsp;论
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<hr style="padding:0%;margin:2%;" class="featurette-divider">
-
-
-
-            </div>
-            <!-- /.blog-main -->
-
-            <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-                <div class="sidebar-module sidebar-module-inset">
-                    <h4>一些公告</h4>
-                    <p>一些公告一些公告一些公告一些公告一些公告一些公告一些公告一些公告一些公告一些公告一些公告一些公告一些公告</p>
-                </div>
-                <div class="sidebar-module">
-                    <h4>最新文章</h4>
-                    <ol class="list-unstyled">
-                        <li>
-                            <a href="#">March 2014</a>
-                        </li>
-                        <li>
-                            <a href="#">February 2014</a>
-                        </li>
-                        <li>
-                            <a href="#">January 2014</a>
-                        </li>
-
-                    </ol>
-                </div>
-                <div class="sidebar-module">
-                    <h4>猜你喜欢</h4>
-                    <ol class="list-unstyled">
-                        <li>
-                            <a href="#">GitHub</a>
-                        </li>
-                        <li>
-                            <a href="#">Twitter</a>
-                        </li>
-                        <li>
-                            <a href="#">Facebook</a>
-                        </li>
-                    </ol>
-                </div>
-            </div>
-            <!-- /.blog-sidebar -->
-
+            <!-- <h3 class="blog-title">&nbsp;发呆</h3> -->
+            <br>
         </div>
         <!-- /.row -->
 
+        <div class="container">
+            <div class="blog-header">
+                <h1 class="blog-title">{{ showtime }}</h1>
+                <p class="lead blog-description">{{ shownong }}</p>
+            </div>
+            <div class="row">
+                <div class="col-sm-8 blog-main">
+                    <div class="col-md-10">
+                        {# col-sm-offset-2 #}
+                        <ul id="selectarticle" class="nav nav-pills" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#"><span class="glyphicon glyphicon-align-justify"></span>&nbsp;&nbsp;所&nbsp;&nbsp;有&nbsp;</a>
+                            </li>
+                            <li role="presentation" class="{% if sort == 'new' %}active{% endif %}">
+                                <a href="?sort=new"><span class="glyphicon glyphicon-dashboard"></span>&nbsp;&nbsp;最&nbsp;&nbsp;新&nbsp;&nbsp;</a>
+                            </li>
+                            <li role="presentation" class="{% if sort == 'hot' %}active{% endif %}">
+                                <a href="?sort=hot"><span class="glyphicon glyphicon-fire"></span>&nbsp;&nbsp;最&nbsp;&nbsp;热&nbsp;&nbsp;</a>
+                            </li>
+                            <li role="presentation" class="{% if sort == 'recommend1' %}active{% endif %}">
+                                <a href="?sort=recommend1"><span class="glyphicon glyphicon-thumbs-up"></span> &nbsp;推&nbsp;荐&nbsp;1&nbsp;</a>
+                            </li>
+                            <li role="presentation" class="{% if sort == 'recommend2' %}active{% endif %}">
+                                <a href="?sort=recommend2"><span class="glyphicon glyphicon-thumbs-up"></span> &nbsp;推&nbsp;&nbsp;荐&nbsp;2&nbsp;</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <br>
+                    <hr style="padding:0%;margin:5%;" class="featurette-divider">
+
+                    {% for article in all_articles.object_list %}
+                        <div class="row featurette">
+                            <div class="row col-md-12">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <div>
+                                            <div>
+                                    <span>
+                                        <h5 style="color:#777;">发表时间：{{ article.add_time }}</h5>
+                                    </span>
+                                            </div>
+                                            <div>
+                                    <span>
+                                        <a href="">
+                                            <img width="24" height="24" src="{{ MEDIA_URL }}{{ article.author.image }}"
+                                                 alt="">
+                                        </a>
+                                        <a href="#" style="color:black;">
+                                            {{ article.author }}
+                                        </a>
+                                        <small style="color:#777;">&nbsp;{{ article.author.short_summary }}</small>
+                                    </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-13" data-toggle="collapse" data-target="#collapseFirst">
+                                            <h3 style="padding:0%;margin:2%;">
+                                                <b>{{ article.title }}</b>
+                                                <span class="text-muted">
+                                        <small>{{ article.desc }}</small>
+                                    </span>
+                                            </h3>
+                                            <p id="articledetailp">{{ article.detail }}</p>
+                                        </div>
+                                    </div>
+                                    {% if article.image != '' %}
+                                        <div class="media-bottom">
+                                            <div class="row">
+                                                <div class="col-xs-3 col-md-3">
+                                                    <a href="#" class="thumbnail">
+                                                        <img class="media-object"
+                                                             style="height:120px;width:100%;display:block;"
+                                                             src="{{ MEDIA_URL }}{{ article.image }}" alt="...">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    <div id="demo{{ article.id }}" class="collapse ">
+<p>评论列表：</p>
+                                        <div id="selectTree" class="ztree" style="height:300px;overflow:auto; ">
+
+                                            {% for comment in all_comments %}
+                                                {% ifequal article.id comment.article_id %}
+                                                    <div class="">
+                                                        <div class="row col-md-12">
+                                                            <div class="media">
+                                                                {#                                                                                <div class="media-left">#}
+                                                                {##}
+                                                                {#                                                                                </div>#}
+                                                                <div class="media-body">
+                                                                    <div>
+                                                                        <div>
+                            <span>
+                                <a href="">
+                                    <img width="24" height="24" src="{{ MEDIA_URL }}{{ comment.user.image }}" alt="">
+                                </a>
+                                <a href="#" style="color:black;">
+                                    {{ comment.user }} -- {{ comment.user.short_summary }}
+                                </a>
+                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12">
+                                                                        <p>{{ comment.comments }}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endifequal %}
+                                            {% endfor %}
+
+                                        </div>
+                                    <div class="modal-footer">
+                                                <div class="">
+                                                    <textarea class="form-control" rows="3"
+                                                              placeholder="扯淡、吐槽、表扬、鼓励……想说啥就说啥！"></textarea>
+                                                </div>
+                                                <br>
+                                                <button type="button" class="btn btn-default" data-toggle="collapse"
+                                                        data-target="#demo{{ article.id }}">
+                                                    Close
+                                                </button>
+                                                <button type="button" class="btn btn-primary">发表评论</button>
+                                            </div>
+                                    </div>
+
+                                    <p>
+                                        <small>
+                                            click_num:{{ article.click_num }}&nbsp; fav_nums:{{ article.fav_nums }}&nbsp;
+                                            score:{{ article.score }}
+                                        </small>
+                                    </p>
+                                    <div class="col-md-8 col-sm-offset-2 text-center">
+                                        <a href="">
+                                            <button type="button" class="btn btn-primary btn-lg"
+                                                    style="background-color:#096c47;">
+                                                <span class="glyphicon glyphicon-heart"></span>&nbsp;Like
+                                            </button>
+                                        </a>
+                                        <a href="{% url 'article:article_detail' article.id %}" target="_blank">
+                                            <button type="button" class="btn btn-primary btn-lg"
+                                                    style="background-color:#096c47;">
+                                                <span class="glyphicon glyphicon-fullscreen"></span> read all
+                                            </button>
+                                        </a>
+                                        <button type="button" class="btn btn-primary btn-lg"
+                                                style="background-color:#096c47;" data-toggle="collapse"
+                                                data-target="#demo{{ article.id }}">
+                                            <span class="glyphicon glyphicon-bullhorn"></span> 评&nbsp;论
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr style="padding:0%;margin:2%;" class="featurette-divider">
+                    {% endfor %}
+                </div>
+                <!-- /.blog-main -->
+
+                <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+                    <div class="sidebar-module sidebar-module-inset">
+                        <h4>一些公告</h4>
+                        <p>共{{ article_nums }}篇文章</p>
+                    </div>
+                    <div class="sidebar-module">
+                        <h4>最热文章</h4>
+                        <ol class="list-unstyled">
+                            {% for hotarticle in hot_article %}
+                                <li>
+                                    <a href="#">{{ forloop.counter }}.{{ hotarticle.title }}</a>
+                                </li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                    <div class="sidebar-module">
+                        <h4>猜你喜欢</h4>
+                        <ol class="list-unstyled">
+                            {% for article in all_articles.object_list %}
+                                <li>
+                                    <a href="#">{{ forloop.counter }}.{{ article.title }}</a>
+                                </li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </div>
+                <!-- /.blog-sidebar -->
+
+            </div>
+            <!-- /.row -->
+
+        </div>
+        <!-- /.container -->
+
+
+        <!-- /.row -->
+        <div class="col-md-8 col-sm-offset-2 text-center">
+            <nav id="fenyeqi">
+                <ul class="pagination">
+                    {% if all_articles.has_previous %}
+                        <li>
+                            <a href="?{{ all_articles.previous_page_number.querystring }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% for page in all_articles.pages %}
+                        {% if page %}
+                            {% ifequal page all_articles.number %}
+                                <li class="active"><a href="?{{ page.querystring }}">{{ page }}</a></li>
+                            {% else %}
+                                <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
+                            {% endifequal %}
+                        {% else %}
+                            <li class="none"><a href="">...</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if all_articles.has_next %}
+                        <li>
+                            <a href="?{{ all_articles.next_page_number.querystring }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+
+        <hr style="padding:0%;margin:2%;" class="featurette-divider">
+
+
     </div>
-    <!-- /.container -->
-
-
-    <!-- /.row -->
-    <div class="col-md-8 col-sm-offset-2 text-center">
-    <nav id="fenyeqi">
-        <ul class="pagination">
-            <li>
-                <a href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">1</a>
-            </li>
-            <li>
-                <a href="#">2</a>
-            </li>
-            <li>
-                <a href="#">3</a>
-            </li>
-            <li>
-                <a href="#">4</a>
-            </li>
-            <li>
-                <a href="#">5</a>
-            </li>
-            <li>
-                <a href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-    </div>
-
-<hr style="padding:0%;margin:2%;" class="featurette-divider">
-
-    <!-- FOOTER -->
-    <footer class="blog-footer">
-        <p>编写
-            <a href="#">网站主页</a> by
-            <a href="#">@冯浩斌</a>.</p>
-        <p>
-            <a href="#">回到顶部</a>
-        </p>
-    </footer>
-
-</div>
-<!-- /.container -->
-
-
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-<script src="../../assets/js/vendor/holder.min.js"></script>
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-
-
-</body>
-
-</html>
+{% endblock %}
