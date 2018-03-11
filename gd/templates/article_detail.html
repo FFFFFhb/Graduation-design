@@ -66,68 +66,39 @@
     </style>
 {% endblock %}
 {% block custom_js %}
+    <script type="text/javascript">
+        //收藏分享
+        function add_fav(current_elem, fav_id, fav_type) {
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: "{% url 'article:add_fav' %}",
+                data: {'fav_id': fav_id, 'fav_type': fav_type},
+                async: true,
+                beforeSend: function (xhr, settings) {
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+                success: function (data) {
+                    console.log(1)
+                    if (data.status == 'fail') {
+                        if (data.msg == '用户未登录') {
+                            window.location.href = "/login/";
+                        } else {
+                            alert(data.msg)
+                        }
+                    } else if (data.status == 'success') {
+                        current_elem.text(data.msg)
+                    }
+                },
+            });
+        }
 
+        $('.collect-btn').on('click', function () {
+            add_fav($(this), $(this).data("articleid"), 1);
+        });
+    </script>
 {% endblock %}
 {% block content %}
-    <!-- Modal -->
-    <div class="modal fade in" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" style="width: 800px" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">文章标题 - 评论</h4>
-                </div>
-                <div class="modal-body">
-                    <div id="selectTree" class="ztree" style="height:300px;overflow:auto; ">
-
-                        {% for comment in all_comments %}
-                            <div class="row featurette">
-                                <div class="row col-md-12">
-                                    <div class="media">
-                                        <div class="media-left"></div>
-                                        <div class="media-body">
-                                            <div>
-                                                <div>
-                                        <span>
-                                            <a href="">
-                                                <img width="24" height="24" src="images/LOGO.png" alt="">
-                                            </a>
-                                            <a href="#" style="color:black;">
-                                                {{ comment.user.nick_name }}
-                                            </a>
-
-                                        </span>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12" data-toggle="collapse" data-target="#collapseFirst1">
-                                                <p>{{ comment.comments }}
-                                                </p>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <hr>
-                        {% endfor %}
-                    </div>
-
-
-                </div>
-                <div class="modal-footer">
-                    <div class="">
-                        <textarea class="form-control" rows="3" placeholder="扯淡、吐槽、表扬、鼓励……想说啥就说啥！"></textarea>
-                    </div>
-                    <br>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">发表评论</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="container marketing">
 
@@ -192,7 +163,6 @@
                     </div>
 
 
-
                 </div>
                 <!-- /.blog-main -->
 
@@ -244,21 +214,21 @@
 
         </div>
         <!-- /.container -->
-<div id="demo" class="collapse ">
-<p>评论列表：</p>
-                                        <div id="selectTree" class="ztree" style="height:400px;overflow:auto; ">
+        <div id="demo" class="collapse ">
+            <p>评论列表：</p>
+            <div id="selectTree" class="ztree" style="height:400px;overflow:auto; ">
 
-                                            {% for comment in all_comments %}
-                                                {% ifequal articledetail.id comment.article_id %}
-                                                    <div class="">
-                                                        <div class="row col-md-12">
-                                                            <div class="media">
-                                                                {#                                                                                <div class="media-left">#}
-                                                                {##}
-                                                                {#                                                                                </div>#}
-                                                                <div class="media-body">
-                                                                    <div>
-                                                                        <div>
+                {% for comment in all_comments %}
+                    {% ifequal articledetail.id comment.article_id %}
+                        <div class="">
+                            <div class="row col-md-12">
+                                <div class="media">
+                                    {#                                                                                <div class="media-left">#}
+                                    {##}
+                                    {#                                                                                </div>#}
+                                    <div class="media-body">
+                                        <div>
+                                            <div>
                             <span>
                                 <a href="">
                                     <img width="24" height="24" src="{{ MEDIA_URL }}{{ comment.user.image }}" alt="">
@@ -267,50 +237,49 @@
                                     {{ comment.user }} -- {{ comment.user.short_summary }}
                                 </a>
                             </span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-12">
-                                                                        <p>{{ comment.comments }}</p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                {% endifequal %}
-                                            {% endfor %}
-
+                                            </div>
                                         </div>
- <div class="modal-footer">
-                                                <div class="">
+                                        <div class="col-md-12">
+                                            <p>{{ comment.comments }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endifequal %}
+                {% endfor %}
+
+            </div>
+            <div class="modal-footer">
+                <div class="">
                                                     <textarea class="form-control" rows="3"
                                                               placeholder="扯淡、吐槽、表扬、鼓励……想说啥就说啥！"></textarea>
-                                                </div>
-                                                <br>
-                                                <button type="button" class="btn btn-default" data-toggle="collapse"
-                                                        data-target="#demo{{ article.id }}">
-                                                    Close
-                                                </button>
-                                                <button type="button" class="btn btn-primary">发表评论</button>
-                                            </div>
-                                    </div>
-        <!-- /.row -->
-        <div class="col-md-8 col-sm-offset-2 text-center">
-            <!-- Button trigger modal -->
-
-                <button type="button" class="btn btn-primary btn-lg" style="background-color:#096c47;">
-                    <span class="glyphicon glyphicon-heart"></span>&nbsp;Like
+                </div>
+                <br>
+                <button type="button" class="btn btn-default" data-toggle="collapse"
+                        data-target="#demo{{ article.id }}">
+                    Close
                 </button>
-
-
-
-                <button type="button" class="btn btn-primary btn-lg" style="background-color:#096c47;" data-toggle="collapse" data-target="#demo">
-                    评&nbsp;&nbsp;论
-                </button>
-
+                <button type="button" class="btn btn-primary">发表评论</button>
+            </div>
         </div>
 
-        <hr style="padding:0%;margin:2%;" class="featurette-divider">
 
+        <div class="col-md-8 col-sm-offset-2 text-center">
+            <button type="button" class="btn btn-primary btn-lg collect-btn"
+                    style="background-color:#096c47;" data-articleid="{{ articledetail.id }}">
+{#                <span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;<span#}
+{#                    class="badge">{{ articledetail.fav_nums }}</span>#}
+                {% if has_fav %}Liked{% else %}Like{% endif %}
+            </button>
+
+            <button type="button" class="btn btn-primary btn-lg"
+                    style="background-color:#096c47;" data-toggle="collapse"
+                    data-target="#demo">
+                <span class="glyphicon glyphicon-comment"></span> 评&nbsp;论
+            </button>
+        </div>
+        <hr style="padding:0%;margin:2%;" class="featurette-divider">
 
     </div>
 {% endblock %}

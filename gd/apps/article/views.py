@@ -1,12 +1,13 @@
+# _*_ coding:utf-8 _*_
 import datetime
 
 from django.shortcuts import render
 from django.views.generic import View
-
+from django.http import HttpResponse
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import Article
-from operation.models import ArticleComments
+from operation.models import ArticleComments,UserFavorite
 from operation.gongtonong import GongToNong
 
 # Create your views here.
@@ -18,9 +19,12 @@ class ArticleView(View):
         #文章列表
         all_articles = Article.objects.all()
         article_nums = all_articles.count()
-        article_id = request.GET.get('articleid',"")
         hot_article = all_articles.order_by("-click_num")[:5]
         showtime = datetime.datetime.now().date()
+
+        # 收藏
+        favlist = UserFavorite.objects.filter(user_id=int(request.user.id))
+        num = 0
 
         #公历转换成农历显示
         y = datetime.datetime.now().year
@@ -48,7 +52,7 @@ class ArticleView(View):
             page = 1
         # Provide Paginator with the request object for complete querystring generation
 
-        p = Paginator(all_articles, 5, request=request)
+        p = Paginator(all_articles, 10, request=request)
 
         atcs = p.page(page)
 
@@ -60,6 +64,8 @@ class ArticleView(View):
             "sort":sort,
             "showtime":showtime,
             "shownong":shownong,
+            "favlist":favlist,
+            "num":num,
         })
 
 
@@ -69,10 +75,54 @@ class ArticleDetailView(View):
         # 评论
         all_comments = ArticleComments.objects.all()
         all_comments = all_comments.order_by("-fav_time")
-
+        #收藏
+        has_fav = False
+        if request.user.is_authenticated():
+            if UserFavorite.objects.filter(user=request.user, fav_id=articledetail.id, fav_type=1):
+                has_fav = True
         articledetail.click_num += 1
         articledetail.save()
         return render(request,'article_detail.html',{
             'articledetail':articledetail,
             "all_comments":all_comments,
+            'has_fav':has_fav,
         })
+
+
+class AddFavView(View):
+    #用户收藏
+    def post(self, request):
+        fav_id = request.POST.get('fav_id', 0)
+        fav_type = request.POST.get('fav_type', 0)
+
+        if not request.user.is_authenticated():
+            return HttpResponse('{"status":"fail", "msg":"用户未登录"}', content_type='application/json')
+        exist_records = UserFavorite.objects.filter(user=request.user, fav_id=int(fav_id), fav_type=int(fav_type))
+        if exist_records:
+            # 如果记录已经存在，则取消收藏
+            exist_records.delete()
+            if int(fav_type) == 1:
+                article = Article.objects.get(id=int(fav_id))
+                article.fav_nums -= 1
+                if article.fav_nums < 0:
+                    article.fav_nums = 0
+                article.save()
+
+            return HttpResponse('{"status":"success", "msg":"Like"}', content_type='application/json')
+
+        else:
+            user_fav = UserFavorite()
+            if int(fav_id) > 0 and int(fav_type) > 0:
+                user_fav.user = request.user
+                user_fav.fav_id = int(fav_id)
+                user_fav.fav_type = int(fav_type)
+
+                user_fav.save()
+                if int(fav_type) == 1:
+                    article = Article.objects.get(id=int(fav_id))
+                    article.fav_nums += 1
+                    article.save()
+                return HttpResponse('{"status":"success", "msg":"Liked"}', content_type='application/json')
+
+            else:
+                return HttpResponse('{"status":"fail", "msg":"收藏出错"}', content_type='application/json')

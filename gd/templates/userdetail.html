@@ -231,13 +231,15 @@
             <hr id="section-1" style="padding:0%;margin:5%;" class="featurette-divider">
             <h2 >个人资料</h2>
             <h4>个人介绍：</h4>
-            <p>姓名：{{ request.user.nick_name }}</p>
+            <p>昵称：{{ request.user.nick_name }}</p>
+            <p>一句话介绍：{{ request.user.short_summary }}</p>
             <p>e-mail:{{ request.user.email }}</p>
             <p>性别:{% if request.user.gender == 'male' %}男{% elif request.user.gender == 'female' %}女{% endif %}</p>
             <p>出生年月:{{ request.user.birthday|default_if_none:'' }}</p>
             <p>教育经历:{{ request.user.eduated }}</p>
-            <p>所在行业:</p>
-            <p>个人简介:</p>
+            <p>所在行业:{{ request.user.profession }}</p>
+            <p>居住地:{{ request.user.address }}</p>
+            <p>个人简介:{{ request.user.summary }}</p>
             <p class="text-center">
                 <a class="btn btn-default" href="#" role="button">Edit &raquo;</a>
             </p>
