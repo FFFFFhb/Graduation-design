@@ -1,0 +1,268 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}用户列表 - F-ZTH{% endblock %}
+{% block custom_css %}
+    <style>
+        #fenyeqi {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #selectarticle > li > a {
+            background-color: #096c47;
+            color: #e7e7e7;
+        }
+
+        #selectarticle > li > a :visited {
+            color: #ffffff;
+            background-color: #e7e7e7;
+        }
+
+        #selectarticle > li > a :hover {
+            color: #555;
+            background-color: #e7e7e7;
+        }
+
+        #selectarticle > li > a :active {
+            color: #555;
+            background-color: #e7e7e7;
+        }
+
+        /* Sidebar modules for boxing content */
+        .sidebar-module {
+            padding: 15px;
+            margin: 0 -15px 15px;
+        }
+
+        .sidebar-module-inset {
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+        }
+
+        .sidebar-module-inset p:last-child,
+        .sidebar-module-inset ul:last-child,
+        .sidebar-module-inset ol:last-child {
+            margin-bottom: 0;
+        }
+
+        .blog-header {
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .blog-title {
+            margin-top: 30px;
+            margin-bottom: 0;
+            font-size: 60px;
+            font-weight: normal;
+        }
+
+        .blog-description {
+            font-size: 20px;
+            color: #999;
+        }
+
+        {#多行文本溢出显示省略号#}
+        #articledetailp {
+            position: relative;
+            line-height: 1.4em;
+            /* 3 times the line-height to show 3 lines */
+            height: 4.2em;
+            overflow: hidden;
+        }
+
+        #articledetailp::after {
+            content: "...";
+            font-weight: bold;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            padding: 0 20px 1px 45px;
+            background: url(http://css88.b0.upaiyun.com/css88/2014/09/ellipsis_bg.png) repeat-y;
+        }
+
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container marketing">
+
+
+        <!-- Three columns of text below the carousel -->
+        <div class="blog-header">
+            <!-- <h3 class="blog-title">&nbsp;发呆</h3> -->
+            <br>
+        </div>
+        <!-- /.row -->
+
+        <div class="container">
+            <div class="blog-header">
+                <h1 class="blog-title">{{ showtime }}</h1>
+                <p class="lead blog-description">{{ shownong }}</p>
+            </div>
+            <div class="row">
+                <div class="col-sm-8 blog-main">
+                    <div class="col-md-10">
+                        {# col-sm-offset-2 #}
+                        <ul id="selectarticle" class="nav nav-pills" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#"><span class="glyphicon glyphicon-align-justify"></span>&nbsp;&nbsp;所&nbsp;&nbsp;有&nbsp;</a>
+                            </li>
+                            <li role="presentation" class="{% if sort == 'new' %}active{% endif %}">
+                                <a href="?sort=new"><span class="glyphicon glyphicon-dashboard"></span>&nbsp;&nbsp;最&nbsp;&nbsp;新&nbsp;&nbsp;</a>
+                            </li>
+                            <li role="presentation" class="{% if sort == 'hot' %}active{% endif %}">
+                                <a href="?sort=hot"><span class="glyphicon glyphicon-fire"></span>&nbsp;&nbsp;人&nbsp;&nbsp;气&nbsp;&nbsp;</a>
+                            </li>
+                            <li role="presentation" class="{% if sort == 'recommend1' %}active{% endif %}">
+                                <a href="?sort=recommend1"><span class="glyphicon glyphicon-thumbs-up"></span> &nbsp;推&nbsp;荐&nbsp;1&nbsp;</a>
+                            </li>
+                            <li role="presentation" class="{% if sort == 'recommend2' %}active{% endif %}">
+                                <a href="?sort=recommend2"><span class="glyphicon glyphicon-thumbs-up"></span> &nbsp;推&nbsp;&nbsp;荐&nbsp;2&nbsp;</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <br>
+                    <hr style="padding:0%;margin:5%;" class="featurette-divider">
+
+
+                    {% for user in all_user.object_list %}
+                         <div class="row">
+
+                        <div class="col-lg-4">
+                            <img class="img-circle" src="{{ MEDIA_URL }}{{ user.image }}" alt="头像"
+                                 width="140" height="140">
+                            <h2>{{ user.nick_name }}</h2>
+
+                        </div>
+                        <div class="col-lg-8">
+                            <h4>一句话介绍：</h4>
+                            <p>e-mail:</p>
+                            <p>教育经历:</p>
+                            <p>所在行业:</p>
+                            <p>粉丝数：{{ user.fans_nums }}</p>
+
+
+                        </div>
+                        <!-- /.col-lg-4 -->
+                        <div class="col-md-11 col-sm-offset-2 text-center">
+                            <button type="button" class="btn btn-primary btn-lg collect-btn"
+                                    style="background-color:#096c47;" data-userid="{{ user.id }}">
+                                <span
+                                    class="badge">{{ user.fans_nums }}</span>&nbsp;关注
+                            </button>
+                            {#<span class="glyphicon glyphicon-heart"></span>&nbsp;#}
+                            <a href="{% url 'user:user_detail' user.id %}" target="_blank">
+                                <button type="button" class="btn btn-primary btn-lg"
+                                        style="background-color:#096c47;">
+                                    <span class="glyphicon glyphicon-file"></span> read all
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                        <hr style="padding:0%;margin:2%;" class="featurette-divider">
+                    {% endfor %}
+                </div>
+                <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+                    <div class="sidebar-module sidebar-module-inset">
+                        <h4>一些公告</h4>
+                        <p>共{{ user_nums }}位用户</p>
+                    </div>
+                    <div class="sidebar-module">
+                        <h4>最热文章</h4>
+                        <ol class="list-unstyled">
+                            {% for hotarticle in hot_article %}
+                                <li>
+                                    <a href="#">{{ forloop.counter }}.{{ hotarticle.title }}</a>
+                                </li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                    <div class="sidebar-module">
+                        <h4>猜你喜欢</h4>
+                        <ol class="list-unstyled">
+                            {% for article in all_articles.object_list %}
+                                <li>
+                                    <a href="#">{{ forloop.counter }}.{{ article.title }}</a>
+                                </li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </div>
+                <!-- /.blog-sidebar -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+        <!-- /.row -->
+        <div class="col-md-8 col-sm-offset-2 text-center">
+            <nav id="fenyeqi">
+                <ul class="pagination">
+                    {% if all_articles.has_previous %}
+                        <li>
+                            <a href="?{{ all_articles.previous_page_number.querystring }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% for page in all_articles.pages %}
+                        {% if page %}
+                            {% ifequal page all_articles.number %}
+                                <li class="active"><a href="?{{ page.querystring }}">{{ page }}</a></li>
+                            {% else %}
+                                <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
+                            {% endifequal %}
+                        {% else %}
+                            <li class="none"><a href="">...</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if all_articles.has_next %}
+                        <li>
+                            <a href="?{{ all_articles.next_page_number.querystring }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+
+        <hr style="padding:0%;margin:2%;" class="featurette-divider">
+
+
+    </div>
+{% endblock %}
+{% block custom_js %}
+    <script type="text/javascript">
+        //收藏分享
+        function add_fav(current_elem, fav_id, fav_type) {
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: "{% url 'article:add_fav' %}",
+                data: {'fav_id': fav_id, 'fav_type': fav_type},
+                async: true,
+                beforeSend: function (xhr, settings) {
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+                success: function (data) {
+                    console.log(1)
+                    if (data.status == 'fail') {
+                        if (data.msg == '用户未登录') {
+                            window.location.href = "/login/";
+                        } else {
+                            alert(data.msg)
+                        }
+                    } else if (data.status == 'success') {
+                        current_elem.text(data.msg)
+                    }
+                },
+            });
+        }
+
+        $('.collect-btn').on('click', function () {
+            add_fav($(this), $(this).data("articleid"), 1);
+        });
+    </script>
+{% endblock %}

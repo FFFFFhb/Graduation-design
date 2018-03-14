@@ -8,7 +8,7 @@ from users.models import UserProfile
 class Article(models.Model):
     author = models.ForeignKey(UserProfile, verbose_name=u'作者', null=True, blank=True)
     title = models.CharField(max_length=50, verbose_name=u'标题')
-    desc = models.CharField(max_length=100, verbose_name=u'标签')
+    desc = models.CharField(max_length=100, verbose_name=u'标签', null=True, blank=True)
     detail = models.TextField(verbose_name=u'内容')
     click_num = models.IntegerField(default=0, verbose_name=u'点击数')
     fav_nums =models.IntegerField(default=0, verbose_name=u'收藏人数')

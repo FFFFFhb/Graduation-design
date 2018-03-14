@@ -4,6 +4,7 @@ import datetime
 from django.shortcuts import render
 from django.views.generic import View
 from django.http import HttpResponse
+from django.db.models import Q
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import Article
@@ -22,9 +23,13 @@ class ArticleView(View):
         hot_article = all_articles.order_by("-click_num")[:5]
         showtime = datetime.datetime.now().date()
 
+        #搜索功能
+        search_keywords = request.GET.get('keywords',"")
+        if search_keywords:
+            all_articles = all_articles.filter(Q(title__icontains=search_keywords)|Q(desc__icontains=search_keywords)|Q(detail__icontains=search_keywords))
+
         # 收藏
         favlist = UserFavorite.objects.filter(user_id=int(request.user.id))
-        num = 0
 
         #公历转换成农历显示
         y = datetime.datetime.now().year
@@ -65,7 +70,6 @@ class ArticleView(View):
             "showtime":showtime,
             "shownong":shownong,
             "favlist":favlist,
-            "num":num,
         })
 
 

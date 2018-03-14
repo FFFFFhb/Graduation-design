@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
-{% block title %}test{% endblock %}
+{% block title %}新文章 - F-ZTH{% endblock %}
 {% block custom_css %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/simditor.css' %}"/>
 {#     <link href="css/blog.css" rel="stylesheet">#}
@@ -11,7 +11,12 @@
     <script type="text/javascript" src="{% static 'js/hotkeys.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/uploader.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/simditor.js' %}"></script>
-
+    <script>
+    var editor = new Simditor({
+            textarea: $('#editor')
+            //optional options
+        });
+</script>
 {% endblock %}
 {% block content %}
 <div class="blog-header">
@@ -48,11 +53,6 @@
         </div>
     </div>
 
-    <script>
-    var editor = new Simditor({
-            textarea: $('#editor')
-            //optional options
-        });
-</script>
+
 
 {% endblock %}

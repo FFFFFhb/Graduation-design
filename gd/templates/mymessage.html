@@ -1,148 +1,14 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}个人主页 - F-ZTH{% endblock %}
+{% block custom_css %}{% endblock %}
+{% block custom_js %}{% endblock %}
+{% block content %}
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="images\fzth.ico">
-
-    <title>个人主页 - F-ZTH</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <!-- Custom styles for this template -->
-    <link href="css/carousel.css" rel="stylesheet">
-
-</head>
-<!-- NAVBAR
-================================================== -->
-
-<body>
-    <!-- 固定导航条 -->
-    <!-- Fixed navbar -->
-    <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-                    aria-controls="navbar">
-                    <span class="sr-only">From Zero to Hero</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a style="color:#ffffff;" class="navbar-brand" href="#">F-ZTH</a>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="#">
-                            <span class="glyphicon glyphicon-home"></span> 主页</a>
-                    </li>
-                    <li>
-                        <a href="#about">
-                            <span class="glyphicon glyphicon-align-justify"></span> 文章列表</a>
-                    </li>
-                    <li class="disabled">
-                        <a href="#contact">用户列表</a>
-                    </li>
-                    <li class="dropdown active">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <span class="glyphicon glyphicon-user"></span> 个人中心
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="disabled">
-                                <a href="#">我的文章</a>
-                            </li>
-                            <li>
-                                <a href="#">我的收藏</a>
-                            </li>
-                            <li class="disabled">
-                                <a href="#">我的关注</a>
-                            </li>
-                            <li role="separator" class="divider"></li>
-                            <li class="dropdown-header">其他</li>
-                            <li>
-                                <a href="#">个人信息</a>
-                            </li>
-                            <li>
-                                <a href="#">我的评论</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-
-                    <form class="navbar-form navbar-left" role="search">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown">
-                                文章
-                                <span class="caret"></span>
-                            </button>
-
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="#">文章</a>
-                                </li>
-                                <li role="presentation" class="disabled">
-                                    <a href="#">用户</a>
-                                </li>
-
-                                <li role="presentation">
-                                    <a href="#">发表日期(yy-mm-dd)</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search">
-                            <button type="submit" class="btn btn-default">
-                                <span class="glyphicon glyphicon-search"></span>
-                            </button>
-                        </div>
-                    </form>
-
-
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="disabled">
-                            <a href="#">
-                                <span class="glyphicon glyphicon-user"></span> 注册</a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <span class="glyphicon glyphicon-log-in"></span> 登录</a>
-                        </li>
-                    </ul>
-                </ul>
-            </div>
-            <!--/.nav-collapse -->
-        </div>
-    </nav>
-
-    <!-- Carousel
-================================================== -->
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-     
         <div class="carousel-inner" role="listbox">
             <div class="item active">
-                <img class="first-slide" src="images/LOGO.png" alt="封面图">
+                <img class="first-slide" src="{% static 'images/default_surface.jpg' %}" alt="封面图">
             </div>
         </div>
         <!-- <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
@@ -150,29 +16,24 @@
             <span class="sr-only">Previous</span>
         </a>
         <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-            
+
             <span class="sr-only">Next</span>
         </a> -->
     </div>
     <!-- /.carousel -->
 
-
-    <!-- Marketing messaging and featurettes
-================================================== -->
-    <!-- Wrap the rest of the page in another container to center all the content. -->
-
-    <div class="container marketing">
+    <div class="container marketing" >
 
         <!-- Three columns of text below the carousel -->
         <div class="row">
 
             <div class="col-lg-4">
-                <img class="img-circle" src="images/LOGO.png" alt="Generic placeholder image"
+                <img class="img-circle" src="{{ MEDIA_URL }}{{ userdetail.image }}" alt="头像"
                     width="140" height="140">
-                <h2>显示昵称</h2>
+                <h2>{{ userdetail.nick_name|default_if_none:'无昵称' }}</h2>
 
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-8">
                 <h4>个人介绍：</h4>
                 <p>姓名：</p>
                 <p>e-mail:</p>
@@ -181,7 +42,7 @@
                 <p>教育经历:</p>
                 <p>所在行业:</p>
                 <p>个人简介:</p>
-               
+
             </div>
             <!-- /.col-lg-4 -->
 
@@ -190,19 +51,19 @@
         <!-- START THE FEATURETTES -->
 
         <hr class="featurette-divider">
-
+{% for article in my_article %}
         <div class="row featurette">
             <div class="col-md-7">
-                <h2 class="featurette-heading">展示第一篇文章
-                    <span class="text-muted"><small>副标题</small></span>
+                <h2 class="featurette-heading">{{ article.title }}
+                    <span class="text-muted"><small>{{ article.desc }}</small></span>
                 </h2>
-                <p class="lead">内容简介</p>
+                <p class="lead">{{ article.detail }}</p>
             </div>
             <div class="col-md-5">
-                <img class="featurette-image img-responsive center-block" src="images/LOGO.png" alt="文章图片">
+                <img class="featurette-image img-responsive center-block" src="{{ MEDIA_URL }}{{ article.image }}" alt="文章图片">
             </div>
         </div>
-
+{% endfor %}
         <hr class="featurette-divider">
 
         <div class="row featurette">
@@ -233,32 +94,5 @@
 
         <hr class="featurette-divider">
 
-        <!-- /END THE FEATURETTES -->
-
-        <!-- FOOTER -->
-        <footer>
-            <p class="pull-right">
-                <a href="#">回到顶部</a>
-            </p>
-            <p>&copy; 2018 广东工业大学, 自动化学院. &middot;
-                <a href="#">物联网工程</a> &middot;
-                <a href="#">2014级4班</a>
-            </p>
-        </footer>
     </div>
-    <!-- /.container -->
-
-
-    <!-- Bootstrap core JavaScript
-================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-    <script src="../../assets/js/vendor/holder.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-</body>
-
-</html>
+{% endblock %}

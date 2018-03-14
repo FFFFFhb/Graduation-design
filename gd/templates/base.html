@@ -31,20 +31,21 @@
     <!-- Custom styles for this template -->
     <link href="{% static 'css/carousel.css' %}" rel="stylesheet">
 
-{% block custom_css %}{% endblock %}
+    {% block custom_css %}{% endblock %}
 
 </head>
 <!-- NAVBAR
 ================================================== -->
 
-<body>
+<body style="background-color: #F6F6F6">
 <!-- 固定导航条 -->
 <!-- Fixed navbar -->
 <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-                aria-controls="navbar">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false"
+                    aria-controls="navbar">
                 <span class="sr-only">From Zero to Hero</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -54,74 +55,67 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li>
+                <li {% if request.path == '/' %}class="active"{% endif %}>
                     <a href="/">
                         <span class="glyphicon glyphicon-home"></span> 首页</a>
                 </li>
-                <li class="active">
+                <li {% if request.path|slice:'13' == '/article/list' %}class="active"{% endif %}>
                     <a href="{% url 'article:article_list' %}">
                         <span class="glyphicon glyphicon-align-justify"></span> 文章列表</a>
                 </li>
-                <li>
-                    <a href="#contact"><span class="glyphicon glyphicon-user"></span> 用户列表</a>
+                <li {% if request.path|slice:'10' == '/user/list' %}class="active"{% endif %}>
+                    <a href="{% url 'user:user_list' %}"><span class="glyphicon glyphicon-user"></span> 用户列表</a>
                 </li>
-                <li>
-                    <a href="{% url 'operation:operation_write' %}" ><span class="glyphicon glyphicon-edit"></span> 写文章</a>
+                <li {% if request.path|slice:'16' == '/operation/write' %}class="active"{% endif %}>
+                    <a href="{% url 'operation:operation_write' %}"><span class="glyphicon glyphicon-edit"></span>
+                        写文章</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
 
-                <form class="navbar-form navbar-left" role="search">
+                <div class="navbar-form navbar-left" role="search">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown">
+                        <button id="jsSelectOption" type="button" class="btn btn-default dropdown-toggle "
+                                data-toggle="dropdown" data-value="article">
                             文章
                             <span class="caret"></span>
                         </button>
-
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <a href="#">文章</a>
-                            </li>
-                            <li role="presentation" class="disabled">
-                                <a href="#">用户</a>
-                            </li>
-
-                            <li role="presentation">
-                                <a href="#">发表日期(yy-mm-dd)</a>
-                            </li>
+                        <ul class="dropdown-menu" role="menu" id="jsSelectMenu">
+                            <li data-value="article"><a href="#">文章</a></li>
+                            <li data-value="user"><a href="#">用户</a></li>
                         </ul>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
-                        <button type="submit" class="btn btn-default">
+                        <input id="search_keywords" type="text" class="form-control" placeholder="请输入搜索内容">
+                        <button id="jsSearchBtn" type="submit" class="btn btn-default">
                             <span class="glyphicon glyphicon-search"></span>
                         </button>
                     </div>
-                </form>
+                </div>
 
 
                 <ul class="nav navbar-nav navbar-right">
                     {% if request.user.is_authenticated %}
-{#                         <li><a href="{% url 'user:user_info' %}"><img width="20" height="20" src="/static/images/fzth.ico"/>&nbsp;{{ request.user.username }}#}
-{#                         </a></li>#}
-
+                        {#                         <li><a href="{% url 'user:user_info' %}"><img width="20" height="20" src="/static/images/fzth.ico"/>&nbsp;{{ request.user.username }}#}
+                        {#                         </a></li>#}
                         <li class="dropdown">
-                    <a href="{% url 'user:user_info' %}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <img width="20" height="20" src="/static/images/fzth.ico"/>&nbsp;{{ request.user.username }}
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                         <li>
-                            <a href="{% url 'user:user_info' %}">进入个人主页</a>
+                            <a href="{% url 'user:user_info' %}" class="dropdown-toggle" data-toggle="dropdown"
+                               role="button" aria-haspopup="true" aria-expanded="false">
+                                <img width="20" height="20"
+                                     src="/static/images/fzth.ico"/>&nbsp;{{ request.user.username }}
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{% url 'user:user_detail' request.user.id %}">进入个人主页</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'user:user_info' %}">进入个人中心</a>
+                                </li>
+                            </ul>
                         </li>
-                        <li>
-                            <a href="{% url 'user:user_info' %}">进入个人中心</a>
-                        </li>
-                    </ul>
-                </li>
 
-
-                         <li><a href="/logout/">退出</a></li>
+                        <li><a href="/logout/">退出</a></li>
                     {% else %}
                         <li><a href="#"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
                         <li><a href="/login/"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
@@ -134,33 +128,33 @@
         <!--/.nav-collapse -->
     </div>
 </nav>
-    <!-- Marketing messaging and featurettes
+<!-- Marketing messaging and featurettes
 ================================================== -->
-    <!-- Wrap the rest of the page in another container to center all the content. -->
+<!-- Wrap the rest of the page in another container to center all the content. -->
 
-<div class="container marketing">
+<div class="container marketing" >
     {% block content %}
-<hr class="featurette-divider">
+        <hr class="featurette-divider">
         <!-- Three columns of text below the carousel -->
         <div class="row">
 
             <div class="col-lg-4">
                 <img class="img-circle" src="{% static 'images/LOGO.png' %}" alt="Generic placeholder image"
-                    width="140" height="140">
+                     width="140" height="140">
                 <h2>Froben</h2>
-<p>
-    <a class="btn btn-default" href="#" role="button">修改头像</a>
-</p>
+                <p>
+                    <a class="btn btn-default" href="#" role="button">修改头像</a>
+                </p>
             </div>
             <div class="col-lg-4">
-            <h4>个人介绍：</h4>
-            <p>姓名：</p>
-            <p>e-mail:</p>
-            <p>性别:</p>
-            <p>出生年月:</p>
-            <p>教育经历:</p>
-            <p>所在行业:</p>
-            <p>个人简介:</p>
+                <h4>个人介绍：</h4>
+                <p>姓名：</p>
+                <p>e-mail:</p>
+                <p>性别:</p>
+                <p>出生年月:</p>
+                <p>教育经历:</p>
+                <p>所在行业:</p>
+                <p>个人简介:</p>
             </div>
             <!-- /.col-lg-4 -->
 
@@ -170,111 +164,164 @@
 
         <hr>
 
-    <form class="form-horizontal" role="form">
-        <div class="form-group">
-            <label for="firstname" class="col-sm-2 control-label">姓名</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="firstname" placeholder="请输入您的名字">
-            </div>
-        </div>
-        <hr>
-        <div class="form-group">
-            <label for="nickname" class="col-sm-2 control-label">昵称</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="nickname" placeholder="请输入您的昵称">
-            </div>
-        </div>
-        <hr>
-        <div class="form-group">
-            <label for="email" class="col-sm-2 control-label">e-mail</label>
-            <div class="col-sm-10">
-                <input type="email" class="form-control" id="email" placeholder="请输入您的email">
-            </div>
-        </div>
-        <hr>
-        <div class="form-group">
-            <label for="sex" class="col-sm-2 control-label">性别</label>
-            <div class="col-sm-10">
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked> 男
-                    </label>
-                    &nbsp;
-                    <label>
-                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">女
-                    </label>
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label for="firstname" class="col-sm-2 control-label">姓名</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="firstname" placeholder="请输入您的名字">
                 </div>
             </div>
-        </div>
-    <hr>
-        <div class="form-group">
-            <label for="birth" class="col-sm-2 control-label">出生年月</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="birth" placeholder="请输入您的出生年月">
+            <hr>
+            <div class="form-group">
+                <label for="nickname" class="col-sm-2 control-label">昵称</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="nickname" placeholder="请输入您的昵称">
+                </div>
             </div>
-        </div>
-    <hr>
-        <div class="form-group">
-            <label for="educated" class="col-sm-2 control-label">教育经历</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="educated" placeholder="请输入您的教育经历s">
+            <hr>
+            <div class="form-group">
+                <label for="email" class="col-sm-2 control-label">e-mail</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" id="email" placeholder="请输入您的email">
+                </div>
             </div>
-        </div>
-    <hr>
-        <div class="form-group">
-            <label for="work" class="col-sm-2 control-label">所在行业</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="work" placeholder="请输入您的所在行业">
+            <hr>
+            <div class="form-group">
+                <label for="sex" class="col-sm-2 control-label">性别</label>
+                <div class="col-sm-10">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked> 男
+                        </label>
+                        &nbsp;
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">女
+                        </label>
+                    </div>
+                </div>
             </div>
-        </div>
-    <hr>
-        <div class="form-group">
-            <label for="sex" class="col-sm-2 control-label">个人简介</label>
-            <div class="col-sm-10">
-                <textarea class="form-control" rows="3"></textarea>
+            <hr>
+            <div class="form-group">
+                <label for="birth" class="col-sm-2 control-label">出生年月</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="birth" placeholder="请输入您的出生年月">
+                </div>
             </div>
-        </div>
-<br>
+            <hr>
+            <div class="form-group">
+                <label for="educated" class="col-sm-2 control-label">教育经历</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="educated" placeholder="请输入您的教育经历s">
+                </div>
+            </div>
+            <hr>
+            <div class="form-group">
+                <label for="work" class="col-sm-2 control-label">所在行业</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="work" placeholder="请输入您的所在行业">
+                </div>
+            </div>
+            <hr>
+            <div class="form-group">
+                <label for="sex" class="col-sm-2 control-label">个人简介</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" rows="3"></textarea>
+                </div>
+            </div>
+            <br>
 
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default">cancel</button>
-                &nbsp;
-                <button type="submit" style="background-color:#096c47;color:#ffffff;" class="btn btn-default">save</button>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default">cancel</button>
+                    &nbsp;
+                    <button type="submit" style="background-color:#096c47;color:#ffffff;" class="btn btn-default">save
+                    </button>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
 
         <hr class="featurette-divider">
 
         <!-- /END THE FEATURETTES -->
-{% endblock %}
-        <!-- FOOTER -->
-        <footer>
-            <p class="pull-right">
-                <a href="#">回到顶部</a>
-            </p>
-            <p>&copy; 2018 广东工业大学, 自动化学院. &middot;
-                <a href="#">物联网工程</a> &middot;
-                <a href="#">2014级4班</a>
-            </p>
-        </footer>
-    </div>
-    <!-- /.container -->
+    {% endblock %}
+    <!-- FOOTER -->
+    <footer>
+        <p class="pull-right">
+            <a href="#">回到顶部</a>
+        </p>
+        <p>&copy; 2018 广东工业大学, 自动化学院. &middot;
+            <a href="#">物联网工程</a> &middot;
+            <a href="#">2014级4班</a>
+        </p>
+    </footer>
+</div>
+<!-- /.container -->
 
 
-    <!-- Bootstrap core JavaScript
+<!-- Bootstrap core JavaScript
 ================================================== -->
 
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-    <script src="../../assets/js/vendor/holder.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-{% block custom_js %}{% endblock %}
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+<script src="../../assets/js/vendor/holder.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+
+<script>
+    //顶部搜索栏搜索方法
+    function search_click() {
+        var type = $('#jsSelectOption').attr('data-value'),
+            keywords = $('#search_keywords').val(),
+            request_url = '';
+        if (keywords == "") {
+            return
+        }
+        if (type == "article") {
+            request_url = "/article/list?keywords=" + keywords
+        } else if (type == "user") {
+            request_url = "/user/list?keywords=" + keywords
+        }
+        window.location.href = request_url
+    }
+
+    //顶部搜索栏搜索按钮事件
+    $('#jsSelectOption').on('click', function () {
+        var $jsSelectMenu = $('#jsSelectMenu');
+        if ($jsSelectMenu.css('display') == 'block') return;
+        $jsSelectMenu.addClass('dis');
+    });
+    $('#jsSelectMenu > li').on('click', function () {
+        var searchType = $(this).attr('data-value'),
+            searchName = $(this).text(),
+            $jsSelectOption = $('#jsSelectOption');
+        $jsSelectOption.attr('data-value', searchType).text(searchName);
+        $(this).parent().removeClass('dis');
+    });
+    $(document).on('click', function (e) {
+        if (e.target != $('#jsSelectOption')[0] && e.target != $('#jsSelectMenu')[0]) {
+            $('#jsSelectMenu').removeClass('dis');
+        }
+    });
+
+
+    $('#jsSearchBtn').on('click', function () {
+        search_click()
+    });
+    //搜索表单键盘事件
+    $("#search_keywords").keydown(function (event) {
+        if (event.keyCode == 13) {
+            $('#jsSearchBtn').trigger('click');
+        }
+    });
+
+</script>
+{% block custom_js %}
+
+{% endblock %}
+
 </body>
 
 </html>

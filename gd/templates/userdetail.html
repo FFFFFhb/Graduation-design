@@ -110,7 +110,7 @@
                     <a href="/">
                         <span class="glyphicon glyphicon-home"></span> 首页</a>
                 </li>
-                <li class="active">
+                <li>
                     <a href="{% url 'article:article_list' %}">
                         <span class="glyphicon glyphicon-align-justify"></span> 文章列表</a>
                 </li>
@@ -123,33 +123,25 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
 
-                <form class="navbar-form navbar-left" role="search">
+                <div class="navbar-form navbar-left" role="search">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown">
+                        <button id="jsSelectOption" type="button" class="btn btn-default dropdown-toggle "
+                                data-toggle="dropdown" data-value="article">
                             文章
                             <span class="caret"></span>
                         </button>
-
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <a href="#">文章</a>
-                            </li>
-                            <li role="presentation" class="disabled">
-                                <a href="#">用户</a>
-                            </li>
-
-                            <li role="presentation">
-                                <a href="#">发表日期(yy-mm-dd)</a>
-                            </li>
+                        <ul class="dropdown-menu" role="menu" id="jsSelectMenu">
+                            <li data-value="article"><a href="#">文章</a></li>
+                            <li data-value="user"><a href="#">用户</a></li>
                         </ul>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
-                        <button type="submit" class="btn btn-default">
+                        <input id="search_keywords" type="text" class="form-control" placeholder="请输入搜索内容">
+                        <button id="jsSearchBtn" type="submit" class="btn btn-default">
                             <span class="glyphicon glyphicon-search"></span>
                         </button>
                     </div>
-                </form>
+                </div>
 
 
                 <ul class="nav navbar-nav navbar-right">
@@ -157,14 +149,14 @@
 {#                         <li><a href="{% url 'user:user_info' %}"><img width="20" height="20" src="/static/images/fzth.ico"/>&nbsp;{{ request.user.username }}#}
 {#                         </a></li>#}
 
-                        <li class="dropdown">
+                        <li {% if request.path|slice:'10' == '/user/info' %}class="active dropdown" {% else %} {% endif %}>
                     <a href="{% url 'user:user_info' %}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                         <img width="20" height="20" src="/static/images/fzth.ico"/>&nbsp;{{ request.user.username }}
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                          <li>
-                            <a href="{% url 'user:user_info' %}">进入个人主页</a>
+                            <a href="{% url 'user:user_detail' request.user.id  %}">进入个人主页</a>
                         </li>
                         <li>
                             <a href="{% url 'user:user_info' %}">进入个人中心</a>
@@ -230,7 +222,7 @@
         <div class="col-xs-9">
             <hr id="section-1" style="padding:0%;margin:5%;" class="featurette-divider">
             <h2 >个人资料</h2>
-            <h4>个人介绍：</h4>
+            <h4>个人介绍：{{ request.user.short_summary }}</h4>
             <p>昵称：{{ request.user.nick_name }}</p>
             <p>一句话介绍：{{ request.user.short_summary }}</p>
             <p>e-mail:{{ request.user.email }}</p>
@@ -241,42 +233,42 @@
             <p>居住地:{{ request.user.address }}</p>
             <p>个人简介:{{ request.user.summary }}</p>
             <p class="text-center">
-                <a class="btn btn-default" href="#" role="button">Edit &raquo;</a>
+                <a class="btn btn-default" href="{% url 'user:edit_message' %}" role="button">Edit &raquo;</a>
             </p>
         
             <hr id="section-2" style="padding:0%;margin:5%;" class="featurette-divider">
             <h2 >我的文章</h2>
+        {% for article in my_article %}
             <div class="row featurette">
-            
                 <div class="row col-md-12">
                     <div class="media">
                         <div class="media-body">
                             <div>
                                 <div>
                                     <span>
-                                        <h5 style="color:#777;">发表时间：2018年3月1日</h5>
+                                        <h5 style="color:#777;">发表时间：{{ article.add_time }}</h5>
                                     </span>
                                 </div>
                                 <div>
                                     <span>
                                         <a href="">
-                                            <img width="24" height="24" src="images\LOGO.png" alt="">
+                                            <img width="24" height="24" src="{{ MEDIA_URL }}{{ request.user.image }}" alt="">
                                         </a>
                                         <a href="#" style="color:black;">
-                                            Froben
+                                            {{ request.user.nick_name }}
                                         </a>
-                                        <small style="color:#777;">&nbsp;目标：机器学习工程师,数据挖掘工程师</small>
+                                        <small style="color:#777;">&nbsp;{{ request.user.short_summary }}</small>
                                     </span>
                                 </div>
                             </div>
                             <div class="col-md-13" data-toggle="collapse" data-target="#collapseTwo">
                                 <h3 style="padding:0%;margin:2%;">
-                                    <b>展示第一篇文章</b>
+                                    <b>{{ article.title }}</b>
                                     <span class="text-muted">
-                                        <small>副标题</small>
+                                        <small>{{ article.desc }}</small>
                                     </span>
                                 </h3>
-                                <p class=""> 内容简介内容简介内容简介内容简介
+                                <p class=""> {{ article.detail }}
                                 </p>
                             </div>
                         </div>
@@ -287,45 +279,35 @@
                             <div class="row">
                                 <div class="col-xs-3 col-md-3">
                                     <a href="#" class="thumbnail">
-                                        <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
+                                        <img class="media-object" style="height:120px;width:100%;display:block;" src="{{ MEDIA_URL }}{{ article.image }}" alt="...">
                                     </a>
                                 </div>
-                                <div class="col-xs-3 col-md-3">
-                                    <a href="#" class="thumbnail">
-                                        <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                                    </a>
-                                </div>
-                                <div class="col-xs-3 col-md-3">
-                                    <a href="#" class="thumbnail">
-                                        <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                                    </a>
-                                </div>
-                                <div class="col-xs-3 col-md-3">
-                                    <a href="#" class="thumbnail">
-                                        <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                                    </a>
-                                </div>
-                              
                             </div>
             
                         </div>
             
             
                         <div class="col-md-8 col-sm-offset-2 text-center">
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="background-color:#096c47;">
-                                编&nbsp;&nbsp;辑
-                            </button>
-                            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="background-color:#096C47;">
-                                展开全文
-                            </button>
-                            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="background-color:#096c47;">
-                                评&nbsp;&nbsp;论
-                            </button>
-                        </div>
+                                <button type="button" class="btn btn-primary btn-lg collect-btn"
+                                        style="background-color:#096c47;" data-articleid="{{ article.id }}">
+                                    <span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;<span class="badge">{{ article.fav_nums }}</span>
+                                </button>
+                                {#<span class="glyphicon glyphicon-heart"></span>&nbsp;#}
+                                <a href="{% url 'article:article_detail' article.id %}" target="_blank">
+                                    <button type="button" class="btn btn-primary btn-lg"
+                                            style="background-color:#096c47;">
+                                        <span class="glyphicon glyphicon-file"></span> read all
+                                    </button>
+                                </a>
+                                <button type="button" class="btn btn-primary btn-lg"
+                                        style="background-color:#096c47;" >
+                                    <span class="glyphicon glyphicon-edit"></span> 编&nbsp;辑
+                                </button>
+                            </div>
                     </div>
                 </div>
             </div>
+        {% endfor %}
             <hr id="section-3" style="padding:0%;margin:5%;" class="featurette-divider">
             <h2>我的关注</h2>
             <p>暂未开发</p>
@@ -514,26 +496,21 @@
                         <div>
                             <span>
                                 <a href="">
-                                    <img width="24" height="24" src="images\LOGO.png" alt="">
+                                    <img width="24" height="24" src="{{ MEDIA_URL }}{{ request.user.image }}" alt="">
                                 </a>
                                 <a href="#" style="color:black;">
-                                    Froben -- 文章名字
+                                    {{ request.user.nick_name }} -- 文章名字
                                 </a>
     
                             </span>
                         </div>
                     </div>
-                    <div class="col-md-12" data-toggle="collapse" data-target="#collapseSecond">
+                    <div class="col-md-12">
                         <p>---介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介简介内容简介内容简
     
                         </p>
                     </div>
-                    <div id="collapseSecond" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher
-                            vice lomo.
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -577,7 +554,54 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
 
+<script>
+    //顶部搜索栏搜索方法
+    function search_click() {
+        var type = $('#jsSelectOption').attr('data-value'),
+            keywords = $('#search_keywords').val(),
+            request_url = '';
+        if (keywords == "") {
+            return
+        }
+        if (type == "article") {
+            request_url = "/article/list?keywords=" + keywords
+        } else if (type == "user") {
+            request_url = "/user/list?keywords=" + keywords
+        }
+        window.location.href = request_url
+    }
 
+    //顶部搜索栏搜索按钮事件
+    $('#jsSelectOption').on('click', function () {
+        var $jsSelectMenu = $('#jsSelectMenu');
+        if ($jsSelectMenu.css('display') == 'block') return;
+        $jsSelectMenu.addClass('dis');
+    });
+    $('#jsSelectMenu > li').on('click', function () {
+        var searchType = $(this).attr('data-value'),
+            searchName = $(this).text(),
+            $jsSelectOption = $('#jsSelectOption');
+        $jsSelectOption.attr('data-value', searchType).text(searchName);
+        $(this).parent().removeClass('dis');
+    });
+    $(document).on('click', function (e) {
+        if (e.target != $('#jsSelectOption')[0] && e.target != $('#jsSelectMenu')[0]) {
+            $('#jsSelectMenu').removeClass('dis');
+        }
+    });
+
+
+    $('#jsSearchBtn').on('click', function () {
+        search_click()
+    });
+    //搜索表单键盘事件
+    $("#search_keywords").keydown(function (event) {
+        if (event.keyCode == 13) {
+            $('#jsSearchBtn').trigger('click');
+        }
+    });
+
+</script>
 </body>
 
 </html>
