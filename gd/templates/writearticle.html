@@ -2,57 +2,136 @@
 {% load staticfiles %}
 {% block title %}新文章 - F-ZTH{% endblock %}
 {% block custom_css %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/simditor.css' %}"/>
-{#     <link href="css/blog.css" rel="stylesheet">#}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/simditor.css' %}"/>
+    {#     <link href="css/blog.css" rel="stylesheet">#}
+    <style>
+        #img_file {
+            display: none;
+        }
+    </style>
 {% endblock %}
 {% block custom_js %}
-<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/module.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/hotkeys.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/uploader.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/simditor.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/validate.js' %}"></script>
+
     <script>
-    var editor = new Simditor({
-            textarea: $('#editor')
-            //optional options
+
+
+        $('#img_file').change(function () {
+            loadImg();
+        })
+
+        function loadImg() {
+            var file = $(".img_btn").find("input")[0].files[0];
+            console.log(file)
+            var reader = new FileReader();
+            var imgFile;
+            reader.onload = function (e) {
+                imgFile = e.target.result;
+                console.log(imgFile);
+                $("#image").attr('src', imgFile);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        {#             --------------------------------------------------------------------------------------------------#}
+        $('#jsNewArticleBtn').on('click', function () {
+
+            var _self = $(this),
+                $jsNewArticleForm = $('#jsNewArticleForm')
+            verify = verifySubmit(
+                [
+                    {id: '#newtitle', tips: Dml.Msg.epNickName, require: true}
+                ]
+            );
+            if (!verify) {
+                return;
+            }
+            $.ajax({
+                cache: false,
+                type: "POST",
+                dataType: 'json',
+                url: "{% url 'operation:operation_write' %}",
+                data: $jsNewArticleForm.serialize(),
+                async: true,
+                beforeSend: function (xhr, settings) {
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+
+                success: function (data) {
+                    if (data.title) {
+                        _showValidateError($('#newtitle'), data.title);
+                    } else if (data.detail) {
+                        _showValidateError($('.newdetail'), data.detail);
+                    } else if (data.status == "failure") {
+                        Dml.fun.showTipsDialog({
+                            title: '保存失败',
+                            h2: data.msg
+                        });
+                    } else if (data.status == "success") {
+                        Dml.fun.showTipsDialog({
+                            title: '保存成功',
+                            h2: '文章保存成功！'
+                        });
+                        setTimeout(function () {
+                            window.location.href = window.location.href;
+                        }, 1500);
+{#                        alert("评论发表成功");#}
+{#                        window.location.reload();//刷新当前页面.#}
+                    }
+                },
+                complete: function (XMLHttpRequest) {
+                    _self.val("保存");
+                    _self.removeAttr("disabled");
+                }
+            });
         });
-</script>
+
+    </script>
 {% endblock %}
 {% block content %}
-<div class="blog-header">
+    <div class="blog-header">
         <br>
     </div>
     <!-- /.row -->
     <div class="container">
         <hr style="padding:0%;margin:2%;" class="featurette-divider">
-        <div class="blog-header">
-            <div class="row">
-                <h1 class="text-center">New article</h1>
-            </div>
-        </div>
         <div class="">
-            <form action="" class="center-block">
-                <h2>Title:</h2>
-                <input type="title" id="inputEmail" class="form-control" placeholder="New article title" required
-                       autofocus>
+            <form class="perinform center-block" id="" autocomplete="off" method="post" enctype="multipart/form-data"
+                  action="{% url 'operation:operation_write' %}">
+                <div style="text-align: center;">
+                    <img name="fengmiantu" id="image" src="{% static 'images/default_surface.jpg' %}"/>
+                </div>
                 <br>
-                <h2>Content:</h2>
-                <textarea id="editor" placeholder="这里输入内容" autofocus></textarea>
+                <div class="text-center">
+                    <label class="btn btn-default btn-lg img_btn" style="color: #8590a6;">
+                        <input type="file" id="img_file" name="image" accept=".jpg,.png" hidden/>添加文章封面</label>
+                </div>
+                <h3>题目</h3>
+                <input type="text" id="newtitle" class="form-control" name="title" placeholder="请输入文章题目"/>
+
+                <h3>正文</h3>
+                <textarea id="newdetail" name="detail" class="form-control" placeholder="请输入文章内容"></textarea>
                 <br>
-                <nav>
-                    <center>
-                        <button type="button" class="btn btn-primary btn-lg" style="background-color:#555;">
-                            取消
+                <center>
+                    <div class="btn_wrap">
+                        <button type="button" class="btn btn-default btn-lg">
+                            <a href="{% url 'article:article_list' %}" style="color:#8590a6;">取消</a>
                         </button>
-                        <button type="button" class="btn btn-primary btn-lg" style="background-color:#096c47;">
-                            完成
+                        <button class="btn_finish btn btn-primary btn-lg" id="jsNewArticleBtn"
+                                style="background-color:#096c47;">完成
                         </button>
-                    </center>
-                </nav>
+                    </div>
+                </center>
+                {% csrf_token %}
             </form>
+            <hr>
         </div>
     </div>
-
 
 
 {% endblock %}

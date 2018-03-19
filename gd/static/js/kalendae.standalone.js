@@ -1113,7 +1113,7 @@ Kalendae.Input = function (targetElement, options) {
 
 Kalendae.Input.prototype = util.merge(Kalendae.prototype, {
 	defaults : util.merge(Kalendae.prototype.defaults, {
-		format: 'MM/DD/YYYY',
+		format: 'YYYY-MM-DD',
 		side: 'bottom',
 		closeButton: true,
 		offsetLeft: 0,
@@ -2239,7 +2239,7 @@ var MinPubSub = function(d){
         _longDateFormat : {
             LTS : 'h:mm:ss A',
             LT : 'h:mm A',
-            L : 'MM/DD/YYYY',
+            L : 'YYYY-MM-DD',
             LL : 'MMMM D, YYYY',
             LLL : 'MMMM D, YYYY LT',
             LLLL : 'dddd, MMMM D, YYYY LT'

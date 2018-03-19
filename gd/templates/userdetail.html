@@ -32,7 +32,7 @@
     <link href="{% static 'css/carousel.css' %}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-{#    <link href="{% static 'css/blog.css' %}" rel="stylesheet">#}
+    {#    <link href="{% static 'css/blog.css' %}" rel="stylesheet">#}
 
     <style>
         .fixed-btn {
@@ -47,42 +47,47 @@
             -webkit-backface-visibility: hidden;
         }
 
-
         /* Custom Styles */
-    ul.nav-tabs{
-        width: 140px;
-        margin-top: 20px;
-        border-radius: 4px;
-        border: 1px solid #ddd;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
-    }
-    ul.nav-tabs li{
-        margin: 0;
-        border-top: 1px solid #ddd;
-    }
-    ul.nav-tabs li:first-child{
-        border-top: none;
-    }
-    ul.nav-tabs li a{
-        margin: 0;
-        padding: 8px 16px;
-        border-radius: 0;
-    }
-   
-    ul.nav-tabs li.active a, ul.nav-tabs li.active a:hover{
-        color: #fff;
-        background: #096c47;
-        border: 1px solid #0088cc;
-    }
-    ul.nav-tabs li:first-child a{
-        border-radius: 4px 4px 0 0;
-    }
-    ul.nav-tabs li:last-child a{
-        border-radius: 0 0 4px 4px;
-    }
-    ul.nav-tabs.affix{
-        top: 30px; /* Set the top position of pinned element */
-    }
+        ul.nav-tabs {
+            width: 140px;
+            margin-top: 20px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
+        }
+
+        ul.nav-tabs li {
+            margin: 0;
+            border-top: 1px solid #ddd;
+        }
+
+        ul.nav-tabs li:first-child {
+            border-top: none;
+        }
+
+        ul.nav-tabs li a {
+            margin: 0;
+            padding: 8px 16px;
+            border-radius: 0;
+        }
+
+        ul.nav-tabs li.active a, ul.nav-tabs li.active a:hover {
+            color: #fff;
+            background: #096c47;
+            border: 1px solid #0088cc;
+        }
+
+        ul.nav-tabs li:first-child a {
+            border-radius: 4px 4px 0 0;
+        }
+
+        ul.nav-tabs li:last-child a {
+            border-radius: 0 0 4px 4px;
+        }
+
+        ul.nav-tabs.affix {
+            top: 30px; /* Set the top position of pinned element */
+        }
 
     </style>
 </head>
@@ -95,8 +100,9 @@
 <nav class="navbar navbar-default navbar-inverse">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-                aria-controls="navbar">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false"
+                    aria-controls="navbar">
                 <span class="sr-only">From Zero to Hero</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -118,7 +124,8 @@
                     <a href="#contact"><span class="glyphicon glyphicon-user"></span> 用户列表</a>
                 </li>
                 <li>
-                    <a href="{% url 'operation:operation_write' %}" ><span class="glyphicon glyphicon-edit"></span> 写文章</a>
+                    <a href="{% url 'operation:operation_write' %}"><span class="glyphicon glyphicon-edit"></span>
+                        写文章</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -146,26 +153,28 @@
 
                 <ul class="nav navbar-nav navbar-right">
                     {% if request.user.is_authenticated %}
-{#                         <li><a href="{% url 'user:user_info' %}"><img width="20" height="20" src="/static/images/fzth.ico"/>&nbsp;{{ request.user.username }}#}
-{#                         </a></li>#}
+                        {#                         <li><a href="{% url 'user:user_info' %}"><img width="20" height="20" src="/static/images/fzth.ico"/>&nbsp;{{ request.user.username }}#}
+                        {#                         </a></li>#}
 
                         <li {% if request.path|slice:'10' == '/user/info' %}class="active dropdown" {% else %} {% endif %}>
-                    <a href="{% url 'user:user_info' %}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        <img width="20" height="20" src="/static/images/fzth.ico"/>&nbsp;{{ request.user.username }}
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                         <li>
-                            <a href="{% url 'user:user_detail' request.user.id  %}">进入个人主页</a>
+                            <a href="{% url 'user:user_info' %}" class="dropdown-toggle" data-toggle="dropdown"
+                               role="button" aria-haspopup="true" aria-expanded="false">
+                                <img width="20" height="20"
+                                     src="{{ MEDIA_URL }}{{ request.user.image }}"/>&nbsp;{{ request.user.username }}
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{% url 'user:user_detail' request.user.id %}">进入个人主页</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'user:user_info' %}">进入个人中心</a>
+                                </li>
+                            </ul>
                         </li>
-                        <li>
-                            <a href="{% url 'user:user_info' %}">进入个人中心</a>
-                        </li>
-                    </ul>
-                </li>
 
 
-                         <li><a href="/logout/">退出</a></li>
+                        <li><a href="/logout/">退出</a></li>
                     {% else %}
                         <li><a href="#"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
                         <li><a href="/login/"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
@@ -180,379 +189,324 @@
 </nav>
 
 
-
 <div class="container marketing">
 
-        <!-- Three columns of text below the carousel -->
-        <div class="blog-header">
-            <!-- <h3 class="blog-title">&nbsp;发呆</h3> -->
-            <br>
-        </div>
-        <!-- /.row -->
+    <!-- Three columns of text below the carousel -->
+    <div class="blog-header">
+        <!-- <h3 class="blog-title">&nbsp;发呆</h3> -->
+        <br>
+    </div>
+    <!-- /.row -->
 
-          
 
     <div class="container">
-    <div class="jumbotron">
-        <h1>个人中心</h1>
-    </div>
-    <div class="row">
-        <div class="col-xs-3" id="myScrollspy">
-            <ul class="nav nav-tabs nav-stacked" data-spy="affix" data-offset-top="125" >
-                <li class="active">
-                    <a href="#section-1">个人信息</a>
-                </li>
-                <li>
-                    <a href="#section-2">我的文章</a>
-                </li>
-                <li>
-                    <a href="#section-3">我的关注</a>
-                </li>
-                <li>
-                    <a href="#section-4">我的收藏</a>
-                </li>
-                <li>
-                    <a href="#section-5">我的评论</a>
-                </li>
-                <li>
-                    <a href="#top">回到顶部</a>
-                </li>
-            </ul>
+        <div class="jumbotron">
+            <h1>个人中心</h1>
         </div>
-        <div class="col-xs-9">
-            <hr id="section-1" style="padding:0%;margin:5%;" class="featurette-divider">
-            <h2 >个人资料</h2>
-            <h4>个人介绍：{{ request.user.short_summary }}</h4>
-            <p>昵称：{{ request.user.nick_name }}</p>
-            <p>一句话介绍：{{ request.user.short_summary }}</p>
-            <p>e-mail:{{ request.user.email }}</p>
-            <p>性别:{% if request.user.gender == 'male' %}男{% elif request.user.gender == 'female' %}女{% endif %}</p>
-            <p>出生年月:{{ request.user.birthday|default_if_none:'' }}</p>
-            <p>教育经历:{{ request.user.eduated }}</p>
-            <p>所在行业:{{ request.user.profession }}</p>
-            <p>居住地:{{ request.user.address }}</p>
-            <p>个人简介:{{ request.user.summary }}</p>
-            <p class="text-center">
-                <a class="btn btn-default" href="{% url 'user:edit_message' %}" role="button">Edit &raquo;</a>
-            </p>
-        
-            <hr id="section-2" style="padding:0%;margin:5%;" class="featurette-divider">
-            <h2 >我的文章</h2>
-        {% for article in my_article %}
-            <div class="row featurette">
-                <div class="row col-md-12">
-                    <div class="media">
-                        <div class="media-body">
-                            <div>
-                                <div>
+        <div class="row">
+            <div class="col-xs-3" id="myScrollspy">
+                <ul class="nav nav-tabs nav-stacked" data-spy="affix" data-offset-top="125">
+                    <li class="active">
+                        <a href="#section-1">个人信息</a>
+                    </li>
+                    <li>
+                        <a href="#section-2">我的文章</a>
+                    </li>
+                    <li>
+                        <a href="#section-3">我的关注</a>
+                    </li>
+                    <li>
+                        <a href="#section-4">我的收藏</a>
+                    </li>
+                    <li>
+                        <a href="#section-5">我的评论</a>
+                    </li>
+                    <li>
+                        <a href="#top">回到顶部</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-xs-9">
+                <hr id="section-1" style="padding:0%;margin:5%;" class="featurette-divider">
+                <h2>个人资料</h2>
+                {#                <h4>个人介绍：{{ request.user.short_summary }}</h4>#}
+                <p>昵称：{{ request.user.nick_name }}</p>
+                <p>一句话介绍：{{ request.user.short_summary }}</p>
+                <p>e-mail:{{ request.user.email }}</p>
+                <p>性别:{% if request.user.gender == 'male' %}男{% elif request.user.gender == 'female' %}女{% endif %}</p>
+                <p>出生年月:{{ request.user.birthday|default_if_none:'' }}</p>
+                <p>教育经历:{{ request.user.eduated }}</p>
+                <p>所在行业:{{ request.user.profession }}</p>
+                <p>居住地:{{ request.user.address }}</p>
+                <p>个人简介:{{ request.user.summary }}</p>
+                <p class="text-center">
+                    <a class="btn btn-default" href="{% url 'user:edit_message' %}" role="button">Edit &raquo;</a>
+                </p>
+
+                <hr id="section-2" style="padding:0%;margin:5%;" class="featurette-divider">
+                <h2>我的文章</h2>
+                {% for article in my_article %}
+                    <div class="row featurette">
+                        <div class="row col-md-12">
+                            <div class="media">
+                                <div class="media-body">
+                                    <div>
+                                        <div>
                                     <span>
                                         <h5 style="color:#777;">发表时间：{{ article.add_time }}</h5>
                                     </span>
-                                </div>
-                                <div>
+                                        </div>
+                                        <div>
                                     <span>
                                         <a href="">
-                                            <img width="24" height="24" src="{{ MEDIA_URL }}{{ request.user.image }}" alt="">
+                                            <img width="24" height="24" src="{{ MEDIA_URL }}{{ request.user.image }}"
+                                                 alt="">
                                         </a>
                                         <a href="#" style="color:black;">
                                             {{ request.user.nick_name }}
                                         </a>
                                         <small style="color:#777;">&nbsp;{{ request.user.short_summary }}</small>
                                     </span>
-                                </div>
-                            </div>
-                            <div class="col-md-13" data-toggle="collapse" data-target="#collapseTwo">
-                                <h3 style="padding:0%;margin:2%;">
-                                    <b>{{ article.title }}</b>
-                                    <span class="text-muted">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-13" data-toggle="collapse" data-target="#collapseTwo">
+                                        <h3 style="padding:0%;margin:2%;">
+                                            <b>{{ article.title }}</b>
+                                            <span class="text-muted">
                                         <small>{{ article.desc }}</small>
                                     </span>
-                                </h3>
-                                <p class=""> {{ article.detail }}
-                                </p>
-                            </div>
-                        </div>
-            
-                        <div class="media-bottom">
-            
-            
-                            <div class="row">
-                                <div class="col-xs-3 col-md-3">
-                                    <a href="#" class="thumbnail">
-                                        <img class="media-object" style="height:120px;width:100%;display:block;" src="{{ MEDIA_URL }}{{ article.image }}" alt="...">
-                                    </a>
-                                </div>
-                            </div>
-            
-                        </div>
-            
-            
-                        <div class="col-md-8 col-sm-offset-2 text-center">
-                                <button type="button" class="btn btn-primary btn-lg collect-btn"
-                                        style="background-color:#096c47;" data-articleid="{{ article.id }}">
-                                    <span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;<span class="badge">{{ article.fav_nums }}</span>
-                                </button>
-                                {#<span class="glyphicon glyphicon-heart"></span>&nbsp;#}
-                                <a href="{% url 'article:article_detail' article.id %}" target="_blank">
-                                    <button type="button" class="btn btn-primary btn-lg"
-                                            style="background-color:#096c47;">
-                                        <span class="glyphicon glyphicon-file"></span> read all
-                                    </button>
-                                </a>
-                                <button type="button" class="btn btn-primary btn-lg"
-                                        style="background-color:#096c47;" >
-                                    <span class="glyphicon glyphicon-edit"></span> 编&nbsp;辑
-                                </button>
-                            </div>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-            <hr id="section-3" style="padding:0%;margin:5%;" class="featurette-divider">
-            <h2>我的关注</h2>
-            <p>暂未开发</p>
-           
-            <hr id="section-4" style="padding:0%;margin:5%;" class="featurette-divider">
-            <h2>我的收藏</h2>
-            <div class="row featurette">
-                <div class="row col-md-12">
-                    <div class="media">
-                        <div class="media-body">
-                            <div>
-                                <div>
-                                    <span>
-                                        <h5 style="color:#777;">发表时间：2018年3月1日</h5>
-                                    </span>
-                                </div>
-                                <div>
-                                    <span>
-                                        <a href="">
-                                            <img width="24" height="24" src="images\LOGO.png" alt="">
-                                        </a>
-                                        <a href="#" style="color:black;">
-                                            Froben
-                                        </a>
-                                        <small style="color:#777;">&nbsp;目标：机器学习工程师,数据挖掘工程师</small>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="col-md-13">
-                                <h3 style="padding:0%;margin:2%;">
-                                    <b>展示第一篇文章</b>
-                                    <span class="text-muted">
-                                        <small>副标题</small>
-                                    </span>
-                                </h3>
-            
-                                <p class=""> 内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介 3内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介 内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介
-                                    内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介
-                                </p>
-                            </div>
-                        </div>
-            
-                        <div class="media-bottom">
-            
-            
-                            <div class="row">
-                                <div class="col-xs-3 col-md-3">
-                                    <a href="#" class="thumbnail">
-                                        <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                                    </a>
-                                </div>
-                                <div class="col-xs-3 col-md-3">
-                                    <a href="#" class="thumbnail">
-                                        <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                                    </a>
-                                </div>
-                                <div class="col-xs-3 col-md-3">
-                                    <a href="#" class="thumbnail">
-                                        <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                                    </a>
-                                </div>
-                                <div class="col-xs-3 col-md-3">
-                                    <a href="#" class="thumbnail">
-                                        <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                                    </a>
-                                </div>
-                               
-                            </div>
-            
-                        </div>
-            
-            
-                        <div class="col-md-8 col-sm-offset-2 text-center">
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="background-color:#096c47;">
-                                取消收藏
-                            </button>
-                            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="background-color:#096C47;">
-                                展开全文
-                            </button>
-                            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="background-color:#096c47;">
-                                评&nbsp;&nbsp;论
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row featurette">
-                <div class="row col-md-12">
-                    <div class="media">
-                        <div class="media-body">
-                            <div>
-                                <div>
-                                    <span>
-                                        <h5 style="color:#777;">发表时间：2018年3月1日</h5>
-                                    </span>
-                                </div>
-                                <div>
-                                    <span>
-                                        <a href="">
-                                            <img width="24" height="24" src="images\LOGO.png" alt="">
-                                        </a>
-                                        <a href="#" style="color:black;">
-                                            Froben
-                                        </a>
-                                        <small style="color:#777;">&nbsp;目标：机器学习工程师,数据挖掘工程师</small>
-                                    </span>
-                                </div>
-                            </div>
-                           
-
-                            <div class="col-md-13" data-toggle="collapse" data-target="#collapseOne">
-                                <h3 style="padding:0%;margin:2%;">
-                                    <b>展示第一篇文章</b>
-                                    <span class="text-muted">
-                                        <small>副标题</small>
-                                    </span>
-                                </h3>
-                                <p class="">容简介内容简介内容简介...
-                                </p>
-                            </div>
-                                <div id="collapseOne" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher
-                                        vice lomo.
+                                        </h3>
+                                        <p class=""> {{ article.detail }}
+                                        </p>
                                     </div>
                                 </div>
-                            
-                        </div>
-            
-                        <div class="media-bottom">
-            
-            
-                            <div class="row">
-                                <div class="col-xs-3 col-md-3">
-                                    <a href="#" class="thumbnail">
-                                        <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
+
+                                <div class="media-bottom">
+
+
+                                    <div class="row">
+                                        <div class="col-xs-3 col-md-3">
+                                            <a href="#" class="thumbnail">
+                                                <img class="media-object" style="height:120px;width:100%;display:block;"
+                                                     src="{{ MEDIA_URL }}{{ article.image }}" alt="...">
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="col-md-8 col-sm-offset-2 text-center">
+                                    <button type="button" class="btn btn-primary btn-lg collect-btn"
+                                            style="background-color:#096c47;" data-articleid="{{ article.id }}">
+                                        <span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;<span
+                                            class="badge">{{ article.fav_nums }}</span>
+                                    </button>
+                                    {#<span class="glyphicon glyphicon-heart"></span>&nbsp;#}
+                                    <a href="{% url 'article:article_detail' article.id %}" target="_blank">
+                                        <button type="button" class="btn btn-primary btn-lg"
+                                                style="background-color:#096c47;">
+                                            <span class="glyphicon glyphicon-file"></span> read all
+                                        </button>
+                                    </a>
+                                    <a href="{% url 'operation:operation_edit' article.id %}" target="_blank">
+                                        <button type="button" class="btn btn-primary btn-lg"
+                                                style="background-color:#096c47;">
+                                            <span class="glyphicon glyphicon-edit"></span> 编&nbsp;辑
+                                        </button>
                                     </a>
                                 </div>
-                                <div class="col-xs-3 col-md-3">
-                                    <a href="#" class="thumbnail">
-                                        <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                                    </a>
-                                </div>
-                                <div class="col-xs-3 col-md-3">
-                                    <a href="#" class="thumbnail">
-                                        <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                                    </a>
-                                </div>
-                                <div class="col-xs-3 col-md-3">
-                                    <a href="#" class="thumbnail">
-                                        <img class="media-object" style="height:120px;width:100%;display:block;" src="images\LOGO.png" alt="...">
-                                    </a>
-                                </div>
-                                
                             </div>
-            
-                        </div>
-            
-            
-                        <div class="col-md-8 col-sm-offset-2 text-center">
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="background-color:#096c47;">
-                                取消收藏
-                            </button>
-                            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="background-color:#096C47;">
-                                展开全文
-                            </button>
-                            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="background-color:#096c47;">
-                                评&nbsp;&nbsp;论
-                            </button>
                         </div>
                     </div>
-                </div>
-            </div>
-            <hr id="section-5" style="padding:0%;margin:5%;" class="featurette-divider">
-            <h2>我的评论</h2>
-    <div class="row featurette">
-        <div class="row col-md-12">
-            <div class="media">
-                <div class="media-left">
-    
-                </div>
-                <div class="media-body">
-                    <div>
-                        <div>
+                {% endfor %}
+                <hr id="section-3" style="padding:0%;margin:5%;" class="featurette-divider">
+                <h2>我的关注</h2>
+                <br>
+                {% for user in my_fav_user_list %}
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <img class="img-circle" src="{{ MEDIA_URL }}{{ user.image }}" alt="头像"
+                                 width="100" height="100">
+                            <h3>{{ user.nick_name }}</h3>
+                        </div>
+                        <div class="col-lg-6">
+                            <h5>一句话介绍：</h5>
+                            <p>e-mail:</p>
+                            <p>教育经历:</p>
+                            <p>所在行业:</p>
+                            <p>粉丝数：{{ user.fans_nums }}</p>
+                        </div>
+                        <div class="col-lg-2">
+
+                            <button type="button" class="btn btn-primary collect-btn"
+                                    style="background-color:#096c47;" data-userid="{{ user.id }}">
+                                关&nbsp;注
+                            </button>
+
+                            {#<span class="glyphicon glyphicon-heart"></span>&nbsp;#}
+                            <a href="{% url 'user:user_detail' user.id %}" target="_blank">
+                                <button type="button" class="btn btn-primary"
+                                        style="background-color:#096c47;">
+                                    <span class="glyphicon glyphicon-file"></span> 主页
+                                </button>
+                            </a>
+                        </div>
+                        <!-- /.col-lg-4 -->
+                        {#                        <div class="col-md-11 col-sm-offset-2 text-center">#}
+                        {#                            <button type="button" class="btn btn-primary collect-btn"#}
+                        {#                                    style="background-color:#096c47;" data-userid="{{ user.id }}">#}
+                        {#                                <span#}
+                        {#                                        class="badge">{{ user.fans_nums }}</span>&nbsp;关注#}
+                        {#                            </button>#}
+                        {#<span class="glyphicon glyphicon-heart"></span>&nbsp;#}
+                        {#                            <a href="{% url 'user:user_detail' user.id %}" target="_blank">#}
+                        {#                                <button type="button" class="btn btn-primary"#}
+                        {#                                        style="background-color:#096c47;">#}
+                        {#                                    <span class="glyphicon glyphicon-file"></span> read all#}
+                        {#                                </button>#}
+                        {#                            </a>#}
+                        {#                        </div>#}
+                    </div>
+                    {#                    <hr style="padding:0%;margin:2%;" class="featurette-divider">#}
+                {% endfor %}
+
+                <hr id="section-4" style="padding:0%;margin:5%;" class="featurette-divider">
+                <h2>我的收藏</h2>
+                {% for article in my_fav_article_list %}
+                    <div class="row featurette">
+                        <div class="row col-md-12">
+                            <div class="media">
+                                <div class="media-body">
+                                    <div>
+                                        <div>
+                                    <span>
+                                        <h5 style="color:#777;">发表时间：{{ article.add_time }}</h5>
+                                    </span>
+                                        </div>
+                                        <div>
+                                    <span>
+                                        <a href="">
+                                            <img width="24" height="24" src="{{ MEDIA_URL }}{{ article.author.image }}"
+                                                 alt="">
+                                        </a>
+                                        <a href="#" style="color:black;">
+                                            {{ article.author.nick_name }}
+                                        </a>
+                                        <small style="color:#777;">&nbsp;{{ article.author.short_summary }}</small>
+                                    </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-13">
+                                        <h3 style="padding:0%;margin:2%;">
+                                            <b>{{ article.title }}</b>
+                                            <span class="text-muted">
+                                        <small>{{ article.desc }}</small>
+                                    </span>
+                                        </h3>
+
+                                        <p class="">{{ article.detail }}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="media-bottom">
+
+
+                                    <div class="row">
+                                        <div class="col-xs-3 col-md-3">
+                                            <a href="#" class="thumbnail">
+                                                <img class="media-object" style="height:120px;width:100%;display:block;"
+                                                     src="{{ MEDIA_URL }}{{ article.image }}" alt="...">
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="col-md-8 col-sm-offset-2 text-center">
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"
+                                            data-target="#myModal" style="background-color:#096c47;">
+                                        取消收藏
+                                    </button>
+                                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"
+                                            data-target="#myModal" style="background-color:#096C47;">
+                                        展开全文
+                                    </button>
+                                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"
+                                            data-target="#myModal" style="background-color:#096c47;">
+                                        评&nbsp;&nbsp;论
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                <hr id="section-5" style="padding:0%;margin:5%;" class="featurette-divider">
+                <h2>我的评论</h2>
+                {% for comment in my_comment_list %}
+                    <div class="row featurette">
+                        <div class="row col-md-12">
+                            <div class="media">
+                                <div class="media-left">
+                                </div>
+                                <div class="media-body">
+                                    <div>
+                                        <div>
                             <span>
                                 <a href="">
                                     <img width="24" height="24" src="{{ MEDIA_URL }}{{ request.user.image }}" alt="">
                                 </a>
-                                <a href="#" style="color:black;">
-                                    {{ request.user.nick_name }} -- 文章名字
+                                <a href="{% url 'article:article_detail' comment.article.id %}" style="color:black;"
+                                   target="_blank">
+                                    {{ request.user.nick_name }} -- {{ comment.article.title }}
                                 </a>
-    
                             </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <p>{{ comment.comments }}</p>
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-12">
-                        <p>---介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介简介内容简介内容简
-    
-                        </p>
-                    </div>
-
-                </div>
+                {% endfor %}
             </div>
         </div>
-    </div>
-            
-           
-        
-           
-        </div>
-    </div>
-</div>
-        <!-- /.container -->
-
-
- 
-
-        <hr style="padding:0%;margin:2%;" class="featurette-divider">
-
-        <!-- FOOTER -->
-        <footer class="blog-footer">
-            <p>编写
-                <a href="#">网站主页</a> by
-                <a href="#">@冯浩斌</a>.</p>
-            <p>
-                <a href="#">回到顶部</a>
-            </p>
-        </footer>
-
     </div>
     <!-- /.container -->
 
 
-    <!-- Bootstrap core JavaScript
+    <hr style="padding:0%;margin:2%;" class="featurette-divider">
+
+    <!-- FOOTER -->
+    <footer class="blog-footer">
+        <p>编写
+            <a href="#">网站主页</a> by
+            <a href="#">@冯浩斌</a>.</p>
+        <p>
+            <a href="#">回到顶部</a>
+        </p>
+    </footer>
+
+</div>
+<!-- /.container -->
+
+
+<!-- Bootstrap core JavaScript
 ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-    <script src="../../assets/js/vendor/holder.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+<script src="../../assets/js/vendor/holder.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
 
 <script>
     //顶部搜索栏搜索方法

@@ -1,5 +1,6 @@
 # _*_ coding:utf-8 _*_
 import datetime
+import json
 
 from django.shortcuts import render
 from django.views.generic import View
@@ -130,3 +131,22 @@ class AddFavView(View):
 
             else:
                 return HttpResponse('{"status":"fail", "msg":"收藏出错"}', content_type='application/json')
+
+class AddCommentsView(View):
+    def post(self,request):
+        if not request.user.is_authenticated():
+            #判断用户登录状态
+            return HttpResponse(json.dumps({'status': 'fail', 'msg': '用户未登录'}), content_type='application/json')
+        article_id = request.POST.get('article_id',0)
+        comments = request.POST.get('comments','')
+        if int(article_id) > 0 and comments:
+            article_comments = ArticleComments()
+            article = Article.objects.get(id=int(article_id))
+            article_comments.article = article
+            article_comments.comments = comments
+            article_comments.user = request.user
+            article_comments.save()
+            return HttpResponse(json.dumps({'status': 'success', 'msg': '添加成功'}), content_type='application/json')
+        else:
+            return HttpResponse(json.dumps({'status': 'fail', 'msg': '添加失败'}), content_type='application/json')
+

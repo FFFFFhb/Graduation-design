@@ -35,13 +35,15 @@
             </div>
             <div class="col-lg-8">
                 <h4>个人介绍：</h4>
-                <p>姓名：</p>
-                <p>e-mail:</p>
-                <p>性别:</p>
-                <p>出生年月:</p>
-                <p>教育经历:</p>
-                <p>所在行业:</p>
-                <p>个人简介:</p>
+
+                <p>一句话介绍：{{ userdetail.short_summary }}</p>
+                <p>e-mail:{{ userdetail.email }}</p>
+                <p>性别:{% if userdetail.gender == 'male' %}男{% elif userdetail.gender == 'female' %}女{% endif %}</p>
+                <p>出生年月:{{ userdetail.birthday|default_if_none:'' }}</p>
+                <p>教育经历:{{ userdetail.eduated }}</p>
+                <p>所在行业:{{ userdetail.profession }}</p>
+                <p>居住地:{{ userdetail.address }}</p>
+                <p>个人简介:{{ userdetail.summary }}</p>
 
             </div>
             <!-- /.col-lg-4 -->
@@ -52,47 +54,23 @@
 
         <hr class="featurette-divider">
 {% for article in my_article %}
+
         <div class="row featurette">
-            <div class="col-md-7">
+            <div class="col-md-7 col-md-push-5">
                 <h2 class="featurette-heading">{{ article.title }}
                     <span class="text-muted"><small>{{ article.desc }}</small></span>
                 </h2>
                 <p class="lead">{{ article.detail }}</p>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-5 col-md-pull-7">
                 <img class="featurette-image img-responsive center-block" src="{{ MEDIA_URL }}{{ article.image }}" alt="文章图片">
             </div>
         </div>
+    <hr>
 {% endfor %}
         <hr class="featurette-divider">
 
-        <div class="row featurette">
-            <div class="col-md-7 col-md-push-5">
-                <h2 class="featurette-heading">展示第二篇文章
-                    <span class="text-muted"><small>副标题</small></span>
-                </h2>
-                <p class="lead">内容简介</p>
-            </div>
-            <div class="col-md-5 col-md-pull-7">
-                <img class="featurette-image img-responsive center-block" src="images/LOGO.png" alt="文章图片">
-            </div>
-        </div>
 
-        <hr class="featurette-divider">
-
-        <div class="row featurette">
-            <div class="col-md-7">
-                <h2 class="featurette-heading">展示第三篇文章
-                    <span class="text-muted"><small>副标题</small></span>
-                </h2>
-                <p class="lead">内容简介</p>
-            </div>
-            <div class="col-md-5">
-                <img class="featurette-image img-responsive center-block" src="images/LOGO.png" alt="文章图片">
-            </div>
-        </div>
-
-        <hr class="featurette-divider">
 
     </div>
 {% endblock %}

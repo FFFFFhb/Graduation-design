@@ -209,9 +209,9 @@
                                     {% endfor %}
 
                                 </div>
-                                <div class="modal-footer">
-                                    <div class="">
-                                                    <textarea class="form-control" rows="3"
+                                <div class="modal-footer" id="js-pub-container">
+                                    <div class="" id="js-pl-input-fake">
+                                                    <textarea class="form-control" rows="3" id="js-pl-textarea"
                                                               placeholder="扯淡、吐槽、表扬、鼓励……想说啥就说啥！"></textarea>
                                     </div>
                                     <br>
@@ -219,7 +219,7 @@
                                             data-target="#demo{{ article.id }}">
                                         Close
                                     </button>
-                                    <button type="button" class="btn btn-primary">发表评论</button>
+                                    <button  id="js-pl-submit" type="button" class="btn btn-primary" data-commentarticleid="{{ article.id }}">发表评论</button>
                                 </div>
                             </div>
 
@@ -263,7 +263,7 @@
                     <ol class="list-unstyled">
                         {% for hotarticle in hot_article %}
                             <li>
-                                <a href="#">{{ forloop.counter }}.{{ hotarticle.title }}</a>
+                                <a href="{% url 'article:article_detail' hotarticle.id %}" target="_blank">{{ forloop.counter }}.{{ hotarticle.title }}</a>
                             </li>
                         {% endfor %}
                     </ol>
@@ -273,7 +273,7 @@
                     <ol class="list-unstyled">
                         {% for article in all_articles.object_list %}
                             <li>
-                                <a href="#">{{ forloop.counter }}.{{ article.title }}</a>
+                                <a href="{% url 'article:article_detail' article.id %}" target="_blank">{{ forloop.counter }}.{{ article.title }}</a>
                             </li>
                         {% endfor %}
                     </ol>
@@ -354,4 +354,36 @@
             add_fav($(this), $(this).data("articleid"), 1);
         });
     </script>
+    <script type="text/javascript">
+                            //添加评论
+                            $('#js-pl-submit').on('click', function () {
+                                var comments = $("#js-pl-textarea").val()
+                                if (comments == "") {
+                                    alert("评论不能为空")
+                                    return
+                                }
+                                $.ajax({
+                                    cache: false,
+                                    type: "POST",
+                                    url: "{% url 'article:add_comment' %}",
+                                    data: {'article_id':$(this).data("commentarticleid"), 'comments': comments},
+                                    async: true,
+                                    beforeSend: function (xhr, settings) {
+                                        xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                                    },
+                                    success: function (data) {
+                                        if (data.status == 'fail') {
+                                            if (data.msg == '用户未登录') {
+                                                window.location.href = "/login/";
+                                            } else {
+                                                alert(data.msg)
+                                            }
+                                        } else if (data.status == 'success') {
+                                            alert("评论发表成功");
+                                            window.location.reload();//刷新当前页面.
+                                        }
+                                    },
+                                });
+                            });
+                        </script>
 {% endblock %}

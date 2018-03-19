@@ -1,4 +1,5 @@
 import datetime
+import json
 
 from django.shortcuts import render
 from django.contrib.auth import authenticate,login,logout
@@ -10,10 +11,11 @@ from utils.mixin_utils import LoginRequiredMixin
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import UserProfile
-from .forms import LoginForm
+from .forms import LoginForm,UserInfoForm,UploadSurfaceForm,UploadImageForm
 from article.models import Article
-from operation.models import UserFavorite
+from operation.models import UserFavorite,ArticleComments
 from operation.gongtonong import GongToNong
+
 
 
 class CustomBackend(ModelBackend):
@@ -121,11 +123,95 @@ class UserInfoView(LoginRequiredMixin,View):
     def get(self, request):
         user_id = request.user.id
         my_article = Article.objects.filter(author_id=int(user_id))
+        my_fav_user = UserFavorite.objects.filter(user_id=int(user_id),fav_type=2)
+        my_fav_article = UserFavorite.objects.filter(user_id=int(user_id),fav_type=1)
+        my_fav_article_list = []
+        my_fav_user_list = []
+        my_comment_list = ArticleComments.objects.filter(user_id=int(user_id))
+        for my_fav_id in my_fav_user:
+            fav_user_id = my_fav_id.user_id
+            fu = UserProfile.objects.get(id=int(fav_user_id))
+            my_fav_user_list.append(fu)
+        for my_fav_id in my_fav_article:
+            fav_article_id = my_fav_id.fav_id
+            fa = Article.objects.get(id=int(fav_article_id))
+            my_fav_article_list.append(fa)
+
         return render(request, 'userdetail.html', {
             'my_article': my_article,
+            'my_fav_article_list':my_fav_article_list,
+            'my_fav_user_list':my_fav_user_list,
+            'my_comment_list':my_comment_list,
         })
 
-class EditUserMessage(View):
+class EditUserMessage(LoginRequiredMixin,View):
     def get(self,request):
         return render(request,"editmessage.html",{
         })
+    def post(self,request):
+        user_info_form = UserInfoForm(request.POST,request.FILES,instance=request.user)
+        if user_info_form.is_valid():
+            user_info_form.save()
+            # return render(request,'mymessage.html',{})
+            return HttpResponse('{"status":"success"}', content_type='application/json')
+        else:
+            return HttpResponse(json.dumps(user_info_form.errors), content_type='application/json')
+
+class UploadImageView(LoginRequiredMixin,View):
+    #用户修改头像
+    def post(self,request):
+        image_form = UploadImageForm(request.POST,request.FILES,instance=request.user)
+        if image_form.is_valid():
+            request.user.save()
+            return HttpResponse('{"status":"success"}', content_type='application/json')
+        else:
+            return HttpResponse('{"status":"fail"}', content_type='application/json')
+
+class UploadSurfaceView(LoginRequiredMixin,View):
+    #用户修改头像
+    def post(self,request):
+        image_form = UploadSurfaceForm(request.POST,request.FILES,instance=request.user)
+        if image_form.is_valid():
+            request.user.save()
+            return HttpResponse('{"status":"success"}', content_type='application/json')
+        else:
+            return HttpResponse('{"status":"fail"}', content_type='application/json')
+
+class AddFavView(LoginRequiredMixin,View):
+    #用户收藏
+    def post(self, request):
+        fav_id = request.POST.get('fav_id', 0)
+        fav_type = request.POST.get('fav_type', 0)
+
+        if not request.user.is_authenticated():
+            return HttpResponse('{"status":"fail", "msg":"用户未登录"}', content_type='application/json')
+        exist_records = UserFavorite.objects.filter(user=request.user, fav_id=int(fav_id), fav_type=int(fav_type))
+        if exist_records:
+            # 如果记录已经存在，则取消收藏
+            exist_records.delete()
+            if int(fav_type) == 2:
+                user = UserProfile.objects.get(id=int(fav_id))
+                user.fans_nums -= 1
+                if user.fans_nums < 0:
+                    user.fans_nums = 0
+                user.save()
+
+            return HttpResponse('{"status":"success", "msg":"Like"}', content_type='application/json')
+
+        else:
+            user_fav = UserFavorite()
+            if int(fav_id) > 0 and int(fav_type) > 0:
+                user_fav.user = request.user
+                user_fav.fav_id = int(fav_id)
+                user_fav.fav_type = int(fav_type)
+
+                user_fav.save()
+                if int(fav_type) == 2:
+                    user = UserProfile.objects.get(id=int(fav_id))
+                    user.fans_nums += 1
+                    user.save()
+                return HttpResponse('{"status":"success", "msg":"Liked"}', content_type='application/json')
+
+            else:
+                return HttpResponse('{"status":"fail", "msg":"收藏出错"}', content_type='application/json')
+
