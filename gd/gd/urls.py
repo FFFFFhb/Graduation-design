@@ -41,3 +41,8 @@ urlpatterns = [
     # 配置上传文件的访问处理函数
     url(r'^media/(?P<path>.*)$', serve, {'document_root': MEDIA_ROOT}),
 ]
+
+#全局404页面配置
+handler404 = 'users.view.page_not_found'
+#全局500页面配置
+handler500 = 'users.view.page_error'

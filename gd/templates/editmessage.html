@@ -142,7 +142,7 @@
                     <div class="col-sm-offset-2 col-sm-10">
                         <button type="submit" class="btn btn-default">cancel</button>
                         &nbsp;
-                        <button id="jsEditUserBtn" type="submit" style="background-color:#096c47;color:#ffffff;"
+                        <button id="jsEditUserBtn"  style="background-color:#096c47;color:#ffffff;"
                                 class="btn btn-default">save
                         </button>
                     </div>
@@ -232,13 +232,14 @@
                                 h2: data.msg
                             });
                         } else if (data.status == "success") {
-                            Dml.fun.showTipsDialog({
-                                title: '保存成功',
-                                h2: '个人信息修改成功！'
-                            });
-                            setTimeout(function () {
-                                window.location.href = window.location.href;
-                            }, 1500);
+{#                            Dml.fun.showTipsDialog({#}
+{#                                title: '保存成功',#}
+{#                                h2: '个人信息修改成功！'#}
+{#                            });#}
+window.location.reload();//刷新当前页面.
+{#                            setTimeout(function () {#}
+{#                                window.location.href = window.location.href;#}
+{#                            }, 1500);#}
                         }
                     },
                     complete: function (XMLHttpRequest) {

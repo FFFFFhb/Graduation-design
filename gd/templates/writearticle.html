@@ -8,6 +8,10 @@
         #img_file {
             display: none;
         }
+
+        .haserror {
+            border-color: #a94442;
+        }
     </style>
 {% endblock %}
 {% block custom_js %}
@@ -42,53 +46,69 @@
         $('#jsNewArticleBtn').on('click', function () {
 
             var _self = $(this),
-                $jsNewArticleForm = $('#jsNewArticleForm')
-            verify = verifySubmit(
-                [
-                    {id: '#newtitle', tips: Dml.Msg.epNickName, require: true}
-                ]
-            );
-            if (!verify) {
-                return;
-            }
-            $.ajax({
-                cache: false,
-                type: "POST",
-                dataType: 'json',
-                url: "{% url 'operation:operation_write' %}",
-                data: $jsNewArticleForm.serialize(),
-                async: true,
-                beforeSend: function (xhr, settings) {
-                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
-                },
-
-                success: function (data) {
-                    if (data.title) {
-                        _showValidateError($('#newtitle'), data.title);
-                    } else if (data.detail) {
-                        _showValidateError($('.newdetail'), data.detail);
-                    } else if (data.status == "failure") {
-                        Dml.fun.showTipsDialog({
-                            title: '保存失败',
-                            h2: data.msg
-                        });
-                    } else if (data.status == "success") {
-                        Dml.fun.showTipsDialog({
-                            title: '保存成功',
-                            h2: '文章保存成功！'
-                        });
-                        setTimeout(function () {
-                            window.location.href = window.location.href;
-                        }, 1500);
-{#                        alert("评论发表成功");#}
-{#                        window.location.reload();//刷新当前页面.#}
-                    }
-                },
-                complete: function (XMLHttpRequest) {
-                    _self.val("保存");
-                    _self.removeAttr("disabled");
-                }
-            });
+                $jsNewArticleForm = $('#jsNewArticleForm');
+{#            var title = $("#newtitle").val();#}
+{#            var detail = $("#newdetail").val();#}
+{#            if (title == "") {#}
+{#                alert("请输入文章标题");#}
+{#                $("#newtitle").addClass("haserror");#}
+{#                return#}
+{#            }else {#}
+{#                $("#newtitle").removeClass("haserror");#}
+{#            }#}
+{#            if (detail == "") {#}
+{#                alert("请输入文章内容");#}
+{#                $("#newdetail").addClass("haserror");#}
+{#                return#}
+{#            }else {#}
+{#                $("#newdetail").removeClass("haserror");#}
+{#            }#}
+{#            verify = verifySubmit(#}
+{#                [#}
+{#                    {id: '#newtitle', tips: Dml.Msg.epNickName, require: true}#}
+{#                ]#}
+{#            );#}
+{#            if (!verify) {#}
+{#                return;#}
+{#            }#}
+{#            $.ajax({#}
+{#                cache: false,#}
+{#                type: "POST",#}
+{#                dataType: 'json',#}
+{#                url: "{% url 'operation:operation_write' %}",#}
+{#                data: $jsNewArticleForm.serialize(),#}
+{#                async: true,#}
+{#                beforeSend: function (xhr, settings) {#}
+{#                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");#}
+{#                },#}
+{##}
+{#                success: function (data) {#}
+{#                    if (data.title) {#}
+{#                        _showValidateError($('#newtitle'), data.title);#}
+{#                    } else if (data.detail) {#}
+{#                        _showValidateError($('.newdetail'), data.detail);#}
+{#                    } else if (data.status == "failure") {#}
+{#                        Dml.fun.showTipsDialog({#}
+{#                            title: '保存失败',#}
+{#                            h2: data.msg#}
+{#                        });#}
+{#                    } else if (data.status == "success") {#}
+{#                        Dml.fun.showTipsDialog({#}
+{#                            title: '保存成功',#}
+{#                            h2: '文章保存成功！'#}
+{#                        });#}
+{#                        setTimeout(function () {#}
+{#                            window.location.href = window.location.href;#}
+{#                        }, 1500);#}
+                        {#                        alert("评论发表成功");#}
+                        {#                        window.location.reload();//刷新当前页面.#}
+{#                    }#}
+{#                },#}
+{#                complete: function (XMLHttpRequest) {#}
+{#                    _self.val("保存");#}
+{#                    _self.removeAttr("disabled");#}
+{#                }#}
+{#            });#}
         });
 
     </script>
@@ -101,6 +121,7 @@
     <div class="container">
         <hr style="padding:0%;margin:2%;" class="featurette-divider">
         <div class="">
+            <iframe id="suibian" name="suibian" src="" frameborder="0" style="display: none;"></iframe>
             <form class="perinform center-block" id="" autocomplete="off" method="post" enctype="multipart/form-data"
                   action="{% url 'operation:operation_write' %}">
                 <div style="text-align: center;">
@@ -129,6 +150,7 @@
                 </center>
                 {% csrf_token %}
             </form>
+
             <hr>
         </div>
     </div>

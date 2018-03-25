@@ -152,7 +152,7 @@ class EditUserMessage(LoginRequiredMixin,View):
         user_info_form = UserInfoForm(request.POST,request.FILES,instance=request.user)
         if user_info_form.is_valid():
             user_info_form.save()
-            # return render(request,'mymessage.html',{})
+            # return render(request,'success.html',{})
             return HttpResponse('{"status":"success"}', content_type='application/json')
         else:
             return HttpResponse(json.dumps(user_info_form.errors), content_type='application/json')
@@ -214,4 +214,18 @@ class AddFavView(LoginRequiredMixin,View):
 
             else:
                 return HttpResponse('{"status":"fail", "msg":"收藏出错"}', content_type='application/json')
+
+def page_not_found(request):
+    #全局404配置函数
+    from django.shortcuts import render_to_response
+    response = render_to_response('404.html',{})
+    response.status_code = 404
+    return response
+
+def page_error(request):
+    #全局404配置函数
+    from django.shortcuts import render_to_response
+    response = render_to_response('500.html',{})
+    response.status_code = 500
+    return response
 

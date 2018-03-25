@@ -283,7 +283,7 @@
 
                                 <div class="media-bottom">
 
-
+{% if article.image != '' %}
                                     <div class="row">
                                         <div class="col-xs-3 col-md-3">
                                             <a href="#" class="thumbnail">
@@ -292,15 +292,18 @@
                                             </a>
                                         </div>
                                     </div>
-
+    {% else %}
+    <br>
+{% endif %}
                                 </div>
 
 
                                 <div class="col-md-8 col-sm-offset-2 text-center">
                                     <button type="button" class="btn btn-primary btn-lg collect-btn"
-                                            style="background-color:#096c47;" data-articleid="{{ article.id }}">
-                                        <span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;<span
-                                            class="badge">{{ article.fav_nums }}</span>
+                                            style="background-color:#096c47;" >
+                                        <span class="delete-group fr jsDeletemy_article" data-articleid="{{ article.id }}">
+                                            <span class="glyphicon glyphicon-trash"></span> 删除
+                                        </span>
                                     </button>
                                     {#<span class="glyphicon glyphicon-heart"></span>&nbsp;#}
                                     <a href="{% url 'article:article_detail' article.id %}" target="_blank">
@@ -554,6 +557,30 @@
             $('#jsSearchBtn').trigger('click');
         }
     });
+
+</script>
+<script type="text/javascript">
+    $('.jsDeletemy_article').on('click', function(){
+        var _this = $(this),
+            articleid = _this.attr('data-articleid');
+
+        $.ajax({
+                cache: false,
+                type: "POST",
+                url: "/operation/delete/",
+                data: {
+                    article_id: articleid,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                async: true,
+                success: function(data) {
+                    alert('删除成功')
+                    window.location.reload();//刷新当前页面.
+{#                    Dml.fun.winReload();#}
+                }
+            });
+    });
+
 
 </script>
 </body>

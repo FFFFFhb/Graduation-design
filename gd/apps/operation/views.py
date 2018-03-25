@@ -54,7 +54,19 @@ class EditArticleView(LoginRequiredMixin,View):
                 edit_article.image = image
             edit_article.detail = detail
             edit_article.save()
-
             return render(request, 'success.html')
         else:
             return render(request, 'failed.html')
+
+
+class DeleteArticleView(LoginRequiredMixin,View):
+    def post(self,request):
+        article_id = request.POST.get('article_id',0)
+
+        if not request.user.is_authenticated():
+            return  HttpResponse('{"status":"fail", "msg":"用户未登录"}',content_type='application/json')
+        exist_records = Article.objects.filter(pk=article_id)
+        if exist_records:
+            #如果记录已经存在，则删除文章
+            exist_records.delete()
+            return render(request, 'success.html')
