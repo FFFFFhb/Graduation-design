@@ -29,10 +29,10 @@ class UploadImageForm(forms.Form):
 class UploadSurfaceForm(forms.Form):
     class Meta:
         model = UserProfile
-        fields = ['image']
+        fields = ['surface']
 
 class UserInfoForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ['image','nick_name','email','gender','short_summary','birthday','address','educated','profession','summary']
+        fields = ['surface','image','nick_name','email','gender','short_summary','birthday','address','educated','profession','summary']
 #nick_name,birthday,gender,educated,profession,mobile,image,fans_num,address,summary,short_summary

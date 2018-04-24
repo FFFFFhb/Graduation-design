@@ -6,6 +6,7 @@
         #mysurface {
             position: relative;
         }
+
         #hiddensurface {
             position: absolute;
             right: 0px;
@@ -13,6 +14,7 @@
             width: 180px;
             height: 70px;
         }
+
         #hiddensurfacebtn {
             display: none;
         }
@@ -20,34 +22,37 @@
     <link rel="stylesheet" href="{% static 'css/kalendae.css' %}">
 {% endblock %}
 {% block content %}
-
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner" role="listbox">
-            <div class="item active">
-                {#                <form class="clearfix" id="jsAvatarForm2" enctype="multipart/form-data" autocomplete="off" method="post"#}
-                {#                      action="{% url 'user:surface_upload' %}" target='frameFile'>#}
-                <img id="mysurface" class="first-slide" src="{% static 'images/default_surface.jpg' %}" alt="封面图">
-                <div id="hiddensurface">
-                    <label class="btn btn-default btn-lg" style="color: #8590a6;" id="jsAvatarBtn2"><input
-                            id="hiddensurfacebtn"
-                            type="file" hidden>
-                        <span class="glyphicon glyphicon-camera"></span> 修改封面图</label>
+    <form id="jsEditUserForm" class="form-horizontal" action="{% url 'user:edit_message' %}" autocomplete="off"
+          method="post" enctype="multipart/form-data">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner" role="listbox">
+                <div class="item active">
+                    {#                <form class="clearfix" id="jsAvatarForm2" enctype="multipart/form-data" autocomplete="off" method="post"#}
+                    {#                      action="{% url 'user:surface_upload' %}" target='frameFile'>#}
+                    <img id="mysurface" class="first-slide" {% if request.user.surface %}src="{{ MEDIA_URL }}{{ request.user.surface }}"{% else %}src="{% static 'images/default_surface.jpg' %}"{% endif %} alt="封面图">
+                    <div id="hiddensurface">
+                        <label class="btn btn-default btn-lg img_btn" style="color: #8590a6;" id="jsAvatarBtn2">
+                            <input
+                                id="hiddensurfacebtn" name="surface"
+                                type="file" accept=".jpg,.png" hidden>
+                            <span class="glyphicon glyphicon-camera"></span> 修改封面图</label>
+                    </div>
+                    {#                    {% csrf_token %}#}
+                    {#                </form>#}
                 </div>
-                {#                    {% csrf_token %}#}
-                {#                </form>#}
             </div>
         </div>
-    </div>
-    <!-- Three columns of text below the carousel -->
-    <div class="row">
-        <form id="jsEditUserForm" class="form-horizontal" action="{% url 'user:edit_message' %}" autocomplete="off"
-              method="post" enctype="multipart/form-data">
+        <!-- Three columns of text below the carousel -->
+        <div class="row">
+
+            <div class="error btns login-form-tips" id="jsLoginTips" style="color: red">
+                {% for key,error in login_form.errors.items %}{{ error }}{% endfor %}{{ msg }}</div>
             <div class="col-lg-4">
                 <img class="img-circle" id="image" src="{{ MEDIA_URL }}{{ request.user.image }}" alt="头像"
                      width="140" height="140">
                 <h2>{{ request.user.nick_name }}</h2>
                 <p>
-                    <label class="btn btn-default img_btn" >
+                    <label class="btn btn-default img_btn">
                         <input type="file" id="img_file" name="image" accept=".jpg,.png"
                                style="display:none;">修改头像</label>
                 </p>
@@ -55,6 +60,7 @@
 
 
             <div class="col-lg-8">
+
 
                 <div class="form-group">
                     <label for="nickname" class="col-sm-2 control-label">昵称</label>
@@ -99,7 +105,7 @@
                     <label for="birth_day" class="col-sm-2 control-label">出生年月</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control auto-kal" id="birth_day" name="birthday"
-                               value="{{ request.user.birthday|date:'Y-m-d' }}">
+                               value="{{ request.user.birthday|date:'Y-m-d' }}" readonly>
                         <i class="error-tips"></i>
                     </div>
                 </div>
@@ -140,9 +146,9 @@
 
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-default">cancel</button>
+                        <button  class="btn btn-default">cancel</button>
                         &nbsp;
-                        <button id="jsEditUserBtn"  style="background-color:#096c47;color:#ffffff;"
+                        <button type="submit" id="jsEditUserBtn" style="background-color:#096c47;color:#ffffff;"
                                 class="btn btn-default">save
                         </button>
                     </div>
@@ -150,9 +156,10 @@
                 <input type='hidden' name='csrfmiddlewaretoken' value='{{ csrf_token }}'/>
 
             </div>
-            {% csrf_token %}
-        </form>
-    </div>
+
+        </div>
+        {% csrf_token %}
+    </form>
     <!-- /.row -->
     <!-- START THE FEATURETTES -->
 
@@ -170,11 +177,14 @@
     <script>
         $('#img_file').change(function () {
             loadImg();
-        })
+        });
+        $('#hiddensurfacebtn').change(function () {
+            loadImg2();
+        });
 
         function loadImg() {
-            var file = $(".img_btn").find("input")[0].files[0];
-            console.log(file)
+            var file = $(".img_btn").find("input")[1].files[0];
+            console.log(file);
             var reader = new FileReader();
             var imgFile;
             reader.onload = function (e) {
@@ -184,71 +194,90 @@
             };
             reader.readAsDataURL(file);
         }
+        function loadImg2() {
+            var file = $(".img_btn").find("input")[0].files[0];
+            console.log(file)
+            var reader = new FileReader();
+            var imgFile;
+            reader.onload = function (e) {
+                imgFile = e.target.result;
+                console.log(imgFile);
+                $("#mysurface").attr('src', imgFile);
+            };
+            reader.readAsDataURL(file);
+        }
 
-        $(function () {
-
-            //保存个人资料
-            $('#jsEditUserBtn').on('click', function () {
-                var _self = $(this),
-                    $jsEditUserForm = $('#jsEditUserForm')
-                verify = verifySubmit(
-                    [
-                        {id: '#nick_name', tips: Dml.Msg.epNickName, require: true}
-                    ]
-                );
-                if (!verify) {
-                    return;
-                }
-                $.ajax({
-                    cache: false,
-                    type: 'post',
-                    dataType: 'json',
-                    url: "/user/editmymessage/",
-                    data: $jsEditUserForm.serialize(),
-                    async: true,
-                    beforeSend: function (xhr, settings) {
-                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
-                },
-                    success: function (data) {
-                        if (data.nick_name) {
-                            _showValidateError($('#nick_name'), data.nick_name);
-                        } else if (data.birthday) {
-                            _showValidateError($('#birth_day'), data.birthday);
-                        } else if (data.address) {
-                            _showValidateError($('#address'), data.address);
-                        } else if (data.email) {
-                            _showValidateError($('#email'), data.email);
-                        } else if (data.short_summary) {
-                            _showValidateError($('#short_summary'), data.short_summary);
-                        } else if (data.educated) {
-                            _showValidateError($('#educated'), data.educated);
-                        } else if (data.profession) {
-                            _showValidateError($('#profession'), data.profession);
-                        } else if (data.summary) {
-                            _showValidateError($('#summary'), data.summary);
-                        } else if (data.status == "failure") {
-                            Dml.fun.showTipsDialog({
-                                title: '保存失败',
-                                h2: data.msg
-                            });
-                        } else if (data.status == "success") {
+{#        $(function () {#}
+{##}
+{#            //保存个人资料#}
+{#            $('#jsEditUserBtn').on('click', function () {#}
+{#                var _self = $(this),#}
+{#                    $jsEditUserForm = $('#jsEditUserForm')#}
+{#                verify = verifySubmit(#}
+{#                    [#}
+{#                        {id: '#nick_name', tips: Dml.Msg.epNickName, require: true}#}
+{#                    ]#}
+{#                );#}
+{#                if (!verify) {#}
+{#                    return;#}
+{#                }#}
+{#                $.ajax({#}
+{#                    cache: false,#}
+{#                    type: 'post',#}
+{#                    dataType: 'json',#}
+{#                    url: "/user/editmymessage/",#}
+{#                    data: $jsEditUserForm.serialize(),#}
+{#                    async: true,#}
+{#                    beforeSend: function (xhr, settings) {#}
+{#                        xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");#}
+{#                    },#}
+{#                    success: function (data) {#}
+{#                        if (data.nick_name) {#}
+{#                            _showValidateError($('#nick_name'), data.nick_name);#}
+{#                        } else if (data.birthday) {#}
+{#                            _showValidateError($('#birth_day'), data.birthday);#}
+{#                        } else if (data.address) {#}
+{#                            _showValidateError($('#address'), data.address);#}
+{#                        } else if (data.email) {#}
+{#                            _showValidateError($('#email'), data.email);#}
+{#                        } else if (data.short_summary) {#}
+{#                            _showValidateError($('#short_summary'), data.short_summary);#}
+{#                        } else if (data.educated) {#}
+{#                            _showValidateError($('#educated'), data.educated);#}
+{#                        } else if (data.profession) {#}
+{#                            _showValidateError($('#profession'), data.profession);#}
+{#                        } else if (data.summary) {#}
+{#                            _showValidateError($('#summary'), data.summary);#}
+{#                        } else if (data.status == "failure") {#}
 {#                            Dml.fun.showTipsDialog({#}
-{#                                title: '保存成功',#}
-{#                                h2: '个人信息修改成功！'#}
+{#                                title: '保存失败',#}
+{#                                h2: data.msg#}
 {#                            });#}
-window.location.reload();//刷新当前页面.
-{#                            setTimeout(function () {#}
-{#                                window.location.href = window.location.href;#}
-{#                            }, 1500);#}
-                        }
-                    },
-                    complete: function (XMLHttpRequest) {
-                        _self.val("保存");
-                        _self.removeAttr("disabled");
-                    }
-                });
-            });
-        });
+{#                        } else if (data.status == "success") {#}
+                            {#                            Dml.fun.showTipsDialog({#}
+                            {#                                title: '保存成功',#}
+                            {#                                h2: '个人信息修改成功！'#}
+                            {#                            });#}
+{#                            window.location.reload();//刷新当前页面.#}
+                            {#                            setTimeout(function () {#}
+                            {#                                window.location.href = window.location.href;#}
+                            {#                            }, 1500);#}
+{#                        }#}
+{#                    },#}
+{#                    complete: function (XMLHttpRequest) {#}
+{#                        _self.val("保存");#}
+{#                        _self.removeAttr("disabled");#}
+{#                    }#}
+{#                });#}
+{#            });#}
+{#        });#}
 
+    </script>
+    <script>
+        $(document).ready(function () {//页面加载完之后，自动执行该方法
+            setTimeout(function () {
+                $("#jsLoginTips").hide();
+            }, 2000);//2秒后执行该方法
+        });
     </script>
 {% endblock %}

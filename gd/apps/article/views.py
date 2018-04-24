@@ -30,7 +30,13 @@ class ArticleView(View):
             all_articles = all_articles.filter(Q(title__icontains=search_keywords)|Q(desc__icontains=search_keywords)|Q(detail__icontains=search_keywords))
 
         # 收藏
-        favlist = UserFavorite.objects.filter(user_id=int(request.user.id))
+        favlist = None
+        fav_list = []
+        if request.user.id:
+            favlist = UserFavorite.objects.filter(user_id=int(request.user.id))
+            for i in favlist:
+                if i.fav_type == '1' or i.fav_type == 1:
+                    fav_list.append(i.fav_id)
 
         #公历转换成农历显示
         y = datetime.datetime.now().year
@@ -41,25 +47,24 @@ class ArticleView(View):
 
         #排序
         sort = request.GET.get('sort',"")
+        all_articles = all_articles.order_by("-add_time")
         if sort:
             if sort == "new":
                 all_articles = all_articles.order_by("-add_time")
             elif sort == "hot":
                 all_articles = all_articles.order_by("-fav_nums")
 
-
         #评论
         all_comments = ArticleComments.objects.all()
         all_comments = all_comments.order_by("-fav_time")
+
         # 对文章进行分页
         try:
             page = request.GET.get('page', 1)
         except PageNotAnInteger:
             page = 1
         # Provide Paginator with the request object for complete querystring generation
-
         p = Paginator(all_articles, 10, request=request)
-
         atcs = p.page(page)
 
         return render(request,"articlelist.html",{
@@ -71,6 +76,7 @@ class ArticleView(View):
             "showtime":showtime,
             "shownong":shownong,
             "favlist":favlist,
+            "fav_list":fav_list,
         })
 
 
@@ -113,7 +119,7 @@ class AddFavView(View):
                     article.fav_nums = 0
                 article.save()
 
-            return HttpResponse('{"status":"success", "msg":"Like"}', content_type='application/json')
+            return HttpResponse('{"status":"success", "msg":"收藏"}', content_type='application/json')
 
         else:
             user_fav = UserFavorite()
@@ -127,7 +133,7 @@ class AddFavView(View):
                     article = Article.objects.get(id=int(fav_id))
                     article.fav_nums += 1
                     article.save()
-                return HttpResponse('{"status":"success", "msg":"Liked"}', content_type='application/json')
+                return HttpResponse('{"status":"success", "msg":"已收藏"}', content_type='application/json')
 
             else:
                 return HttpResponse('{"status":"fail", "msg":"收藏出错"}', content_type='application/json')

@@ -39,13 +39,10 @@ class LoginView(View):
             pass_word = request.POST.get('password', '')
             user = authenticate(username=user_name, password=pass_word)
             if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    return render(request, 'wellcomepage.html')
-                else:
-                    return render(request, 'login.html', {'msg': '用户名未激活!'})
+                login(request, user)
+                return render(request, 'wellcomepage.html')
             else:
-                return render(request, 'login.html', {'msg': '用户名或密码错误或未激活!'})
+                return render(request, 'login.html', {'msg': '用户名或密码错误!'})
         else:
             return render(request, 'login.html', {'login_form':login_form})
 
@@ -76,7 +73,13 @@ class UserListView(View):
         shownong = "\t农历 " + change_year + "年" + lunar_month + lunar_day + " " + lunar_year + "年 "
 
         # 收藏
-        favlist = UserFavorite.objects.filter(user_id=int(request.user.id))
+        favlist = None
+        if request.user:
+            favlist = UserFavorite.objects.filter(user_id=int(request.user.id))
+        fav_list = []
+        for i in favlist:
+            if i.fav_type == '2' or i.fav_type == 2:
+                fav_list.append(i.fav_id)
 
         # 排序
         sort = request.GET.get('sort', "")
@@ -100,22 +103,25 @@ class UserListView(View):
             "shownong": shownong,
             "sort": sort,
             "user_nums":user_nums,
+            "fav_list":fav_list,
         })
 
 class UserDetailView(View):
     def get(self,request,user_id):
         userdetail = UserProfile.objects.get(id=int(user_id))
         my_article = Article.objects.filter(author_id=int(user_id))
-        #收藏
-        # has_fav = False
-        # if request.user.is_authenticated():
-        #     if UserFavorite.objects.filter(user=request.user, fav_id=userdetail.id, fav_type=2):
-        #         has_fav = True
-        # userdetail.click_num += 1
-        # userdetail.save()
+
+        # 对文章进行分页
+        try:
+            page = request.GET.get('page', 1)
+        except PageNotAnInteger:
+            page = 1
+        # Provide Paginator with the request object for complete querystring generation
+        p = Paginator(my_article, 10, request=request)
+        atcs = p.page(page)
         return render(request,'mymessage.html',{
             'userdetail':userdetail,
-            'my_article':my_article,
+            'my_article':atcs,
         })
 
 class UserInfoView(LoginRequiredMixin,View):
@@ -129,7 +135,7 @@ class UserInfoView(LoginRequiredMixin,View):
         my_fav_user_list = []
         my_comment_list = ArticleComments.objects.filter(user_id=int(user_id))
         for my_fav_id in my_fav_user:
-            fav_user_id = my_fav_id.user_id
+            fav_user_id = my_fav_id.fav_id
             fu = UserProfile.objects.get(id=int(fav_user_id))
             my_fav_user_list.append(fu)
         for my_fav_id in my_fav_article:
@@ -137,8 +143,17 @@ class UserInfoView(LoginRequiredMixin,View):
             fa = Article.objects.get(id=int(fav_article_id))
             my_fav_article_list.append(fa)
 
+        # 对文章进行分页
+        try:
+            page = request.GET.get('page', 1)
+        except PageNotAnInteger:
+            page = 1
+        # Provide Paginator with the request object for complete querystring generation
+        p = Paginator(my_article, 5, request=request)
+        atcs1 = p.page(page)
+
         return render(request, 'userdetail.html', {
-            'my_article': my_article,
+            'my_article': atcs1,
             'my_fav_article_list':my_fav_article_list,
             'my_fav_user_list':my_fav_user_list,
             'my_comment_list':my_comment_list,
@@ -152,8 +167,7 @@ class EditUserMessage(LoginRequiredMixin,View):
         user_info_form = UserInfoForm(request.POST,request.FILES,instance=request.user)
         if user_info_form.is_valid():
             user_info_form.save()
-            # return render(request,'success.html',{})
-            return HttpResponse('{"status":"success"}', content_type='application/json')
+            return render(request, 'editmessage.html', {'msg': '修改成功!'})
         else:
             return HttpResponse(json.dumps(user_info_form.errors), content_type='application/json')
 
@@ -196,7 +210,7 @@ class AddFavView(LoginRequiredMixin,View):
                     user.fans_nums = 0
                 user.save()
 
-            return HttpResponse('{"status":"success", "msg":"Like"}', content_type='application/json')
+            return HttpResponse('{"status":"success", "msg":"关注"}', content_type='application/json')
 
         else:
             user_fav = UserFavorite()
@@ -210,7 +224,7 @@ class AddFavView(LoginRequiredMixin,View):
                     user = UserProfile.objects.get(id=int(fav_id))
                     user.fans_nums += 1
                     user.save()
-                return HttpResponse('{"status":"success", "msg":"Liked"}', content_type='application/json')
+                return HttpResponse('{"status":"success", "msg":"已关注"}', content_type='application/json')
 
             else:
                 return HttpResponse('{"status":"fail", "msg":"收藏出错"}', content_type='application/json')

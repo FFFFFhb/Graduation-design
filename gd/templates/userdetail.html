@@ -89,6 +89,25 @@
             top: 30px; /* Set the top position of pinned element */
         }
 
+        {#多行文本溢出显示省略号#}
+        .articledetailp {
+            position: relative;
+            line-height: 1.4em;
+            /* 3 times the line-height to show 3 lines */
+            height: 4.2em;
+            overflow: hidden;
+        }
+
+        .articledetailp::after {
+            content: "...";
+            font-weight: bold;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            padding: 0 20px 1px 45px;
+            background: url(http://css88.b0.upaiyun.com/css88/2014/09/ellipsis_bg.png) repeat-y;
+        }
+
     </style>
 </head>
 <!-- NAVBAR
@@ -121,7 +140,7 @@
                         <span class="glyphicon glyphicon-align-justify"></span> 文章列表</a>
                 </li>
                 <li>
-                    <a href="#contact"><span class="glyphicon glyphicon-user"></span> 用户列表</a>
+                    <a href="{% url 'user:user_list' %}"><span class="glyphicon glyphicon-user"></span> 用户列表</a>
                 </li>
                 <li>
                     <a href="{% url 'operation:operation_write' %}"><span class="glyphicon glyphicon-edit"></span>
@@ -245,7 +264,7 @@
 
                 <hr id="section-2" style="padding:0%;margin:5%;" class="featurette-divider">
                 <h2>我的文章</h2>
-                {% for article in my_article %}
+                {% for article in my_article.object_list %}
                     <div class="row featurette">
                         <div class="row col-md-12">
                             <div class="media">
@@ -276,17 +295,17 @@
                                         <small>{{ article.desc }}</small>
                                     </span>
                                         </h3>
-                                        <p class=""> {{ article.detail }}
+                                        <p id="articledetailp" class="articledetailp"> {{ article.detail }}
                                         </p>
                                     </div>
                                 </div>
 
                                 <div class="media-bottom">
 
-{% if article.image != '' %}
+{% if article.image %}
                                     <div class="row">
                                         <div class="col-xs-3 col-md-3">
-                                            <a href="#" class="thumbnail">
+                                            <a href="{% url 'article:article_detail' article.id %}" target="_blank" class="thumbnail">
                                                 <img class="media-object" style="height:120px;width:100%;display:block;"
                                                      src="{{ MEDIA_URL }}{{ article.image }}" alt="...">
                                             </a>
@@ -323,6 +342,39 @@
                         </div>
                     </div>
                 {% endfor %}
+
+            <div class="col-md-8 col-sm-offset-2 text-center">
+            <nav id="fenyeqi">
+                <ul class="pagination">
+                    {% if my_article.has_previous %}
+                        <li>
+                            <a href="?{{ my_article.previous_page_number.querystring }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% for page in my_article.pages %}
+                        {% if page %}
+                            {% ifequal page my_article.number %}
+                                <li class="active"><a href="?{{ page.querystring }}">{{ page }}</a></li>
+                            {% else %}
+                                <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
+                            {% endifequal %}
+                        {% else %}
+                            <li class="none"><a href="">...</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if my_article.has_next %}
+                        <li>
+                            <a href="?{{ my_article.next_page_number.querystring }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+
                 <hr id="section-3" style="padding:0%;margin:5%;" class="featurette-divider">
                 <h2>我的关注</h2>
                 <br>
@@ -334,17 +386,16 @@
                             <h3>{{ user.nick_name }}</h3>
                         </div>
                         <div class="col-lg-6">
-                            <h5>一句话介绍：</h5>
-                            <p>e-mail:</p>
-                            <p>教育经历:</p>
-                            <p>所在行业:</p>
+                            <h5>一句话介绍：{{ user.short_summary }}</h5>
+                            <p>e-mail:{{ user.email }}</p>
+                            <p>教育经历:{{ user.educated }}</p>
+                            <p>所在行业:{{ user.prefession }}</p>
                             <p>粉丝数：{{ user.fans_nums }}</p>
                         </div>
                         <div class="col-lg-2">
 
                             <button type="button" class="btn btn-primary collect-btn"
-                                    style="background-color:#096c47;" data-userid="{{ user.id }}">
-                                关&nbsp;注
+                                    style="background-color:#096c47;" data-userid="{{ user.id }}">已&nbsp;关&nbsp;注
                             </button>
 
                             {#<span class="glyphicon glyphicon-heart"></span>&nbsp;#}
@@ -373,6 +424,7 @@
                     </div>
                     {#                    <hr style="padding:0%;margin:2%;" class="featurette-divider">#}
                 {% endfor %}
+
 
                 <hr id="section-4" style="padding:0%;margin:5%;" class="featurette-divider">
                 <h2>我的收藏</h2>
@@ -408,45 +460,52 @@
                                     </span>
                                         </h3>
 
-                                        <p class="">{{ article.detail }}
+                                        <p class="articledetailp">{{ article.detail }}
                                         </p>
                                     </div>
                                 </div>
 
                                 <div class="media-bottom">
 
-
+{% if article.image %}
                                     <div class="row">
                                         <div class="col-xs-3 col-md-3">
-                                            <a href="#" class="thumbnail">
+
+                                            <a href="{% url 'article:article_detail' article.id %}" target="_blank" class="thumbnail">
                                                 <img class="media-object" style="height:120px;width:100%;display:block;"
                                                      src="{{ MEDIA_URL }}{{ article.image }}" alt="...">
                                             </a>
                                         </div>
                                     </div>
-
+{% endif %}
                                 </div>
 
 
                                 <div class="col-md-8 col-sm-offset-2 text-center">
                                     <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"
-                                            data-target="#myModal" style="background-color:#096c47;">
-                                        取消收藏
-                                    </button>
-                                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"
-                                            data-target="#myModal" style="background-color:#096C47;">
-                                        展开全文
-                                    </button>
-                                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"
-                                            data-target="#myModal" style="background-color:#096c47;">
-                                        评&nbsp;&nbsp;论
-                                    </button>
+                                    <button type="button" class="btn btn-primary btn-lg collect-article-btn"
+                                                style="background-color:#096c47;" data-articleid="{{ article.id }}">
+                                                取消收藏
+                                        </button>
+                                        {#<span class="glyphicon glyphicon-heart"></span>&nbsp;#}
+                                        <a href="{% url 'article:article_detail' article.id %}" target="_blank">
+                                            <button type="button" class="btn btn-primary btn-lg"
+                                                    style="background-color:#096c47;">
+                                                <span class="glyphicon glyphicon-file"></span> read all
+                                            </button>
+                                        </a>
+{#                                        <button type="button" class="btn btn-primary btn-lg"#}
+{#                                                style="background-color:#096c47;" data-toggle="collapse"#}
+{#                                                data-target="#demo{{ article.id }}">#}
+{#                                            <span class="glyphicon glyphicon-comment"></span> 评&nbsp;论#}
+{#                                        </button>#}
                                 </div>
                             </div>
                         </div>
                     </div>
                 {% endfor %}
+
+
                 <hr id="section-5" style="padding:0%;margin:5%;" class="featurette-divider">
                 <h2>我的评论</h2>
                 {% for comment in my_comment_list %}
@@ -478,6 +537,8 @@
                         </div>
                     </div>
                 {% endfor %}
+
+
             </div>
         </div>
     </div>
@@ -581,7 +642,65 @@
             });
     });
 
+       //收藏分享
+        function add_fav_user(current_elem, fav_id, fav_type) {
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: "{% url 'user:add_fav' %}",
+                data: {'fav_id': fav_id, 'fav_type': fav_type},
+                async: true,
+                beforeSend: function (xhr, settings) {
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+                success: function (data) {
+                    console.log(1)
+                    if (data.status == 'fail') {
+                        if (data.msg == '用户未登录') {
+                            window.location.href = "/login/";
+                        } else {
+                            alert(data.msg)
+                        }
+                    } else if (data.status == 'success') {
+                        current_elem.text(data.msg)
+                    }
+                },
+            });
+        }
 
+        $('.collect-btn').on('click', function () {
+            add_fav_user($(this), $(this).data("userid"), 2);
+        });
+
+                //收藏文章
+        function add_fav_article(current_elem, fav_id, fav_type) {
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: "{% url 'article:add_fav' %}",
+                data: {'fav_id': fav_id, 'fav_type': fav_type},
+                async: true,
+                beforeSend: function (xhr, settings) {
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+                success: function (data) {
+                    console.log(1)
+                    if (data.status == 'fail') {
+                        if (data.msg == '用户未登录') {
+                            window.location.href = "/login/";
+                        } else {
+                            alert(data.msg)
+                        }
+                    } else if (data.status == 'success') {
+                        current_elem.text(data.msg)
+                    }
+                },
+            });
+        }
+
+        $('.collect-article-btn').on('click', function () {
+            add_fav_article($(this), $(this).data("articleid"), 1);
+        });
 </script>
 </body>
 

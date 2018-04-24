@@ -82,6 +82,14 @@
             background: url(http://css88.b0.upaiyun.com/css88/2014/09/ellipsis_bg.png) repeat-y;
         }
 
+        .articlediv {
+            background-color: #ffffff;
+        }
+
+        {#        .articlediv:hover {#}
+        {#            background-color: #F8F8F8;#}
+        {#        }#}
+
     </style>
 {% endblock %}
 
@@ -95,46 +103,40 @@
             <br>
         </div>
         <!-- /.row -->
+        <div class="jumbotron">
+            <h1>{{ showtime }}</h1>
+            <p>{{ shownong }}</p>
+            <ul class="nav nav-justified" style="background-color: white">
+                <li role="presentation" class="active">
+                    <a href="#"><span class="glyphicon glyphicon-align-justify"></span>&nbsp;&nbsp;所&nbsp;&nbsp;有&nbsp;</a>
+                </li>
+                <li role="presentation" class="{% if sort == 'new' %}active{% endif %}">
+                    <a href="?sort=new"><span class="glyphicon glyphicon-dashboard"></span>&nbsp;&nbsp;最&nbsp;&nbsp;新&nbsp;&nbsp;</a>
+                </li>
+                <li role="presentation" class="{% if sort == 'hot' %}active{% endif %}">
+                    <a href="?sort=hot"><span class="glyphicon glyphicon-fire"></span>&nbsp;&nbsp;最&nbsp;&nbsp;热&nbsp;&nbsp;</a>
+                </li>
+                <li role="presentation" class="{% if sort == 'recommend1' %}active{% endif %}">
+                    <a href="?sort=recommend1"> 猜你喜欢</a>
+                </li>
+            </ul>
+        </div>
+
 
         <div class="container">
-            <div class="blog-header">
-                <h1 class="blog-title">{{ showtime }}</h1>
-                <p class="lead blog-description">{{ shownong }}</p>
-            </div>
+
             <div class="row">
                 <div class="col-sm-8 blog-main">
-                    <div class="col-md-10">
-                        {# col-sm-offset-2 #}
-                        <ul id="selectarticle" class="nav nav-pills" role="tablist">
-                            <li role="presentation" class="active">
-                                <a href="#"><span class="glyphicon glyphicon-align-justify"></span>&nbsp;&nbsp;所&nbsp;&nbsp;有&nbsp;</a>
-                            </li>
-                            <li role="presentation" class="{% if sort == 'new' %}active{% endif %}">
-                                <a href="?sort=new"><span class="glyphicon glyphicon-dashboard"></span>&nbsp;&nbsp;最&nbsp;&nbsp;新&nbsp;&nbsp;</a>
-                            </li>
-                            <li role="presentation" class="{% if sort == 'hot' %}active{% endif %}">
-                                <a href="?sort=hot"><span class="glyphicon glyphicon-fire"></span>&nbsp;&nbsp;最&nbsp;&nbsp;热&nbsp;&nbsp;</a>
-                            </li>
-                            <li role="presentation" class="{% if sort == 'recommend1' %}active{% endif %}">
-                                <a href="?sort=recommend1"><span class="glyphicon glyphicon-thumbs-up"></span> &nbsp;推&nbsp;荐&nbsp;1&nbsp;</a>
-                            </li>
-                            <li role="presentation" class="{% if sort == 'recommend2' %}active{% endif %}">
-                                <a href="?sort=recommend2"><span class="glyphicon glyphicon-thumbs-up"></span> &nbsp;推&nbsp;&nbsp;荐&nbsp;2&nbsp;</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <br>
-                    <hr style="padding:0%;margin:5%;" class="featurette-divider">
 
                     {% for article in all_articles.object_list %}
                         <div class="row featurette">
-                            <div class="row col-md-12">
+                            <div class="row col-md-12 articlediv">
                                 <div class="media">
                                     <div class="media-body">
                                         <div>
                                             <div>
                                     <span>
-                                        <h5 style="color:#777;">发表时间：{{ article.add_time }}</h5>
+                                        <h5 style="color:#777;">发表时间：{{ article.add_time|timesince }}前</h5>
                                     </span>
                                             </div>
                                             <div>
@@ -150,21 +152,32 @@
                                     </span>
                                             </div>
                                         </div>
+
+
                                         <div class="col-md-13" data-toggle="collapse" data-target="#collapseFirst">
+
+
                                             <h3 style="padding:0%;margin:2%;">
-                                                <b>{{ article.title }}</b>
-                                                <span class="text-muted">
+                                                <a href="{% url 'article:article_detail' article.id %}" target="_blank">
+                                                    <b>{{ article.title }}</b>
+                                                    <span class="text-muted">
                                         <small>{{ article.desc }}</small>
-                                    </span>
+
+                                    </span></a>
                                             </h3>
-                                            <p id="articledetailp">{{ article.detail }}</p>
+                                            <a href="{% url 'article:article_detail' article.id %}" target="_blank">
+                                                <p id="articledetailp">{{ article.detail }}</p>
+                                                <p>{{ article.detail|slice:"280" }}...</p>
+                                            </a>
                                         </div>
                                     </div>
-                                    {% if article.image != '' %}
+                                    {% if article.image %}
                                         <div class="media-bottom">
                                             <div class="row">
                                                 <div class="col-xs-3 col-md-3">
-                                                    <a href="#" class="thumbnail">
+                                                    <a href="{% url 'article:article_detail' article.id %}"
+                                                       target="_blank"
+                                                       class="thumbnail">
                                                         <img class="media-object"
                                                              style="height:120px;width:100%;display:block;"
                                                              src="{{ MEDIA_URL }}{{ article.image }}" alt="...">
@@ -212,7 +225,8 @@
                                         </div>
                                         <div class="modal-footer" id="js-pub-container">
                                             <div class="" id="js-pl-input-fake">
-                                                    <textarea class="form-control" rows="3" id="js-pl-textarea{{ article.id }}"
+                                                    <textarea class="form-control" rows="3"
+                                                              id="js-pl-textarea{{ article.id }}"
                                                               placeholder="扯淡、吐槽、表扬、鼓励……想说啥就说啥！"></textarea>
                                             </div>
                                             <br>
@@ -220,69 +234,83 @@
                                                     data-target="#demo{{ article.id }}">
                                                 Close
                                             </button>
-                                            <button id="js-pl-submit{{ article.id }}" type="button" class="btn btn-primary"
+                                            <button id="js-pl-submit{{ article.id }}" type="button"
+                                                    class="btn btn-primary"
                                                     data-commentarticleid="{{ article.id }}">发表评论
                                             </button>
                                         </div>
                                     </div>
- <script type="text/javascript">
-        //添加评论
-        $('#js-pl-submit{{ article.id }}').on('click', function () {
-            var comments = $("#js-pl-textarea{{ article.id }}").val()
-            if (comments == "") {
-                alert("评论不能为空")
-                return
-            }
-            $.ajax({
-                cache: false,
-                type: "POST",
-                url: "{% url 'article:add_comment' %}",
-                data: {'article_id': $(this).data("commentarticleid"), 'comments': comments},
-                async: true,
-                beforeSend: function (xhr, settings) {
-                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
-                },
-                success: function (data) {
-                    if (data.status == 'fail') {
-                        if (data.msg == '用户未登录') {
-                            window.location.href = "/login/";
-                        } else {
-                            alert(data.msg)
-                        }
-                    } else if (data.status == 'success') {
-                        alert("评论发表成功");
-                        window.location.reload();//刷新当前页面.
-                    }
-                },
-            });
-        });
-    </script>
+                                    <script type="text/javascript">
+                                        //添加评论
+                                        $('#js-pl-submit{{ article.id }}').on('click', function () {
+                                            var comments = $("#js-pl-textarea{{ article.id }}").val()
+                                            if (comments == "") {
+                                                alert("评论不能为空")
+                                                return
+                                            }
+                                            $.ajax({
+                                                cache: false,
+                                                type: "POST",
+                                                url: "{% url 'article:add_comment' %}",
+                                                data: {
+                                                    'article_id': $(this).data("commentarticleid"),
+                                                    'comments': comments
+                                                },
+                                                async: true,
+                                                beforeSend: function (xhr, settings) {
+                                                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                                                },
+                                                success: function (data) {
+                                                    if (data.status == 'fail') {
+                                                        if (data.msg == '用户未登录') {
+                                                            window.location.href = "/login/";
+                                                        } else {
+                                                            alert(data.msg)
+                                                        }
+                                                    } else if (data.status == 'success') {
+                                                        alert("评论发表成功");
+                                                        window.location.reload();//刷新当前页面.
+                                                    }
+                                                },
+                                            });
+                                        });
+                                    </script>
 
                                     <p>
                                         <small>
-                                            click_num:{{ article.click_num }}&nbsp; fav_nums:{{ article.fav_nums }}&nbsp;
-                                            score:{{ article.score }}
+                                            点击数:{{ article.click_num }}&nbsp;
+                                            收藏数:{{ article.fav_nums }}&nbsp;情感评分:{{ article.score }}
                                         </small>
                                     </p>
-                                    <div class="col-md-8 col-sm-offset-2 text-center">
-                                        <button type="button" class="btn btn-primary btn-lg collect-btn"
-                                                style="background-color:#096c47;" data-articleid="{{ article.id }}">
-                                            <span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;<span
-                                                class="badge">{{ article.fav_nums }}</span>
-                                        </button>
-                                        {#<span class="glyphicon glyphicon-heart"></span>&nbsp;#}
-                                        <a href="{% url 'article:article_detail' article.id %}" target="_blank">
-                                            <button type="button" class="btn btn-primary btn-lg"
-                                                    style="background-color:#096c47;">
-                                                <span class="glyphicon glyphicon-file"></span> read all
-                                            </button>
-                                        </a>
-                                        <button type="button" class="btn btn-primary btn-lg"
-                                                style="background-color:#096c47;" data-toggle="collapse"
-                                                data-target="#demo{{ article.id }}">
-                                            <span class="glyphicon glyphicon-comment"></span> 评&nbsp;论
-                                        </button>
+                                    <ul class="nav nav-justified">
+
+                                        <li><a href="javascript:void(0)" class="collect-btn" type="button"
+                                               data-articleid="{{ article.id }}">
+                                            {% if favlist and article.id in fav_list %}
+                                                已收藏{% else %}收藏
+                                            {% endif %}
+                                        </a></li>
+                                        <li><a href="{% url 'article:article_detail' article.id %}" target="_blank">
+                                            <span class="glyphicon glyphicon-file"></span> 查看全文</a></li>
+                                        <li><a href="javascript:void(0)" data-toggle="collapse"
+                                               data-target="#demo{{ article.id }}">
+                                            <span class="glyphicon glyphicon-comment"></span> 评&nbsp;论</a></li>
+                                    </ul>
+
+                                    <div class="progress" style="margin-bottom: 0;margin-top: 0;">
+                                        <div id="{{ article.id }}" class="absdiv progress-bar {% if article.score > 0 %}progress-bar-success{% else %}progress-bar-danger{% endif %}"
+                                             role="progressbar"
+                                             aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"
+                                             style="width:0">
+                                            <span class="sr-only"></span>
+                                        </div>
+                                        <script>
+                                            var abs = Math.abs(Number({{ article.score }}));
+                                            $('#{{ article.id }}').css("width", abs + '%');
+                                        </script>
+
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -290,11 +318,11 @@
                     {% endfor %}
                 </div>
                 <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-                    <div class="sidebar-module sidebar-module-inset">
+                    <div class="sidebar-module sidebar-module-inset articlediv">
                         <h4>一些公告</h4>
                         <p>共{{ article_nums }}篇文章</p>
                     </div>
-                    <div class="sidebar-module">
+                    <div class="sidebar-module articlediv">
                         <h4>最热文章</h4>
                         <ol class="list-unstyled">
                             {% for hotarticle in hot_article %}
@@ -305,7 +333,7 @@
                             {% endfor %}
                         </ol>
                     </div>
-                    <div class="sidebar-module">
+                    <div class="sidebar-module articlediv">
                         <h4>猜你喜欢</h4>
                         <ol class="list-unstyled">
                             {% for article in all_articles.object_list %}
@@ -394,7 +422,7 @@
     </script>
     <script type="text/javascript">
         //添加评论
-{#        var commentbtnid = $(this).data("commentarticleid").val()#}
+        {#        var commentbtnid = $(this).data("commentarticleid").val()#}
         $('#js-pl-submit').on('click', function () {
             var comments = $("#js-pl-textarea").val()
             if (comments == "") {

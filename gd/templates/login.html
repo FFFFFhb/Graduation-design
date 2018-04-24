@@ -50,8 +50,9 @@
             <input name="username" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
             <label for="inputPassword" class="sr-only">Password</label>
             <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-
-            <input class="btn btn-lg btn-primary btn-block" type="submit" value="登录"></input>
+            <div class="error btns login-form-tips" id="jsLoginTips">
+                {% for key,error in login_form.errors.items %}{{ error }}{% endfor %}{{ msg }}</div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" value="登录">登录</button>
             <br>
              <div class="text-center">
                 <label><a href="">忘记密码</a></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

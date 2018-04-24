@@ -101,7 +101,7 @@
                                 <img width="24" height="24" src="{{ MEDIA_URL }}{{ articledetail.author.image }}"
                                      alt="">
                             </a>
-                            <a href="#" style="color:black;">
+                            <a href="{% url 'user:user_detail' articledetail.author.id %}" style="color:black;">
                             {{ articledetail.author }}
                             </a>
                             <small style="color:#777;">&nbsp;{{ articledetail.author.short_summary }}</small>
@@ -113,7 +113,7 @@
                                         <p class="">{{ articledetail.detail }}</p>
                                     </div>
                                 </div>
-                                {% if articledetail.image != "" %}
+                                {% if articledetail.image %}
                                     <div class="media-bottom">
                                         <div class="row">
                                             <div class="col-xs-3 col-md-3">
@@ -198,10 +198,10 @@
                                         <div>
                                             <div>
                             <span>
-                                <a href="">
+                                <a href="{% url 'user:user_detail' comment.user.id %}">
                                     <img width="24" height="24" src="{{ MEDIA_URL }}{{ comment.user.image }}" alt="">
                                 </a>
-                                <a href="#" style="color:black;">
+                                <a href="{% url 'user:user_detail' comment.user.id %}" style="color:black;">
                                     {{ comment.user }} -- {{ comment.user.short_summary }}
                                 </a>
                             </span>

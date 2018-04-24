@@ -1,12 +1,34 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block title %}个人主页 - F-ZTH{% endblock %}
-{% block custom_css %}{% endblock %}
+{% block custom_css %}
+    <style>
+    {#多行文本溢出显示省略号#}
+        #articledetailp {
+            position: relative;
+            line-height: 1.4em;
+            /* 3 times the line-height to show 3 lines */
+            height: 15.4em;
+            overflow: hidden;
+        }
+
+        #articledetailp::after {
+            content: "...";
+            font-weight: bold;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            padding: 0 20px 1px 45px;
+            background: url(http://css88.b0.upaiyun.com/css88/2014/09/ellipsis_bg.png) repeat-y;
+        }
+    </style>
+{% endblock %}
 {% block custom_js %}{% endblock %}
 {% block content %}
-        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <hr><br>
+        <div id="myCarousel" class="carousel slide" data-ride="carousel" style="margin-bottom: 30px">
 
-        <div class="carousel-inner" role="listbox">
+        <div class="carousel-inner" role="listbox" >
             <div class="item active">
                 <img class="first-slide" src="{% static 'images/default_surface.jpg' %}" alt="封面图">
             </div>
@@ -22,19 +44,19 @@
     </div>
     <!-- /.carousel -->
 
-    <div class="container marketing" >
+    <div class="" >
 
         <!-- Three columns of text below the carousel -->
-        <div class="row">
+        <div class="row" style="margin:0;">
 
-            <div class="col-lg-4">
+            <div class="col-lg-4" style="margin-top: 20px;">
                 <img class="img-circle" src="{{ MEDIA_URL }}{{ userdetail.image }}" alt="头像"
                     width="140" height="140">
                 <h2>{{ userdetail.nick_name|default_if_none:'无昵称' }}</h2>
 
             </div>
             <div class="col-lg-8">
-                <h4>个人介绍：</h4>
+                <h4><b>个人介绍：</b></h4>
 
                 <p>一句话介绍：{{ userdetail.short_summary }}</p>
                 <p>e-mail:{{ userdetail.email }}</p>
@@ -52,22 +74,61 @@
         <!-- /.row -->
         <!-- START THE FEATURETTES -->
 
-        <hr class="featurette-divider">
-{% for article in my_article %}
+        <hr class="">
+{% for article in my_article.object_list %}
 
         <div class="row featurette">
             <div class="col-md-7 col-md-push-5">
-                <h2 class="featurette-heading">{{ article.title }}
+                <a href="{% url 'article:article_detail' article.id %}" target="_blank">
+                    <h1><b>{{ article.title }}</b>
                     <span class="text-muted"><small>{{ article.desc }}</small></span>
-                </h2>
-                <p class="lead">{{ article.detail }}</p>
+                </h1></a>
+                <a href="{% url 'article:article_detail' article.id %}">
+                <p id="articledetailp" class="lead">{{ article.detail }}</p>
+                    </a>
             </div>
             <div class="col-md-5 col-md-pull-7">
-                <img class="featurette-image img-responsive center-block" src="{{ MEDIA_URL }}{{ article.image }}" alt="文章图片">
+             <a href="{% url 'article:article_detail' article.id %}" target="_blank">
+                <img class="featurette-image img-responsive center-block"
+                     src="{% if article.image %}{{ MEDIA_URL }}{{ article.image }}{% else %}{% static 'images/LOGO.png' %}{% endif %}" alt="文章图片">
+             </a>
             </div>
         </div>
     <hr>
 {% endfor %}
+    <div class="col-md-8 col-sm-offset-2 text-center">
+            <nav id="fenyeqi">
+                <ul class="pagination">
+                    {% if my_article.has_previous %}
+                        <li>
+                            <a href="?{{ my_article.previous_page_number.querystring }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% for page in my_article.pages %}
+                        {% if page %}
+                            {% ifequal page my_article.number %}
+                                <li class="active"><a href="?{{ page.querystring }}">{{ page }}</a></li>
+                            {% else %}
+                                <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
+                            {% endifequal %}
+                        {% else %}
+                            <li class="none"><a href="">...</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if my_article.has_next %}
+                        <li>
+                            <a href="?{{ my_article.next_page_number.querystring }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+
+        <hr style="padding:0%;margin:2%;" class="featurette-divider">
         <hr class="featurette-divider">
 
 

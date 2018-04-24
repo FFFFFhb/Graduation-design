@@ -1,7 +1,11 @@
 # _*_ coding:utf-8 _*_
 import xadmin
 from xadmin import views
-from .models import EmailVerifyRecord
+from .models import EmailVerifyRecord,UserProfile
+from xadmin.plugins.auth import UserAdmin
+
+class UserProfileAdmin(UserAdmin):
+    pass
 
 class BaseSetting(object):
     enable_themes = True
@@ -19,5 +23,6 @@ class EmailVerifyRecordAdmin(object):
 
 
 xadmin.site.register(EmailVerifyRecord,EmailVerifyRecordAdmin)
+# xadmin.site.register(UserProfile,UserProfileAdmin)
 xadmin.site.register(views.BaseAdminView, BaseSetting)
 xadmin.site.register(views.CommAdminView, GlobalSettings)

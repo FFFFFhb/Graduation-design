@@ -82,6 +82,10 @@
             background: url(http://css88.b0.upaiyun.com/css88/2014/09/ellipsis_bg.png) repeat-y;
         }
 
+        .userdiv {
+            background-color: #ffffff;
+        }
+
     </style>
 {% endblock %}
 
@@ -96,80 +100,104 @@
         </div>
         <!-- /.row -->
 
+        <div class="jumbotron">
+            <h1>{{ showtime }}</h1>
+            <p>{{ shownong }}</p>
+            <ul class="nav nav-justified" style="background-color: white">
+                <li role="presentation" class="active">
+                    <a href="#"><span class="glyphicon glyphicon-align-justify"></span>&nbsp;&nbsp;所&nbsp;&nbsp;有&nbsp;</a>
+                </li>
+                <li role="presentation" class="{% if sort == 'new' %}active{% endif %}">
+                    <a href="?sort=new"><span class="glyphicon glyphicon-dashboard"></span>&nbsp;&nbsp;最&nbsp;&nbsp;新&nbsp;&nbsp;</a>
+                </li>
+                <li role="presentation" class="{% if sort == 'hot' %}active{% endif %}">
+                    <a href="?sort=hot"><span class="glyphicon glyphicon-fire"></span>&nbsp;&nbsp;人&nbsp;&nbsp;气&nbsp;&nbsp;</a>
+                </li>
+                <li role="presentation" class="{% if sort == 'recommend1' %}active{% endif %}">
+                    <a href="?sort=recommend1"><span class="glyphicon glyphicon-thumbs-up"></span> &nbsp;推&nbsp;荐&nbsp;1&nbsp;</a>
+                </li>
+                <li role="presentation" class="{% if sort == 'recommend2' %}active{% endif %}">
+                    <a href="?sort=recommend2"><span class="glyphicon glyphicon-thumbs-up"></span> &nbsp;推&nbsp;&nbsp;荐&nbsp;2&nbsp;</a>
+                </li>
+            </ul>
+
+        </div>
+
         <div class="container">
-            <div class="blog-header">
-                <h1 class="blog-title">{{ showtime }}</h1>
-                <p class="lead blog-description">{{ shownong }}</p>
-            </div>
+
             <div class="row">
                 <div class="col-sm-8 blog-main">
-                    <div class="col-md-10">
+{#                    <div class="col-md-10">#}
                         {# col-sm-offset-2 #}
-                        <ul id="selectarticle" class="nav nav-pills" role="tablist">
-                            <li role="presentation" class="active">
-                                <a href="#"><span class="glyphicon glyphicon-align-justify"></span>&nbsp;&nbsp;所&nbsp;&nbsp;有&nbsp;</a>
-                            </li>
-                            <li role="presentation" class="{% if sort == 'new' %}active{% endif %}">
-                                <a href="?sort=new"><span class="glyphicon glyphicon-dashboard"></span>&nbsp;&nbsp;最&nbsp;&nbsp;新&nbsp;&nbsp;</a>
-                            </li>
-                            <li role="presentation" class="{% if sort == 'hot' %}active{% endif %}">
-                                <a href="?sort=hot"><span class="glyphicon glyphicon-fire"></span>&nbsp;&nbsp;人&nbsp;&nbsp;气&nbsp;&nbsp;</a>
-                            </li>
-                            <li role="presentation" class="{% if sort == 'recommend1' %}active{% endif %}">
-                                <a href="?sort=recommend1"><span class="glyphicon glyphicon-thumbs-up"></span> &nbsp;推&nbsp;荐&nbsp;1&nbsp;</a>
-                            </li>
-                            <li role="presentation" class="{% if sort == 'recommend2' %}active{% endif %}">
-                                <a href="?sort=recommend2"><span class="glyphicon glyphicon-thumbs-up"></span> &nbsp;推&nbsp;&nbsp;荐&nbsp;2&nbsp;</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <br>
-                    <hr style="padding:0%;margin:5%;" class="featurette-divider">
+{#                        <ul id="selectarticle" class="nav nav-pills" role="tablist">#}
+{#                            <li role="presentation" class="active">#}
+{#                                <a href="#"><span class="glyphicon glyphicon-align-justify"></span>&nbsp;&nbsp;所&nbsp;&nbsp;有&nbsp;</a>#}
+{#                            </li>#}
+{#                            <li role="presentation" class="{% if sort == 'new' %}active{% endif %}">#}
+{#                                <a href="?sort=new"><span class="glyphicon glyphicon-dashboard"></span>&nbsp;&nbsp;最&nbsp;&nbsp;新&nbsp;&nbsp;</a>#}
+{#                            </li>#}
+{#                            <li role="presentation" class="{% if sort == 'hot' %}active{% endif %}">#}
+{#                                <a href="?sort=hot"><span class="glyphicon glyphicon-fire"></span>&nbsp;&nbsp;人&nbsp;&nbsp;气&nbsp;&nbsp;</a>#}
+{#                            </li>#}
+{#                            <li role="presentation" class="{% if sort == 'recommend1' %}active{% endif %}">#}
+{#                                <a href="?sort=recommend1"><span class="glyphicon glyphicon-thumbs-up"></span> &nbsp;推&nbsp;荐&nbsp;1&nbsp;</a>#}
+{#                            </li>#}
+{#                            <li role="presentation" class="{% if sort == 'recommend2' %}active{% endif %}">#}
+{#                                <a href="?sort=recommend2"><span class="glyphicon glyphicon-thumbs-up"></span> &nbsp;推&nbsp;&nbsp;荐&nbsp;2&nbsp;</a>#}
+{#                            </li>#}
+{#                        </ul>#}
+{#                    </div>#}
+{#                    <br>#}
+{#                    <hr style="padding:0%;margin:5%;" class="featurette-divider">#}
 
 
                     {% for user in all_user.object_list %}
-                         <div class="row">
+                        <div class="row userdiv">
 
-                        <div class="col-lg-4">
-                            <a href="{% url 'user:user_detail' user.id %}" target="_blank"><img class="img-circle" src="{{ MEDIA_URL }}{{ user.image }}" alt="头像"
-                                 width="100" height="100"></a>
-                            <a href="{% url 'user:user_detail' user.id %}" target="_blank"><h2>{{ user.nick_name }}</h2></a>
+                            <div class="col-lg-4" style="margin-top: 20px">
+                                <a href="{% url 'user:user_detail' user.id %}" target="_blank"><img class="img-circle"
+                                                                                                    src="
+                                                                                                            {{ MEDIA_URL }}{{ user.image }}"
+                                                                                                    alt="头像"
+                                                                                                    width="100"
+                                                                                                    height="100"></a>
+                                <a href="{% url 'user:user_detail' user.id %}" target="_blank">
+                                    <h2>{{ user.nick_name }}</h2></a>
+
+                            </div>
+                            <div class="col-lg-8" style="margin-top: 20px">
+                                <h4>一句话介绍：{{ user.short_summary }}</h4>
+                                <p>e-mail:{{ user.email }}</p>
+                                <p>教育经历:{{ user.educated }}</p>
+                                <p>所在行业:{{ user.prefession }}</p>
+                                <p>粉丝数：{{ user.fans_nums }}</p>
+
+
+                            </div>
+
+                            <ul class="nav nav-justified">
+                                <li><a href="javascript:void(0)" class="collect-btn" data-userid="{{ user.id }}">
+                                    {#                                <span#}
+                                    {#                                    class="badge">{{ user.fans_nums }}</span>&nbsp;关注#}
+                                    {% if fav_list and user.id in fav_list %}
+                                        已关注{% else %}关注
+                                    {% endif %}</a></li>
+                                <li><a href="{% url 'user:user_detail' user.id %}" target="_blank">
+                                    <span class="glyphicon glyphicon-file"></span> 详细信息
+                                </a></li>
+                            </ul>
 
                         </div>
-                        <div class="col-lg-8">
-                            <h4>一句话介绍：</h4>
-                            <p>e-mail:</p>
-                            <p>教育经历:</p>
-                            <p>所在行业:</p>
-                            <p>粉丝数：{{ user.fans_nums }}</p>
-
-
-                        </div>
-                        <!-- /.col-lg-4 -->
-                        <div class="col-md-11 col-sm-offset-2 text-center">
-                            <button type="button" class="btn btn-primary btn-lg collect-btn"
-                                    style="background-color:#096c47;" data-userid="{{ user.id }}">
-                                <span
-                                    class="badge">{{ user.fans_nums }}</span>&nbsp;关注
-                            </button>
-                            {#<span class="glyphicon glyphicon-heart"></span>&nbsp;#}
-                            <a href="{% url 'user:user_detail' user.id %}" target="_blank">
-                                <button type="button" class="btn btn-primary btn-lg"
-                                        style="background-color:#096c47;">
-                                    <span class="glyphicon glyphicon-file"></span> read all
-                                </button>
-                            </a>
-                        </div>
-                    </div>
                         <hr style="padding:0%;margin:2%;" class="featurette-divider">
+
                     {% endfor %}
                 </div>
                 <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-                    <div class="sidebar-module sidebar-module-inset">
+                    <div class="sidebar-module sidebar-module-inset userdiv">
                         <h4>一些公告</h4>
                         <p>共{{ user_nums }}位用户</p>
                     </div>
-                    <div class="sidebar-module">
+                    <div class="sidebar-module userdiv">
                         <h4>最热文章</h4>
                         <ol class="list-unstyled">
                             {% for hotarticle in hot_article %}
@@ -179,7 +207,7 @@
                             {% endfor %}
                         </ol>
                     </div>
-                    <div class="sidebar-module">
+                    <div class="sidebar-module userdiv">
                         <h4>猜你喜欢</h4>
                         <ol class="list-unstyled">
                             {% for article in all_articles.object_list %}
@@ -199,16 +227,16 @@
         <div class="col-md-8 col-sm-offset-2 text-center">
             <nav id="fenyeqi">
                 <ul class="pagination">
-                    {% if all_articles.has_previous %}
+                    {% if all_user.has_previous %}
                         <li>
-                            <a href="?{{ all_articles.previous_page_number.querystring }}" aria-label="Previous">
+                            <a href="?{{ all_user.previous_page_number.querystring }}" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
                     {% endif %}
-                    {% for page in all_articles.pages %}
+                    {% for page in all_user.pages %}
                         {% if page %}
-                            {% ifequal page all_articles.number %}
+                            {% ifequal page all_user.number %}
                                 <li class="active"><a href="?{{ page.querystring }}">{{ page }}</a></li>
                             {% else %}
                                 <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
@@ -217,9 +245,9 @@
                             <li class="none"><a href="">...</a></li>
                         {% endif %}
                     {% endfor %}
-                    {% if all_articles.has_next %}
+                    {% if all_user.has_next %}
                         <li>
-                            <a href="?{{ all_articles.next_page_number.querystring }}" aria-label="Next">
+                            <a href="?{{ all_user.next_page_number.querystring }}" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>

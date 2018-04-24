@@ -8,6 +8,7 @@
         #img_file {
             display: none;
         }
+
     </style>
 {% endblock %}
 {% block custom_js %}
@@ -113,7 +114,7 @@
                 <input type="text" id="edittitle" class="form-control" name="title" value="{{ edit_article.title }}"/>
 
                 <h3>正文</h3>
-                <textarea id="editdetail" name="detail" class="form-control" >{{ edit_article.detail }}</textarea>
+                <textarea id="editdetail" name="detail" class="form-control" rows="30">{{ edit_article.detail }}</textarea>
                 <br>
                 <h4 name="id" style="display: none">{{ article.id }}</h4>
                 <center>

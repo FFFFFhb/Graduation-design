@@ -1,4 +1,5 @@
 import json
+from jieba.analyse import *
 
 from django.shortcuts import render
 from django.views.generic.base import View
@@ -20,11 +21,32 @@ class WriteArticleView(LoginRequiredMixin,View):
             title = request.POST.get('title', '')
             detail = request.POST.get('detail', '')
             author = request.user
+
+            #使用结巴分词
+            import jieba
+            def chinese_word_cut(mytext):
+                return " ".join(jieba.cut(mytext))
+
+            #结巴分词 TextRank 关键词提取
+            data = detail
+            desc = ''
+            for keyword, weight in textrank(data, topK=10, withWeight=True):
+                desc += (keyword+',')
+            # desc = chinese_word_cut(detail)
+
+            from snownlp import SnowNLP
+            s = SnowNLP(detail)
+            tsum = 0
+            for sentence in s.sentences:
+                tsum += float(SnowNLP(sentence).sentiments) - 0.5
+
             new_article = Article()
             new_article.author = author
             new_article.title = title
             new_article.image = image
+            new_article.desc = desc
             new_article.detail = detail
+            new_article.score = tsum
             new_article.save()
             return render(request, 'success.html')
             # return HttpResponse(json.dumps({'status': 'success', 'msg': '添加成功'}), content_type='application/json')
@@ -48,11 +70,31 @@ class EditArticleView(LoginRequiredMixin,View):
             image = edit_article.cleaned_data['image']
             title = request.POST.get('title', '')
             detail = request.POST.get('detail', '')
+
+            # 使用结巴分词
+            import jieba
+            def chinese_word_cut(mytext):
+                return " ".join(jieba.cut(mytext))
+
+            # 结巴分词 TextRank 关键词提取
+            data = detail
+            desc = ''
+            for keyword, weight in textrank(data, topK=10, withWeight=True):
+                desc += (keyword + ',')
+
+            from snownlp import SnowNLP
+            s = SnowNLP(detail)
+            tsum = 0
+            for sentence in s.sentences:
+                tsum += float(SnowNLP(sentence).sentiments) - 0.5
+
             edit_article = Article.objects.get(pk=edit_article_id)
             edit_article.title = title
             if image:
                 edit_article.image = image
             edit_article.detail = detail
+            edit_article.score = tsum
+            edit_article.desc = desc
             edit_article.save()
             return render(request, 'success.html')
         else:

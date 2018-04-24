@@ -37,7 +37,7 @@
 <!-- NAVBAR
 ================================================== -->
 
-<body style="background-color: #F6F6F6">
+<body style="background-color: #f6f6f6">
 <!-- 固定导航条 -->
 <!-- Fixed navbar -->
 <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
@@ -115,7 +115,7 @@
                             </ul>
                         </li>
 
-                        <li><a href="/logout/">退出</a></li>
+                        <li><a href="{% url 'logout' %}">退出</a></li>
                     {% else %}
                         <li><a href="#"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
                         <li><a href="/login/"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
@@ -134,115 +134,7 @@
 
 <div class="container marketing" >
     {% block content %}
-        <hr class="featurette-divider">
-        <!-- Three columns of text below the carousel -->
-        <div class="row">
 
-            <div class="col-lg-4">
-                <img class="img-circle" src="{% static 'images/LOGO.png' %}" alt="Generic placeholder image"
-                     width="140" height="140">
-                <h2>Froben</h2>
-                <p>
-                    <a class="btn btn-default" href="#" role="button">修改头像</a>
-                </p>
-            </div>
-            <div class="col-lg-4">
-                <h4>个人介绍：</h4>
-                <p>姓名：</p>
-                <p>e-mail:</p>
-                <p>性别:</p>
-                <p>出生年月:</p>
-                <p>教育经历:</p>
-                <p>所在行业:</p>
-                <p>个人简介:</p>
-            </div>
-            <!-- /.col-lg-4 -->
-
-        </div>
-        <!-- /.row -->
-        <!-- START THE FEATURETTES -->
-
-        <hr>
-
-        <form class="form-horizontal" role="form">
-            <div class="form-group">
-                <label for="firstname" class="col-sm-2 control-label">姓名</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="firstname" placeholder="请输入您的名字">
-                </div>
-            </div>
-            <hr>
-            <div class="form-group">
-                <label for="nickname" class="col-sm-2 control-label">昵称</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="nickname" placeholder="请输入您的昵称">
-                </div>
-            </div>
-            <hr>
-            <div class="form-group">
-                <label for="email" class="col-sm-2 control-label">e-mail</label>
-                <div class="col-sm-10">
-                    <input type="email" class="form-control" id="email" placeholder="请输入您的email">
-                </div>
-            </div>
-            <hr>
-            <div class="form-group">
-                <label for="sex" class="col-sm-2 control-label">性别</label>
-                <div class="col-sm-10">
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked> 男
-                        </label>
-                        &nbsp;
-                        <label>
-                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">女
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <hr>
-            <div class="form-group">
-                <label for="birth" class="col-sm-2 control-label">出生年月</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="birth" placeholder="请输入您的出生年月">
-                </div>
-            </div>
-            <hr>
-            <div class="form-group">
-                <label for="educated" class="col-sm-2 control-label">教育经历</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="educated" placeholder="请输入您的教育经历s">
-                </div>
-            </div>
-            <hr>
-            <div class="form-group">
-                <label for="work" class="col-sm-2 control-label">所在行业</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="work" placeholder="请输入您的所在行业">
-                </div>
-            </div>
-            <hr>
-            <div class="form-group">
-                <label for="sex" class="col-sm-2 control-label">个人简介</label>
-                <div class="col-sm-10">
-                    <textarea class="form-control" rows="3"></textarea>
-                </div>
-            </div>
-            <br>
-
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-default">cancel</button>
-                    &nbsp;
-                    <button type="submit" style="background-color:#096c47;color:#ffffff;" class="btn btn-default">save
-                    </button>
-                </div>
-            </div>
-        </form>
-
-        <hr class="featurette-divider">
-
-        <!-- /END THE FEATURETTES -->
     {% endblock %}
     <!-- FOOTER -->
     <footer>
