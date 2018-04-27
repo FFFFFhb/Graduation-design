@@ -74,12 +74,12 @@ class UserListView(View):
 
         # 收藏
         favlist = None
-        if request.user:
-            favlist = UserFavorite.objects.filter(user_id=int(request.user.id))
         fav_list = []
-        for i in favlist:
-            if i.fav_type == '2' or i.fav_type == 2:
-                fav_list.append(i.fav_id)
+        if request.user.id:
+            favlist = UserFavorite.objects.filter(user_id=int(request.user.id))
+            for i in favlist:
+                if i.fav_type == '2' or i.fav_type == 2:
+                    fav_list.append(i.fav_id)
 
         # 排序
         sort = request.GET.get('sort', "")

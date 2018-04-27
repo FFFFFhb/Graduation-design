@@ -7,7 +7,7 @@ from users.models import UserProfile
 # Create your models here.
 class Article(models.Model):
     author = models.ForeignKey(UserProfile, on_delete=models.CASCADE, verbose_name=u'作者', null=True, blank=True)
-    title = models.CharField(max_length=50, verbose_name=u'标题')
+    title = models.CharField(max_length=100, verbose_name=u'标题')
     desc = models.CharField(max_length=100, verbose_name=u'标签', null=True, blank=True)
     detail = models.TextField(verbose_name=u'内容')
     #detail = UEditorField(verbose_name=u"文章详情",width=600,hight=300,imagePath="article/ueditor",filePath="article/ueditor/",default="")
