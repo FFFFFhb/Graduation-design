@@ -8,7 +8,7 @@ from article.models import Article
 
 class ArticleComments(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, verbose_name=u'用户')
-    article = models.ForeignKey(Article, verbose_name=u'文章')
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, verbose_name=u'文章')
     comments = models.CharField(max_length=200, verbose_name=u'评论')
     fav_time = models.IntegerField(default=0,verbose_name=u'点赞数量')
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u'评论时间')
