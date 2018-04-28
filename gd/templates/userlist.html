@@ -105,7 +105,7 @@
             <p>{{ shownong }}</p>
             <ul class="nav nav-justified" style="background-color: white">
                 <li role="presentation" class="active">
-                    <a href="#"><span class="glyphicon glyphicon-align-justify"></span>&nbsp;&nbsp;所&nbsp;&nbsp;有&nbsp;</a>
+                    <a href="{% url 'user:user_list' %}"><span class="glyphicon glyphicon-align-justify"></span>&nbsp;&nbsp;所&nbsp;&nbsp;有&nbsp;</a>
                 </li>
                 <li role="presentation" class="{% if sort == 'new' %}active{% endif %}">
                     <a href="?sort=new"><span class="glyphicon glyphicon-dashboard"></span>&nbsp;&nbsp;最&nbsp;&nbsp;新&nbsp;&nbsp;</a>
@@ -113,12 +113,7 @@
                 <li role="presentation" class="{% if sort == 'hot' %}active{% endif %}">
                     <a href="?sort=hot"><span class="glyphicon glyphicon-fire"></span>&nbsp;&nbsp;人&nbsp;&nbsp;气&nbsp;&nbsp;</a>
                 </li>
-                <li role="presentation" class="{% if sort == 'recommend1' %}active{% endif %}">
-                    <a href="?sort=recommend1"><span class="glyphicon glyphicon-thumbs-up"></span> &nbsp;推&nbsp;荐&nbsp;1&nbsp;</a>
-                </li>
-                <li role="presentation" class="{% if sort == 'recommend2' %}active{% endif %}">
-                    <a href="?sort=recommend2"><span class="glyphicon glyphicon-thumbs-up"></span> &nbsp;推&nbsp;&nbsp;荐&nbsp;2&nbsp;</a>
-                </li>
+
             </ul>
 
         </div>
@@ -127,29 +122,6 @@
 
             <div class="row">
                 <div class="col-sm-8 blog-main">
-{#                    <div class="col-md-10">#}
-                        {# col-sm-offset-2 #}
-{#                        <ul id="selectarticle" class="nav nav-pills" role="tablist">#}
-{#                            <li role="presentation" class="active">#}
-{#                                <a href="#"><span class="glyphicon glyphicon-align-justify"></span>&nbsp;&nbsp;所&nbsp;&nbsp;有&nbsp;</a>#}
-{#                            </li>#}
-{#                            <li role="presentation" class="{% if sort == 'new' %}active{% endif %}">#}
-{#                                <a href="?sort=new"><span class="glyphicon glyphicon-dashboard"></span>&nbsp;&nbsp;最&nbsp;&nbsp;新&nbsp;&nbsp;</a>#}
-{#                            </li>#}
-{#                            <li role="presentation" class="{% if sort == 'hot' %}active{% endif %}">#}
-{#                                <a href="?sort=hot"><span class="glyphicon glyphicon-fire"></span>&nbsp;&nbsp;人&nbsp;&nbsp;气&nbsp;&nbsp;</a>#}
-{#                            </li>#}
-{#                            <li role="presentation" class="{% if sort == 'recommend1' %}active{% endif %}">#}
-{#                                <a href="?sort=recommend1"><span class="glyphicon glyphicon-thumbs-up"></span> &nbsp;推&nbsp;荐&nbsp;1&nbsp;</a>#}
-{#                            </li>#}
-{#                            <li role="presentation" class="{% if sort == 'recommend2' %}active{% endif %}">#}
-{#                                <a href="?sort=recommend2"><span class="glyphicon glyphicon-thumbs-up"></span> &nbsp;推&nbsp;&nbsp;荐&nbsp;2&nbsp;</a>#}
-{#                            </li>#}
-{#                        </ul>#}
-{#                    </div>#}
-{#                    <br>#}
-{#                    <hr style="padding:0%;margin:5%;" class="featurette-divider">#}
-
 
                     {% for user in all_user.object_list %}
                         <div class="row userdiv">
@@ -194,8 +166,10 @@
                 </div>
                 <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
                     <div class="sidebar-module sidebar-module-inset userdiv">
-                        <h4>一些公告</h4>
-                        <p>共{{ user_nums }}位用户</p>
+                        <h4>说明：</h4>
+                        <p>1.本网站关闭了注册通道</p>
+                        <p>2.文章副标题为文章关键词</p>
+                        <p>3.文章下方进度条为情感分析评分条（绿色为正评分，红色为负评分）</p>
                     </div>
                     <div class="sidebar-module userdiv">
                         <h4>最热文章</h4>
@@ -207,16 +181,7 @@
                             {% endfor %}
                         </ol>
                     </div>
-                    <div class="sidebar-module userdiv">
-                        <h4>猜你喜欢</h4>
-                        <ol class="list-unstyled">
-                            {% for article in all_articles.object_list %}
-                                <li>
-                                    <a href="#">{{ forloop.counter }}.{{ article.title }}</a>
-                                </li>
-                            {% endfor %}
-                        </ol>
-                    </div>
+
                 </div>
                 <!-- /.blog-sidebar -->
             </div>

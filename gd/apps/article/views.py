@@ -52,6 +52,8 @@ class ArticleView(View):
             if sort == "new":
                 all_articles = all_articles.order_by("-add_time")
             elif sort == "hot":
+                all_articles = all_articles.order_by("-click_num")
+            elif sort == "hot2":
                 all_articles = all_articles.order_by("-fav_nums")
 
         #评论

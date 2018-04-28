@@ -72,6 +72,9 @@ class UserListView(View):
         lunar_year, change_year, lunar_month, lunar_day = GongToNong.setnong(self, y, m, d)
         shownong = "\t农历 " + change_year + "年" + lunar_month + lunar_day + " " + lunar_year + "年 "
 
+        all_articles = Article.objects.all()
+        hot_article = all_articles.order_by("-click_num")[:5]
+
         # 收藏
         favlist = None
         fav_list = []
@@ -104,6 +107,7 @@ class UserListView(View):
             "sort": sort,
             "user_nums":user_nums,
             "fav_list":fav_list,
+            "hot_article":hot_article,
         })
 
 class UserDetailView(View):

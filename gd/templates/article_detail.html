@@ -109,7 +109,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-13">
-
+                                        <br>
                                         <p class="">{{ articledetail.detail }}</p>
                                     </div>
                                 </div>
@@ -145,35 +145,22 @@
                         </h4>
                         <p>{{ articledetail.author.summary }}</p>
                     </div>
-                    <div class="sidebar-module">
-                        <h4>他的文章</h4>
-                        <ol class="list-unstyled">
-                            <li>
-                                <a href="#">March 2014</a>
-                            </li>
-                            <li>
-                                <a href="#">February 2014</a>
-                            </li>
-                            <li>
-                                <a href="#">January 2014</a>
-                            </li>
+{#                    <div class="sidebar-module">#}
+{#                        <h4>他的文章</h4>#}
+{#                        <ol class="list-unstyled">#}
+{#                            <li>#}
+{#                                <a href="#">March 2014</a>#}
+{#                            </li>#}
+{#                            <li>#}
+{#                                <a href="#">February 2014</a>#}
+{#                            </li>#}
+{#                            <li>#}
+{#                                <a href="#">January 2014</a>#}
+{#                            </li>#}
+{##}
+{#                        </ol>#}
+{#                    </div>#}
 
-                        </ol>
-                    </div>
-                    <div class="sidebar-module">
-                        <h4>猜你喜欢</h4>
-                        <ol class="list-unstyled">
-                            <li>
-                                <a href="#">GitHub</a>
-                            </li>
-                            <li>
-                                <a href="#">Twitter</a>
-                            </li>
-                            <li>
-                                <a href="#">Facebook</a>
-                            </li>
-                        </ol>
-                    </div>
                 </div>
                 <!-- /.blog-sidebar -->
 
@@ -238,7 +225,7 @@
                     style="background-color:#096c47;" data-articleid="{{ articledetail.id }}">
                 {#                <span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;<span#}
                 {#                    class="badge">{{ articledetail.fav_nums }}</span>#}
-                {% if has_fav %}Liked{% else %}Like{% endif %}
+                {% if has_fav %}已收藏{% else %}收藏{% endif %}
             </button>
 
             <button type="button" class="btn btn-primary btn-lg"

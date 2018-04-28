@@ -1,10 +1,9 @@
 # _*_ coding:utf-8 _*_
 from .models import Article
 from users.models import UserProfile
-from datetime import datetime
 import xadmin
 import pandas as pd
-
+import xlrd
 
 class ArticleAdmin(object):
     #author,title,desc,detail,click_num,fav_nums,image,score,add_time
@@ -15,13 +14,9 @@ class ArticleAdmin(object):
 
     def post(self,request,*args,**kwargs):
         if 'excel' in request.FILES:
-            # 初始化course
-            article = Article()
-            # 读取excel文件
-
             df = pd.read_csv("C:\\Users\\Administrator\\Desktop\\fitdata.csv",encoding = 'gb18030')
-
             for i in range(df.shape[0]):
+                article = Article()
                 author = 1
                 article.author = UserProfile.objects.get(id=int(author))
                 article.title = df.ix[i, 'title']
@@ -32,6 +27,9 @@ class ArticleAdmin(object):
                 article.score = df.ix[i, 'score']
                 # author,title,desc,detail,click_num,fav_nums,image,score,add_time
                 article.save()
+
+                
+
         return super(ArticleAdmin,self).post(request,args,kwargs)
 
 xadmin.site.register(Article, ArticleAdmin)
