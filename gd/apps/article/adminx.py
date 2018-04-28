@@ -28,7 +28,7 @@ class ArticleAdmin(object):
                 # author,title,desc,detail,click_num,fav_nums,image,score,add_time
                 article.save()
 
-                
+
 
         return super(ArticleAdmin,self).post(request,args,kwargs)
 
