@@ -2,8 +2,6 @@
 from .models import Article
 from users.models import UserProfile
 import xadmin
-# import pandas as pd
-import xlrd
 
 class ArticleAdmin(object):
     #author,title,desc,detail,click_num,fav_nums,image,score,add_time
