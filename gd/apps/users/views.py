@@ -241,7 +241,7 @@ def page_not_found(request):
     return response
 
 def page_error(request):
-    #全局404配置函数
+    #全局500配置函数
     from django.shortcuts import render_to_response
     response = render_to_response('500.html',{})
     response.status_code = 500

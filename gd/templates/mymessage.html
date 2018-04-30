@@ -62,7 +62,7 @@
                 <p>e-mail:{{ userdetail.email }}</p>
                 <p>性别:{% if userdetail.gender == 'male' %}男{% elif userdetail.gender == 'female' %}女{% endif %}</p>
                 <p>出生年月:{{ userdetail.birthday|default_if_none:'' }}</p>
-                <p>教育经历:{{ userdetail.eduated }}</p>
+                <p>教育经历:{{ userdetail.educated }}</p>
                 <p>所在行业:{{ userdetail.profession }}</p>
                 <p>居住地:{{ userdetail.address }}</p>
                 <p>个人简介:{{ userdetail.summary }}</p>

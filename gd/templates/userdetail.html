@@ -254,7 +254,7 @@
                 <p>e-mail:{{ request.user.email }}</p>
                 <p>性别:{% if request.user.gender == 'male' %}男{% elif request.user.gender == 'female' %}女{% endif %}</p>
                 <p>出生年月:{{ request.user.birthday|default_if_none:'' }}</p>
-                <p>教育经历:{{ request.user.eduated }}</p>
+                <p>教育经历:{{ request.user.educated }}</p>
                 <p>所在行业:{{ request.user.profession }}</p>
                 <p>居住地:{{ request.user.address }}</p>
                 <p>个人简介:{{ request.user.summary }}</p>
@@ -378,7 +378,7 @@
                 <hr id="section-3" style="padding:0%;margin:5%;" class="featurette-divider">
                 <h2>我的关注</h2>
                 <br>
-                {% for user in my_fav_user_list %}
+                {% for user in my_fav_user_list  %}
                     <div class="row">
                         <div class="col-lg-4">
                             <img class="img-circle" src="{{ MEDIA_URL }}{{ user.image }}" alt="头像"
