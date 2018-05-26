@@ -103,7 +103,11 @@
             <form class="perinform center-block" id="" autocomplete="off" method="post" enctype="multipart/form-data"
                   action="{% url 'operation:operation_edit' edit_article.id %}">
                 <div style="text-align: center;">
+                    {% if edit_article.image %}
                     <img name="fengmiantu" id="image" src="{{ MEDIA_URL }}{{ edit_article.image }}"/>
+                    {% else %}
+                        <img name="fengmiantu" id="image" src="{% static 'images/default_surface.jpg' %}" alt="封面图">
+                    {% endif %}
                 </div>
                 <br>
                 <div class="text-center">

@@ -62,8 +62,10 @@ class UserListView(View):
         #搜索功能
         search_keywords = request.GET.get('keywords',"")
         if search_keywords:
-            all_user = all_user.filter(Q(username__icontains=search_keywords)|Q(nick_name__icontains=search_keywords)|Q(educated__icontains=search_keywords)|Q(profession__icontains=search_keywords))
-
+            all_user = all_user.filter(Q(username__icontains=search_keywords)|
+                                       Q(nick_name__icontains=search_keywords)|
+                                       Q(educated__icontains=search_keywords)|
+                                       Q(profession__icontains=search_keywords))
 
         # 公历转换成农历显示
         y = datetime.datetime.now().year
@@ -75,7 +77,7 @@ class UserListView(View):
         all_articles = Article.objects.all()
         hot_article = all_articles.order_by("-click_num")[:5]
 
-        # 收藏
+        # 关注
         favlist = None
         fav_list = []
         if request.user.id:
@@ -88,9 +90,9 @@ class UserListView(View):
         sort = request.GET.get('sort', "")
         if sort:
             if sort == "new":
-                all_articles = all_user.order_by("-add_time")
+                all_user = all_user.order_by("-add_time")
             elif sort == "hot":
-                all_articles = all_user.order_by("-fans_nums")
+                all_user = all_user.order_by("-fans_nums")
 
         # 对文章进行分页
         try:
@@ -200,7 +202,6 @@ class AddFavView(LoginRequiredMixin,View):
     def post(self, request):
         fav_id = request.POST.get('fav_id', 0)
         fav_type = request.POST.get('fav_type', 0)
-
         if not request.user.is_authenticated():
             return HttpResponse('{"status":"fail", "msg":"用户未登录"}', content_type='application/json')
         exist_records = UserFavorite.objects.filter(user=request.user, fav_id=int(fav_id), fav_type=int(fav_type))
@@ -213,23 +214,19 @@ class AddFavView(LoginRequiredMixin,View):
                 if user.fans_nums < 0:
                     user.fans_nums = 0
                 user.save()
-
             return HttpResponse('{"status":"success", "msg":"关注"}', content_type='application/json')
-
         else:
             user_fav = UserFavorite()
             if int(fav_id) > 0 and int(fav_type) > 0:
                 user_fav.user = request.user
                 user_fav.fav_id = int(fav_id)
                 user_fav.fav_type = int(fav_type)
-
                 user_fav.save()
                 if int(fav_type) == 2:
                     user = UserProfile.objects.get(id=int(fav_id))
                     user.fans_nums += 1
                     user.save()
                 return HttpResponse('{"status":"success", "msg":"已关注"}', content_type='application/json')
-
             else:
                 return HttpResponse('{"status":"fail", "msg":"收藏出错"}', content_type='application/json')
 
@@ -247,3 +244,16 @@ def page_error(request):
     response.status_code = 500
     return response
 
+class IndexView(View):
+    def get(self,request):
+        showtime = datetime.datetime.now().date()
+        # 公历转换成农历显示
+        y = datetime.datetime.now().year
+        m = datetime.datetime.now().month
+        d = datetime.datetime.now().day
+        lunar_year, change_year, lunar_month, lunar_day = GongToNong.setnong(self, y, m, d)
+        shownong = "\t农历 " + change_year + "年" + lunar_month + lunar_day + " " + lunar_year + "年 "
+        return render(request, 'index.html', {
+            "showtime": showtime,
+            "shownong": shownong,
+        })

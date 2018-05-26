@@ -1,5 +1,6 @@
 import json
 from jieba.analyse import *
+from snownlp import SnowNLP
 
 from django.shortcuts import render
 from django.views.generic.base import View
@@ -8,7 +9,6 @@ from django.http import HttpResponse,HttpResponseRedirect
 
 from .forms import NewArticleForm,EditArticleForm
 from article.models import Article
-
 
 # Create your views here.
 class WriteArticleView(LoginRequiredMixin,View):
@@ -22,23 +22,17 @@ class WriteArticleView(LoginRequiredMixin,View):
             detail = request.POST.get('detail', '')
             author = request.user
 
-            #使用结巴分词
-            import jieba
-            def chinese_word_cut(mytext):
-                return " ".join(jieba.cut(mytext))
-
             #结巴分词 TextRank 关键词提取
             data = detail
             desc = ''
-            for keyword, weight in textrank(data, topK=10, withWeight=True):
-                desc += (keyword+',')
-            # desc = chinese_word_cut(detail)
-
-            from snownlp import SnowNLP
-            s = SnowNLP(detail)
             tsum = 0
-            for sentence in s.sentences:
-                tsum += float(SnowNLP(sentence).sentiments) - 0.5
+            if len(detail) >= 280:
+                for keyword, weight in textrank(data, topK=10, withWeight=True):
+                    desc += (keyword+',')
+
+                s = SnowNLP(detail)
+                for sentence in s.sentences:
+                    tsum += float(SnowNLP(sentence).sentiments) - 0.5
 
             new_article = Article()
             new_article.author = author
@@ -49,7 +43,6 @@ class WriteArticleView(LoginRequiredMixin,View):
             new_article.score = tsum
             new_article.save()
             return render(request, 'success.html')
-            # return HttpResponse(json.dumps({'status': 'success', 'msg': '添加成功'}), content_type='application/json')
         else:
             return render(request, 'failed.html')
 
@@ -71,22 +64,17 @@ class EditArticleView(LoginRequiredMixin,View):
             title = request.POST.get('title', '')
             detail = request.POST.get('detail', '')
 
-            # 使用结巴分词
-            import jieba
-            def chinese_word_cut(mytext):
-                return " ".join(jieba.cut(mytext))
-
             # 结巴分词 TextRank 关键词提取
             data = detail
             desc = ''
-            for keyword, weight in textrank(data, topK=10, withWeight=True):
-                desc += (keyword + ',')
-
-            from snownlp import SnowNLP
-            s = SnowNLP(detail)
             tsum = 0
-            for sentence in s.sentences:
-                tsum += float(SnowNLP(sentence).sentiments) - 0.5
+            if len(detail) >= 280:
+                for keyword, weight in textrank(data, topK=10, withWeight=True):
+                    desc += (keyword + ',')
+
+                s = SnowNLP(detail)
+                for sentence in s.sentences:
+                    tsum += float(SnowNLP(sentence).sentiments) - 0.5
 
             edit_article = Article.objects.get(pk=edit_article_id)
             edit_article.title = title

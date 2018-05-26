@@ -27,7 +27,9 @@ class ArticleView(View):
         #搜索功能
         search_keywords = request.GET.get('keywords',"")
         if search_keywords:
-            all_articles = all_articles.filter(Q(title__icontains=search_keywords)|Q(desc__icontains=search_keywords)|Q(detail__icontains=search_keywords))
+            all_articles = all_articles.filter(Q(title__icontains=search_keywords)|
+                                               Q(desc__icontains=search_keywords)|
+                                               Q(detail__icontains=search_keywords))
 
         # 收藏
         favlist = None

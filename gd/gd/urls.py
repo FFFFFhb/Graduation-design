@@ -20,12 +20,13 @@ from django.views.static import serve
 import xadmin
 
 from gd.settings import MEDIA_ROOT
-from users.views import LoginView,LogoutView
+from users.views import LoginView,LogoutView,IndexView
 
 
 urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
     url(r'^$',TemplateView.as_view(template_name='wellcomepage.html'),name='wellcomepage'),
+    url(r'^index/$',IndexView.as_view(),name='index'),
     url(r'^login/$',LoginView.as_view(),name='login'),
     url(r'^logout/$',LogoutView.as_view(),name='logout'),
 

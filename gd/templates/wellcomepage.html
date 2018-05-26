@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 {% load staticfiles %}
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <meta name="description" content="">
     <meta name="author" content="">
-     <!-- 网站图标 -->
+    <!-- 网站图标 -->
     <link rel="icon" href="{% static 'images/fzth.ico' %}">
 
     <title>Wellcome to F-ZTH</title>
@@ -31,64 +31,71 @@
       <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-  </head>
+</head>
 
-  <body>
+<body>
 
-    <div class="site-wrapper">
+<div class="site-wrapper">
 
-      <div class="site-wrapper-inner">
+    <div class="site-wrapper-inner">
 
         <div class="cover-container">
 
-          <div class="masthead clearfix">
-            <div class="inner">
-              <h3 class="masthead-brand">F-ZTH</h3>
-              <nav>
-                <ul class="nav masthead-nav">
-                  <li class="active"><a href="/">主页</a></li>
+            <div class="masthead clearfix">
+                <div class="inner">
+                    <h3 class="masthead-brand">F-ZTH</h3>
+                    <nav>
+                        <ul class="nav masthead-nav">
+                            <li class="active"><a href="/">主页</a></li>
 
-                     {% if request.user.is_authenticated %}
-                         <li><a href="{% url 'user:user_info' %}"><img width="20" height="20" src="{{ MEDIA_URL }}{{ request.user.image }}"/>&nbsp;{{ request.user.username }}
-                         </a></li>
-                         <li><a href="/logout/">退出</a></li>
-                    {% else %}
-                        <li><a href="/login/">登录</a></li>
-                        <li><a href="#">注册</a></li>
-                    {% endif %}
+                            {% if request.user.is_authenticated %}
+                                <li><a href="{% url 'user:user_info' %}"><img width="20" height="20" src="
+                                        {{ MEDIA_URL }}{{ request.user.image }}"/>&nbsp;{{ request.user.username }}
+                                </a></li>
+                                <li><a href="/logout/">退出</a></li>
+                            {% else %}
+                                <li><a href="/login/">登录</a></li>
+                                <li><a href="#">注册</a></li>
+                            {% endif %}
 
-                </ul>
-              </nav>
+                        </ul>
+                    </nav>
+                </div>
             </div>
-          </div>
 
-          <div class="inner cover">
-            <h1 class="cover-heading">F-ZTH</h1>
-            <p class="lead">欢迎来到冯浩斌的毕业设计</p>
-            <p class="lead">
-              <a href="{% url 'article:article_list' %}" class="btn btn-lg btn-default">Get in !</a>
-            </p>
-          </div>
-
-          <div class="mastfoot">
-            <div class="inner">
-              <p>Github:<a href="https://github.com/FFFFFhb/Graduation-design">https://github.com/FFFFFhb/Graduation-design</a>, by <a href="#">@冯浩斌</a>.</p>
+            <div class="inner cover">
+                <h1 class="cover-heading">F-ZTH</h1>
+                <p class="lead">欢迎来到智能文章分享网站</p>
+                <p>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;随着internet的广泛应用，海量的信息资源以文本形式存在。
+                    信息世界的不断发展，极大地丰富了人类的生活，但也带来了棘手的问题：“如何在庞大的信息世界中找到感兴趣的信息”。
+                    这一问题成为了一项具有重大研究意义的课题。本次设计开发的智能文章分享网站的设计与实现正是针对这种情况，
+                    在页面简洁的文章分享网站基础上结合关键词提取技术和情感分析技术，方便用户选择到所感兴趣的文章。</p>
+                <p class="lead">
+                    <a href="{% url 'index' %}" class="btn btn-lg btn-default">Get in !</a>
+                </p>
             </div>
-          </div>
+
+            <div class="mastfoot">
+                <div class="inner">
+                    <p>Github:<a href="https://github.com/FFFFFhb/Graduation-design">https://github.com/FFFFFhb/Graduation-design</a>,
+                        by <a href="#">@冯浩斌</a>.</p>
+                </div>
+            </div>
 
         </div>
 
-      </div>
-
     </div>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-  </body>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+</body>
 </html>

@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link rel="icon" href="{% static 'images/fzth.ico' %}">
 
-    <title>{% block title %}base{% endblock %}</title>
+    <title>首页 - F-ZTH</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -30,8 +30,9 @@
 
     <!-- Custom styles for this template -->
     <link href="{% static 'css/carousel.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/justified-nav.css' %}">
 
-    {% block custom_css %}{% endblock %}
+
 
 </head>
 <!-- NAVBAR
@@ -130,15 +131,32 @@
 </nav>
 <!-- Marketing messaging and featurettes
 ================================================== -->
-<!-- Wrap the rest of the page in another container to center all the content. -->
 
 <div class="container marketing" >
-    {% block content %}
+     <!-- Jumbotron -->
+    <div class="blog-header">
+            <!-- <h3 class="blog-title">&nbsp;发呆</h3> -->
+            <br>
+        </div>
 
-    {% endblock %}
+ <!-- Jumbotron -->
+      <div class="jumbotron">
+          <h1>{{ showtime }}</h1>
+            <p>{{ shownong }}</p>
+{#        <h1>想感受一下本网站的魅力吗？</h1>#}
+{#        <p class="lead">试试体验帐号吧！</p>#}
+{#                  <p>帐号：<code>test@test.com</code></p>#}
+{#                <p>密码：<code>testtest123</code></p>#}
+          <h2>说明：</h2>
+
+                        <p>1.文章副标题为文章关键词</p>
+                        <p>2.文章下方进度条为情感分析评分条（绿色为正评分，红色为负评分）</p>
+        <p><a class="btn btn-lg btn-success" href="{% url 'login' %}" role="button">Get started today</a></p>
+      </div>
+
+
     <!-- FOOTER -->
     <footer class="footer">
-        <hr>
         <p class="pull-right">
             <a href="#">回到顶部</a>
         </p>
@@ -211,9 +229,7 @@
     });
 
 </script>
-{% block custom_js %}
 
-{% endblock %}
 
 </body>
 
