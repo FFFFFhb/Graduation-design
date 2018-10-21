@@ -9,6 +9,7 @@ from django.http import HttpResponse,HttpResponseRedirect
 
 from .forms import NewArticleForm,EditArticleForm
 from article.models import Article
+from .models import UserFavorite,ArticleComments
 
 # Create your views here.
 class WriteArticleView(LoginRequiredMixin,View):
@@ -96,7 +97,13 @@ class DeleteArticleView(LoginRequiredMixin,View):
         if not request.user.is_authenticated():
             return  HttpResponse('{"status":"fail", "msg":"用户未登录"}',content_type='application/json')
         exist_records = Article.objects.filter(pk=article_id)
+        exist_records_fav = UserFavorite.objects.filter(fav_id=article_id)
+        exist_comment = ArticleComments.objects.filter(article_id=article_id)
         if exist_records:
             #如果记录已经存在，则删除文章
             exist_records.delete()
+            if exist_records_fav:
+                exist_records_fav.delete()
+            if exist_comment:
+                exist_comment.delete()
             return render(request, 'success.html')

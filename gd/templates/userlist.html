@@ -148,12 +148,14 @@
                             </div>
 
                             <ul class="nav nav-justified">
+                            {% if request.user.is_authenticated %}
                                 <li><a href="javascript:void(0)" class="collect-btn" data-userid="{{ user.id }}">
                                     {#                                <span#}
                                     {#                                    class="badge">{{ user.fans_nums }}</span>&nbsp;关注#}
                                     {% if fav_list and user.id in fav_list %}
                                         已关注{% else %}关注
                                     {% endif %}</a></li>
+                            {% endif %}
                                 <li><a href="{% url 'user:user_detail' user.id %}" target="_blank">
                                     <span class="glyphicon glyphicon-file"></span> 详细信息
                                 </a></li>

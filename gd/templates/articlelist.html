@@ -223,6 +223,7 @@
 
 
                                         </div>
+                                    {% if request.user.is_authenticated %}
                                         <div class="modal-footer" id="js-pub-container">
                                             <div class="" id="js-pl-input-fake">
                                                     <textarea class="form-control" rows="3"
@@ -239,6 +240,7 @@
                                                     data-commentarticleid="{{ article.id }}">发表评论
                                             </button>
                                         </div>
+                                    {% endif %}
                                     </div>
                                     <script type="text/javascript">
                                         //添加评论
@@ -283,13 +285,14 @@
                                         </small>
                                     </p>
                                     <ul class="nav nav-justified">
-
+                                        {% if request.user.is_authenticated %}
                                         <li><a href="javascript:void(0)" class="collect-btn" type="button"
                                                data-articleid="{{ article.id }}">
                                             {% if favlist and article.id in fav_list %}
                                                 已收藏{% else %}收藏
                                             {% endif %}
                                         </a></li>
+                                    {% endif %}
                                         <li><a href="{% url 'article:article_detail' article.id %}" target="_blank">
                                             <span class="glyphicon glyphicon-file"></span> 查看全文</a></li>
                                         <li><a href="javascript:void(0)" data-toggle="collapse"
